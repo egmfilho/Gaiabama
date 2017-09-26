@@ -1,0 +1,139 @@
+.searchbar-complete {
+	margin-top: 15px !important;
+	margin-bottom: 30px;
+
+	.row > div, .row > span > div {
+		margin-top: 15px;
+		min-height: 50px;
+
+		&:last-child {
+			min-height: auto;
+		}
+	}
+
+	#expand-search {
+		display: block;
+		width: auto;
+
+		&.collapse {
+			display: none;
+
+			&.in {
+				display: block;
+			}
+		}
+	}
+
+	a[data-toggle='collapse'] {
+		&:after {
+			content: 'Menos opções';
+		}
+
+		&.collapsed:after {
+			content: 'Mais opções';
+		}				
+	}
+
+	.bootstrap-select {
+		height: 46px;
+
+		> button {
+			height: 46px;
+			border-radius: 6px;
+
+			.filter-option {
+				font-size: 15px;
+			}
+		}
+	}
+
+	input.input-lg {
+		font-size: 15px;
+	}
+
+	.rzslider {
+		margin-top: 30px !important;
+
+		.rz-bar {
+			background-color: rgba($main-color-lighter, .5);
+
+			&.rz-selection {
+				background-color: $main-color-light;
+			}
+		}
+
+		.rz-pointer {
+			background-color: $main-color;
+			outline: none;
+
+			&::after {
+				background-color: $secondary-color;
+			}
+
+			&.rz-active:after {
+				background-color: $main-color-dark;
+			}
+		}
+	}
+}
+
+.searchbar-complete {
+	$input-bg: #1f2347;
+	$input-border: darken(#1f2347, 15%);
+	$input-color-placeholder: #585E8F;
+
+	input {
+		background-color: $input-bg;
+		color: white;
+		border-color: $input-border;
+		&::placeholder {
+			color: $input-color-placeholder;
+		}
+	}
+
+	.bootstrap-select .btn-default {
+		background-color: $input-bg;
+		border-color: $input-border;
+		
+		span.filter-option {
+			color: $input-color-placeholder;
+		}
+
+		span.bs-caret {
+			color: #777;
+		}
+	}
+
+	.bootstrap-select.ng-not-empty .btn-default {
+		span.filter-option {
+			color: white;
+		}
+	}
+
+	div > button.btn-primary {
+		background-color: $secondary-color;
+		color: $main-color-dark;
+	}
+
+	.rzslider {
+		.rz-bar {
+			background-color: rgba($secondary-color, .5);
+
+			&.rz-selection {
+				background-color: $secondary-color;
+			}
+		}
+
+		.rz-pointer {
+			background-color: $secondary-color;
+
+			&::after {
+				background-color: $main-color-darker;
+			}
+
+			&.rz-active:after {
+				background-color: white;
+			}
+		}
+	}
+}

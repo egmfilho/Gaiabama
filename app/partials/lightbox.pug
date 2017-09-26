@@ -1,0 +1,38 @@
+//- ###############################################################################
+//- # O CAPTION DA IMAGEM ESTA CONFIGURADO NO PROVIDER DENTRO DO CONFIG EM APP.JS #
+//- ###############################################################################
+
+.modal-body(ng-swipe-left='Lightbox.nextImage()' ng-swipe-right='Lightbox.prevImage()')
+	//- navigation
+	.lightbox-nav(style='margin-bottom: 15px')
+		//- close button
+		button.close(aria-hidden='true' ng-click='$dismiss()')
+			i.text-white.fa.fa-close
+
+		.control(ng-if='Lightbox.images.length > 1')
+			a.btn.btn-default.btn-outline(ng-click='Lightbox.prevImage()')
+				i.glyphicon.glyphicon-menu-left
+				| &nbsp;Anterior
+			a.btn.btn-default.btn-outline(ng-click='Lightbox.nextImage()')
+				| Próximo&nbsp;
+				i.glyphicon.glyphicon-menu-right
+
+	.lightbox-image-container
+		//- caption
+		.lightbox-image-caption
+			span {{Lightbox.imageCaption}}
+
+		//- image
+		.beast-machine(disable-rclick)
+			img(ng-if='!Lightbox.isVideo(Lightbox.image)' lightbox-src='{{Lightbox.imageUrl}}')
+			.watermark
+			.prevent-drag
+
+		//- video
+		.embed-responsive.embed-responsive-16by9(ng-if='Lightbox.isVideo(Lightbox.image)')
+			//- video file embedded directly
+			video(ng-if='!Lightbox.isSharedVideo(Lightbox.image)' lightbox-src='{{Lightbox.imageUrl}}' controls autoplay='true')
+
+			//-  video embedded with an external service using 'ng-videosharing-embed'
+			embed-video.embed-responsive-item(ng-if='Lightbox.isSharedVideo(Lightbox.image)' lightbox-src='{{Lightbox.imageUrl}}' ng-href='{{Lightbox.imageUrl}}' iframe-id='lightbox-video')
+				a(ng-href='{{Lightbox.imageUrl}}') Assistir vídeo

@@ -1,0 +1,113 @@
+.footer {
+	// $height: 250px;
+	$height: 0;
+	
+	padding-top: 20px;
+	// border-top: 20px solid $main-color-darker;
+	
+	height: auto;
+	@media (min-width: $screen-sm-min) {
+		height: $height;
+	}
+
+	background-color: white;
+	color: $gray;
+	position: relative;
+
+	@include box-shadow(0, 2px, 5px, rgba(#000, .5));
+
+	.logo {
+		width: 100%;
+		height: 160px;
+		background-image: url('../images/PN/logo.png');
+		background-position: center;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+
+	ul {
+		list-style-type: none;
+
+		li a {
+			color: $gray;
+
+			&:hover {
+				color: $gray-darker;
+			}
+		}
+
+		&.info {
+			margin: 0;
+			padding-left: 0;
+
+			@media (min-width: $screen-sm-min) {
+				padding-left: 40px;
+			}
+
+			li {
+				text-align: center;
+
+				@media(min-width: $screen-sm-min) {
+					// width: 150px;
+					width: 200px;	
+					float: left;
+				}
+
+				@media(min-width: $screen-md-min) {
+					width: 200px;
+				}
+
+				@media(min-width: $screen-lg-min) {
+					width: 250px;
+				}
+				
+				font-size: 24px;
+
+				a {
+					display: block;
+					text-decoration: none;
+				}
+
+				ul.links {
+					padding-left: 10px;
+					padding-top: 10px;
+					margin-bottom: 20px;
+
+					@media (min-width: $screen-sm-min) {
+						margin-bottom: 0; 
+					}
+
+					li {
+						font-size: 16px;
+
+						a {
+							text-decoration: none;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.futura {
+		text-align: center;
+		background-color: $main-color-darker;
+		padding: 6px;
+
+		@media (min-width: $screen-sm-min) {
+			// margin-top: 40px;
+		}
+
+		.futura-cubo {
+			font-size: 25px;
+			color: white;
+			margin-right: 10px;
+			vertical-align: top;
+			line-height: 22px;
+		}
+
+		a {
+			color: white;
+		}
+	}
+}

@@ -1,0 +1,54 @@
+#header.header2
+	.container-narrow
+		.background(ng-show='currentPath === "/"')
+			.container
+				.row
+					.col-xs-6.col-sm-3
+						a(href='/')
+							.logo
+					.col-xs-12.col-sm-9
+						.contato
+							i.fa.fa-whatsapp
+							span  (21) 99999-8888
+						.search
+							ul.nav.nav-tabs(name='cliente')
+							.conteudo-nav.condensar-rows
+								.row
+									.col-sm-3
+										select.selectpicker.form-control(title='Tipo do imóvel' data-container='body')
+											option Casa
+											option Apartamento
+											option Latifúndio
+											option Fazenda
+									.col-sm-6
+										input.form-control.input-lg(type='text' placeholder='Informe um condomínio, bairro ou cidade')
+									.col-sm-3
+										button.btn.btn-primary.btn-block.btn-lg
+											span.glyphicon.glyphicon-search
+											|  Pesquisar
+		nav.navbar.navbar-default
+			.container
+				.navbar-header
+					button.navbar-toggle.collapsed(data-toggle='collapse' data-target='#navbar-collapse')
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='' ng-show='currentPath !== "/"')
+						div
+
+				#navbar-collapse.collapse.navbar-collapse(ng-class='{"navbar-center": currentPath === "/"}')
+					ul.nav.nav-pills
+						li(name='home')
+							a(href='/') Home
+						
+						li(name='sobre')
+							a(href='/sobre') Sobre
+
+						li(name='imoveis')
+							a(href='/imoveis') Imóveis
+
+						li(name='equipe')
+							a(href='/equipe') Equipe
+
+						li(name='contato')
+							a(href='/contato') Contato

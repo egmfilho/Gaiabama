@@ -1,0 +1,91 @@
+a.card(ng-href='{{!dummy ? url : \'\'}}' ng-class='{"card-horizontal": isHorizontal}' ng-mouseenter='onMouseEnter()' ng-mouseleave='onMouseLeave()')
+	
+	.custom-label(ng-if='labelText' ng-style='{"background-color": labelColor}')
+		| {{labelText}}
+	
+	.picture(ng-if='dummy' disable-rclick)
+		.dummy
+		
+	.picture(ng-if='!dummy' disable-rclick)
+		div(style='background-image: url(\' {{currentPicture()}} \')')
+
+			.slide-control(ng-if='!autoSlide && thumbs.length')
+				.left(ng-click='prevSlide($event)')
+					i.fa.fa-angle-left
+				.right(ng-click='nextSlide($event)')
+					i.fa.fa-angle-right
+
+			.category(ng-if='category')
+				| {{category}}
+			//- .icons(ng-if='!isHorizontal')
+				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{area}} m&#178;' ng-if='area && area > 0')
+					| {{area | number}} 
+					span  m&#178; &nbsp;
+
+				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{bed}} dormitórios' ng-if='bed && bed > 0')
+					| {{bed}}  
+					i.fa.fa-bed
+
+				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{suite}} suítes' ng-if='suite && suite > 0')
+					| {{suite}}  
+					i.fa.fa-bathtub
+
+				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{bath}} banheiros' ng-if='bath && bath > 0')
+					| {{bath}}  
+					i.fa.fa-shower
+
+				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{parking}} vagas' ng-if='parking && parking > 0')
+					| {{parking}}  
+					i.fa.fa-car
+	.info(ng-if='!dummy')
+		span.title 
+			| {{title | truncate: (isHorizontal ? 50 : 50)}}
+
+		span.subtitle(ng-if='subtitle')
+			i.glyphicon.glyphicon-map-marker
+			|  {{subtitle}}
+
+		.icons(ng-if='isHorizontal')
+			span(name='icon' data-toggle='tooltip' data-placement='top' title='{{area}} m2' ng-if='area && area > 0')
+				| {{area | number}}&nbsp;
+				b m&#178;
+
+			span(name='icon' data-toggle='tooltip' data-placement='top' title='{{bed}} dormitórios' ng-if='bed && bed > 0')
+				| {{bed}}&nbsp;
+				i.fa.fa-bed
+
+			span(name='icon' data-toggle='tooltip' data-placement='top' title='{{suite}} suítes' ng-if='suite && suite > 0')
+				| {{suite}}&nbsp;
+				i.fa.fa-bathtub
+
+			span(name='icon' data-toggle='tooltip' data-placement='top' title='{{bath}} banheiros' ng-if='bath && bath > 0')
+				| {{bath}}&nbsp;
+				i.fa.fa-shower
+
+			span(name='icon' data-toggle='tooltip' data-placement='top' title='{{parking}} vagas' ng-if='parking && parking > 0')
+				| {{parking}}&nbsp;
+				i.fa.fa-car
+		
+		span.description.text-gray
+			| {{description | truncate: (hideDescription ? 80 : 110)}}
+
+		span.price.text-primary
+			| Valor: {{price | currency : 'R$ ' : 0}}
+
+		span.text-light.text-gray.pull-right(ng-show='isHorizontal')
+			| Código: {{code}}
+
+	.info(ng-if='dummy')
+		.dummy-info
+			.son-goku
+			.son-gohan
+			.son-gohan-ssj
+			.son-goku-ssj
+			.trunks
+			.vegeta
+			.piccolo
+			.yamcha
+			.tenshinhan
+			.frieza
+			.son-goku-ssj-iii
+			.namekuzei

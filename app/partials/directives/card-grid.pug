@@ -1,0 +1,29 @@
+.row.remove-margin
+	.container
+		.section-header(ng-if='cardGridName')
+			div
+				h2.name {{cardGridName}}
+	
+	.col-xs-12.background-gray
+		.container
+			.row
+				.col-xs-12.col-sm-6.col-md-4(ng-repeat='card in cardGridArray')
+
+					card(
+						code='{{card.code}}'
+						picture='{{card.picture}}'
+						title='{{card.title}}'
+						subtitle='{{card.subtitle}}'
+						description='{{card.description}}'
+						category='{{card.category}}'
+						price='{{card.price}}'
+						area='{{card.area}}'
+						url='{{card.url}}'
+						bed='{{card.bed}}'
+						suite='{{card.suite}}'
+						bath='{{card.bath}}'
+						parking='{{card.parking}}'
+						label-text='{{card.labelText}}'
+						label-color='{{card.labelColor}}'
+						dummy='card.dummy'
+						origin='{{cardGridName}}')

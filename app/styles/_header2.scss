@@ -1,0 +1,114 @@
+.header2 {
+	$height: 270px;
+	$logo-height: 200px;
+
+	.background {
+		width: 100%;
+		height: $height;
+		padding-top: 50px;
+		background-image: url('../images/fundo_header_escuro.jpg');
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.logo {
+		width: 100%;
+		height: $logo-height;
+		background-image: url('../images/logo_white.png');
+		background-position: center;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+
+	.contato {
+		margin-top: 20px;
+		font-size: 1.5em;
+		text-align: right;
+		padding-right: 20px;
+		color: white;
+
+		i {
+			color: white;
+			vertical-align: bottom;
+			font-size: 1.2em;
+			margin-right: 3px;
+		}
+	}
+
+	.search {
+		margin-top: 20px;
+
+		.conteudo-nav {
+			border-top-left-radius: 6px;
+			background-color: rgba(#fff, .9);
+		}
+
+		input.input-lg {
+			font-size: 15px;
+		}
+
+		.bootstrap-select {
+			height: 46px;
+
+			> button {
+				height: 46px;
+				border-radius: 6px;
+
+				.filter-option {
+					font-size: 15px;
+				}
+			}
+		}
+	}
+
+	nav.navbar {
+		margin-bottom: 0;
+		height: 80px;
+		background-color: white;
+		border-radius: 0;
+		position: relative;
+		z-index: 2;		
+
+		@include box-shadow(0, 0, 10px, rgba(#000, .3));		
+
+		a.navbar-brand {
+			padding: 0;
+
+			div {
+				height: 80px;
+				width: 200px;
+				background-image: url('../images/logo.png');
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: contain;
+			}
+		}
+
+		.navbar-collapse {
+			.nav-pills {
+				font-size: 18px;
+				margin-top: 15px;
+				float: right;
+
+				a {
+					-webkit-transition: background-color .5s ease;
+					-moz-transition:    background-color .5s ease;
+					-ms-transition:     background-color .5s ease;
+					-o-transition:      background-color .5s ease;
+					transition:         background-color .5s ease;
+				}
+			}
+		}
+
+		.navbar-center {
+			text-align: center;
+
+			.nav-pills {
+				display: inline-block;
+				float: none;
+				vertical-align: top;
+			}
+		}
+	}
+}

@@ -1,0 +1,26 @@
+.row.container-carousel
+	.col-xs-12
+		#carousel-news.carousel.slide(data-ride='carousel')
+
+			//- Indicators
+			ol.carousel-indicators
+				li.active(data-target='$carousel-news' data-slide-to='0')
+				li(data-target='$carousel-news' data-slide-to='1')
+				li(data-target='$carousel-news' data-slide-to='2')
+
+			//- Wrapper for slides
+			.carousel-inner(role='listbox')
+				.item.active
+					.picture
+				.item
+					.picture
+				.item
+					.picture
+
+			//- Controls
+			span.left.carousel-control(data-target='#carousel-news' role='button' data-slide='prev')
+				span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+				span.sr-only Anterior
+			span.right.carousel-control(data-target='#carousel-news' role='button' data-slide='next')
+				span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+				span.sr-only Próximo

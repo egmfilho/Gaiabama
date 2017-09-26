@@ -1,0 +1,388 @@
+a.card {
+	$hover-animation-time: .5s;
+	$height-animation-time: .25s;
+
+	@include keyframe(dummyCard) {
+		0% {
+			transform: translateX(-300px)
+		}
+	
+		100% {
+			transform: translateX(300px)
+		}
+	}
+
+	@include keyframe(dummyCardHorizontal) {
+		0% {
+			transform: translateX(-300px)
+		}
+	
+		100% {
+			transform: translateX(300px)
+		}
+	}
+
+	/* Sobrescreve as propriedades herdadas do elemento <a> */
+	display: block;
+	color: $text-color;
+	text-decoration: none;
+
+	@extend .simple-shadow;
+
+	position: relative;
+	width: 100%;
+	
+	height: 400px;
+	@media (min-width: $screen-sm-min) {
+		height: 400px;
+	}
+
+	max-height: 430px;
+	background-color: white;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	overflow: hidden;
+
+	@include transform(translateY(0));
+
+	@include transition(transform $hover-animation-time ease, box-shadow $hover-animation-time ease, height $height-animation-time ease);
+
+	&:hover {
+		cursor: pointer;
+		-webkit-transform: translateY(-10px);
+		-moz-transform:    translateY(-10px);
+		-ms-transform:     translateY(-10px);
+		-o-transform:      translateY(-10px);
+		transform:         translateY(-10px);
+
+		-webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+		-moz-box-shadow:    0 10px 20px rgba(0, 0, 0, .2);
+		box-shadow:         0 10px 20px rgba(0, 0, 0, .2);
+	}
+
+	.custom-label {
+		@extend .simple-shadow;
+		background-color: $main-color-dark;
+		width: 200px;
+		text-align: center;
+		color: white;
+		font-size: 13px;
+		padding: 3px 20px;
+		position: absolute;
+		top: 23px;
+		left: -59px;
+		@include rotate(-38deg);
+		z-index: 10;
+	}
+
+	.picture {
+		width: 100%;
+		height: 200px;
+		// Moldura da foto				
+		padding: 0;
+
+		> div {
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			background-position: center;
+			background-color: black;
+			background-image: url('../images/no-pic.png');
+			// transition: background-image 0.5s ease-in-out;
+			position: relative;
+			overflow: hidden;
+
+			.slide-control {
+				height: 100%;
+
+				.left, .right {
+					width: 40px;
+					height: 100%;
+					position: absolute;
+					color: white;
+					text-shadow: 0 0 1px rgba(#000, .4);
+					font-size: 36px;
+					transition: all .25s;
+
+					&:hover {
+						font-size: 42px;
+					}
+
+					i.fa {
+						line-height: 200px;
+					}
+				}
+
+				.left {
+					left: -50px;
+					text-align: left;
+					padding-left: 6px;
+				}
+
+				.right {
+					right: -50px;
+					text-align: right;
+					padding-right: 6px;
+				}
+			}
+
+			&:hover {
+				.left {
+					left: 0;
+				}
+
+				.right {
+					right: 0;
+				}
+			}
+
+			&.dummy {
+				background-color: #d5d5d5;
+				background-size: contain;
+				background-repeat: no-repeat; 
+			}
+
+			.category {
+				background-color: $main-color;
+				color: white;
+				padding: 5px 15px;
+				position: absolute;
+				left: 0;
+				bottom: 0;
+			}
+
+			.icons {
+				display: block;
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				text-align: right;
+				background-color: rgba(#000, .5);
+				color: white;
+				padding-right: 15px;
+
+				> span[name="icon"] {
+					margin-right: 10px;
+				}
+			}
+		}
+	}
+
+	.info {
+		padding: 10px 15px;
+		text-decoration: none;
+
+		.title {
+			font-size: 1.1em;
+			display: block;
+			font-weight: bold;
+			text-transform: capitalize;
+		}
+
+		.subtitle {
+			font-size: .9em;
+			display: block;
+			margin-top: 5px;
+			margin-bottom: 10px;
+			color: $main-color;
+
+			i {
+				color: $main-color;
+			}
+		}
+
+		.description {
+			font-size: .92em;
+			display: block;
+			line-height: 20px;
+			min-height: 65px;
+		}
+
+		.price {
+			font-size: 1.25em;
+			display: block;
+			margin-top: 10px;
+			font-family: 'Work Sans', sans-serif;
+		}
+
+		.dummy-info {
+			background: #f6f7f9;
+			overflow: hidden;
+			position: relative;
+			height: 180px;
+
+			&:before {
+				@include animation(0, 2s, linear, dummyCard);
+
+				background-image: linear-gradient(to right, #f6f7f9 0%, #e9ebee 20%, #f6f7f9 40%, #f6f7f9 100%);
+				background-repeat: no-repeat;
+				background-size: 100% 180px;
+				content: ' ';
+				display: block;
+				height: 100%;
+			}
+
+			div {
+				background-color: white;
+				position: absolute;
+				display: block;
+
+				$son-goku-height: 8px;
+				$son-gohan-height: 25px;
+				$trunks-height: 20px;
+				$vegeta-height: 12px;
+				$support-team-height: 4px;
+				$frieza-height: 20px;
+				$son-goku-ssj-iii-height: 27px;
+
+				$line-height: 14px;
+
+				&.son-goku {
+					width: 100%;
+					height: $son-goku-height;
+					top: 0;
+				}
+
+				&.son-gohan {
+					width: 10px;
+					height: $son-gohan-height;
+					left: 100px;
+					top: $son-goku-height;
+				}
+
+				&.son-gohan-ssj {
+					width: 400px;
+					height: $son-gohan-height;
+					left: 230px;
+					top: $son-goku-height;
+				}
+
+				&.son-goku-ssj {
+					width: 100%;
+					height: $son-goku-height;
+					top: #{ $son-goku-height + $son-gohan-height };
+				}
+
+				&.trunks {
+					width: 400px;
+					height: $trunks-height;
+					left: 140px;
+					top: #{ ($son-goku-height * 2) + $son-gohan-height };
+				}
+
+				&.vegeta {
+					width: 100%;
+					height: $vegeta-height;
+					top: #{ ($son-goku-height * 2) + $son-gohan-height + $trunks-height };
+				}
+
+				&.piccolo {
+					width: 100%;
+					height: $support-team-height;
+					top: #{ ($son-goku-height * 2) + $son-gohan-height + $trunks-height + $vegeta-height + $line-height };
+				}
+
+				&.yamcha {
+					width: 100%;
+					height: $support-team-height;
+					top: #{ ($son-goku-height * 2) + $son-gohan-height + $trunks-height + $vegeta-height + $support-team-height + ($line-height * 2) };
+				}
+
+				&.tenshinhan {
+					width: 400px;
+					height: $line-height;
+					left: 160px;
+					top: #{ ($son-goku-height * 2) + $son-gohan-height + $trunks-height + $vegeta-height + ($support-team-height * 2) + ($line-height * 2) };
+				}
+
+				&.frieza {
+					width: 100%;
+					height: $frieza-height;
+					top: #{ ($son-goku-height * 2) + $son-gohan-height + $trunks-height + $vegeta-height + ($support-team-height * 2) + ($line-height * 3) };
+				}
+
+				&.son-goku-ssj-iii {
+					width: 400px;
+					height: $son-goku-ssj-iii-height;
+					left: 180px;
+					top: #{ ($son-goku-height * 2) + $son-gohan-height + $trunks-height + $vegeta-height + ($support-team-height * 2) + ($line-height * 3) + $frieza-height };
+				}
+
+				&.namekuzei {
+					width: 100%;
+					height: 400px;
+					left: 0;
+					top: #{ ($son-goku-height * 2) + $son-gohan-height + $trunks-height + $vegeta-height + ($support-team-height * 2) + ($line-height * 3) + $frieza-height + $son-goku-ssj-iii-height };
+				}
+			}
+		}
+	}
+
+	&.card-horizontal {
+		height: 240px;
+
+		.picture {			
+			height: 240px;
+			display: inline-block;
+			max-width: 30%;
+
+			> div {
+				.category {
+					top: 0;
+					left: 0;
+					bottom: auto;
+				}
+
+				.slide-control {
+					.left, .right {
+						i.fa {
+							line-height: 240px;
+						}
+					}
+				}
+			}
+		}
+
+		.info {
+			display: inline-block;
+			width: 70%;
+			max-width: 70%;
+			height: 100%;
+			position: absolute;
+
+			.title {
+				font-size: 1.4em;
+			}
+
+			.subtitle {
+				font-size: 1em;
+				margin-bottom: 10px;
+			}
+
+			.icons {
+				margin: 20px;
+				display: block;
+				font-size: 1.1em;
+				color: $main-color;
+
+				> span {
+					margin-right: 10px;					
+					padding: 5px 15px;
+					border: 1px solid $main-color;
+					background-color: rgba($main-color, .1);
+					// border-radius: 4px;
+				}
+			}
+
+			.description {
+				font-size: 1.05em;
+				min-height: 40px;
+			}
+
+			.price {
+				margin-top: 20px;
+				font-size: 1.5em;
+			}
+		}
+	}
+}

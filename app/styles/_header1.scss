@@ -1,0 +1,183 @@
+.header {
+	$height: 360px;
+	$title-height: 160px;
+
+	.background {
+		width: 100%;
+		height: $height;
+		padding-top: 20px;
+		background-image: url('../images/fundo_header.jpg');
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.title {
+		background-color: white;
+		width: 100%;
+		height: $title-height;
+
+		.logo {
+			width: 100%;
+			height: $title-height;
+			background-image: url('../images/logo.png');
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
+
+		.info {
+			margin-top: 50px;
+
+			a {
+				text-decoration: none;
+				color: $gray;
+
+				&:hover {
+					color: $gray-dark;
+				}
+
+				i {
+					font-size: 50px;
+					vertical-align: text-top;
+					margin-right: 5px;
+					float: left;
+				}
+
+				strong {
+					font-size: 1.5em;
+					float: left;
+				}
+
+				span {
+					font-size: 1em;
+					float: left;
+				}
+			}
+		}
+
+		.contato {
+			margin-top: 70px;
+			font-size: 1.5em;
+			text-align: right;
+			padding-right: 20px;
+			color: $gray;
+
+			i {
+				color: green;
+				vertical-align: bottom;
+				font-size: 1.2em;
+				margin-right: 3px;
+			}
+		}
+	}
+
+	.nav-tabs {
+		padding-bottom: 1px;
+		border-bottom: none;
+
+		>li {
+			text-align: center;
+
+			> a {
+				@extend .up-shadow;
+
+				padding: 15px 30px;
+				font-size: 1.2em;
+				background-color: white;
+				color: $main-color;
+				border: none;
+
+				&:hover, &:focus {
+					background-color: $main-color-dark;
+					border: none;
+				}
+			}
+		}
+
+		>li.active {
+			> a {
+				background-color: white;
+				color: $gray;
+				border: none;
+
+				&:hover, &:focus {
+					background-color: white;
+					color: $gray-dark;
+					border: none;
+				}
+			}
+		}
+	}
+
+	.search {
+		margin-top: 20px;
+
+		input.input-lg {
+			font-size: 15px;
+		}
+
+		.bootstrap-select {
+			height: 46px;
+
+			> button {
+				height: 46px;
+				border-radius: 6px;
+				
+				.filter-option {
+					font-size: 15px;
+				}
+			}
+		}
+	}
+
+	nav.navbar {
+		margin-bottom: 0;
+		height: 80px;
+		background-color: white;
+		border-radius: 0;
+		position: relative;
+		z-index: 2;     
+
+		@include box-shadow(0, 0, 10px, rgba(#000, .3));        
+
+		a.navbar-brand {
+			padding: 0;
+
+			div {
+				height: 80px;
+				width: 200px;
+				background-image: url('../images/logo.png');
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: contain;
+			}
+		}
+
+		.navbar-collapse {
+			.nav-pills {
+				font-size: 18px;
+				margin-top: 15px;
+				float: right;
+
+				a {
+					-webkit-transition: background-color .5s ease;
+					-moz-transition:    background-color .5s ease;
+					-ms-transition:     background-color .5s ease;
+					-o-transition:      background-color .5s ease;
+					transition:         background-color .5s ease;
+				}
+			}
+		}
+
+		.navbar-center {
+			text-align: center;
+
+			.nav-pills {
+				display: inline-block;
+				float: none;
+				vertical-align: top;
+			}
+		}
+	}    
+}

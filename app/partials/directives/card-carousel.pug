@@ -1,0 +1,42 @@
+.row.remove-margin.container-carousel
+	.container.section-header
+		div
+			h2.name {{cardCarouselName}}
+			.btn-group.control.hidden-xs(role='group')
+				button.btn.btn-primary(data-target='#{{cardCarouselId}}' role='button' data-slide='prev')
+					i.fa.fa-chevron-left
+				button.btn.btn-primary(data-target='#{{cardCarouselId}}' role='button' data-slide='next')
+					i.fa.fa-chevron-right
+
+	.col-xs-12.background-gray
+		.container
+			.row
+				.col-xs-12
+					.card-carousel.carousel.slide.row(id='{{cardCarouselId}}' data-ride='carousel' ng-swipe-left='next()' ng-swipe-right='prev()')
+						.carousel-inner(role='listbox' style='height: auto')
+							.item(ng-class='{"active": $index == 0}' ng-repeat='block in blocks track by $index')
+
+								.col-xs-12.col-sm-6.col-md-4(ng-repeat='card in block')
+									card(
+										code='{{card.code}}'
+										picture='{{card.picture}}'
+										title='{{card.title}}'
+										subtitle='{{card.subtitle}}'
+										description='{{card.description}}'
+										category='{{card.category}}'
+										area='{{card.area}}'
+										price='{{card.price}}'
+										url='{{card.url}}'
+										bed='{{card.bed}}'
+										suite='{{card.suite}}'
+										bath='{{card.bath}}'
+										parking='{{card.parking}}'
+										label-text='{{card.labelText}}'
+										label-color='{{card.labelColor}}'
+										dummy='card.dummy',
+										origin='{{cardCarouselName}}')
+						//- Controls
+						a.left.carousel-control.visible-xs(data-target="#{{cardCarouselId}}" role="button" data-slide='prev')
+							span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+						a.right.carousel-control.visible-xs(data-target="#{{cardCarouselId}}" role="button" data-slide='next')
+							span.glyphicon.glyphicon-chevron-right(aria-hidden='true')

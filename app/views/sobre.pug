@@ -1,0 +1,25 @@
+.page-header(style='background-image: url("../images/Gaia/fundo-sobre.jpg")')
+	.dark-layer
+		.container
+			.row
+				.col-xs-12
+					h1.text-xlg Sobre a Empresa
+			.row.hidden-xs.offset-top-30
+				.col-sm-6
+					p.text-sm
+						a(href='/home') Home
+						b &nbsp;/&nbsp;Sobre
+
+.container
+	.row.offset-top-60.offset-bottom-60
+		.col-xs-12
+			h1.text-lg.offset-bottom-60 Sobre
+
+			div
+				p.text-sm.text-gray.offset-bottom-15.text-line-spacing
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ex nunc, ultricies ac tincidunt a, fringilla id risus. Morbi posuere vehicula lacus, luctus auctor augue accumsan et. Etiam nisl diam, cursus nec lacinia et, facilisis at quam. Aliquam fermentum facilisis nisl eget hendrerit. Vestibulum imperdiet bibendum felis vitae consequat. Duis tincidunt pulvinar quam ultricies aliquam. Aliquam at ante quis neque interdum fringilla.
+
+				p.text-sm.text-gray.offset-bottom-15.text-line-spacing
+					| Vestibulum metus lectus, dignissim tincidunt iaculis in, imperdiet eget neque. Quisque vitae fermentum tellus, vel tincidunt eros. Nam et fermentum dui. Mauris quis blandit lorem. Vivamus pretium nulla eget dui viverra lobortis. Morbi imperdiet enim vel dolor consequat dictum. Donec tincidunt eleifend imperdiet. Nam a ipsum gravida, semper arcu quis, finibus nibh. Praesent tincidunt lectus ac egestas ullamcorper. Proin efficitur at erat at fermentum. Fusce cursus tristique dolor, at laoreet felis pretium egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus quis mollis libero, vitae commodo neque.
+
+card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='sobre.array' ng-if='sobre.array.length')

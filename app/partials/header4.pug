@@ -1,0 +1,126 @@
+#header.header4(ng-controller='HeaderCtrl as header' ng-init='getFeaturedList()')
+	.container-narrow
+		.contact-stripe
+			.container
+				.contato
+					span
+						i.fa.fa-whatsapp
+						span  (21) 99999-8888
+					span
+						i.fa.fa-envelope-o
+						span  railander_007@hotmail.com
+					span
+						| CRECI: 053712F
+
+		.menu
+			.container
+				.row
+					.col-sm-3
+						a(href='/')
+							.logo
+					.col-sm-9
+						ul.nav.nav-pills
+							li(role='presentation' name='home')
+								a(href='/') Home
+							
+							li(role='presentation' name='sobre')
+								a(href='/sobre') Sobre
+
+							li(role='presentation' name='imoveis')
+								a(href='/imoveis') Imóveis
+
+							li(role='presentation' name='equipe')
+								a(href='/equipe') Equipe
+
+							li(role='presentation' name='contato')
+								a(href='/contato') Contato
+
+		.row.remove-margin.container-carousel(ng-show='currentPath === "/"')
+			.col-xs-12(style='padding: 0')
+				#carousel-showcase.carousel.slide(data-ride='carousel')
+					//- Wrapper for slides
+					.carousel-inner.clearfix(role='listbox')
+						.item(ng-repeat='item in featuredList track by $index' ng-class='{"active": $index == 0}')
+							.picture(ng-style='{"background-image": "url(" + item.pictureLg + ")"}')
+								.info
+									.subtitle
+										i.glyphicon.glyphicon-map-marker
+										|  {{item.subtitle}}
+									.title
+										| {{item.title}}
+									.description(ng-cloak) 
+										| {{item.description | truncate: 140}}
+									.price
+										| Valor:
+										strong(ng-cloak)  {{item.price | currency : 'R$ ' : 0}}
+									.more
+										a.btn.btn-primary.btn-lg(ng-href='/imovel?codigo={{item.code}}&nome={{item.parsedName}}')
+											| Ver mais  
+											i.fa.fa-chevron-right
+					//- Controls
+					span.control.left(data-target='#carousel-showcase' role='button' data-slide='prev')
+						button.btn.btn-primary
+							i.fa.fa-angle-left
+					span.control.right(data-target='#carousel-showcase' role='button' data-slide='next')
+						button.btn.btn-primary
+							i.fa.fa-angle-right
+
+	.container-fluid(ng-show='currentPath === "/"' ng-init='startBootstrapSelect()' ng-controller='SearchBarCtrl as searchBar')
+		.search.container.offset-top-30.offset-bottom-15
+			.row
+				.col-md-3
+					select.selectpicker.form-control(title='Tipo' data-container='body')
+						option Todos
+						option Tipo1
+						option Tipo2
+				.col-md-3
+					select.selectpicker.form-control(title='Cidade' data-container='body')
+						option Todas
+						option Cidade1
+						option Cidade2
+				.col-md-3
+					select.selectpicker.form-control(title='Bairro' data-container='body')
+						option Todos
+						option Bairro1
+						option Bairro2
+				.col-md-3
+					button.btn.btn-primary.btn-block.btn-lg
+						i.glyphicon.glyphicon-search
+						|  Pesquisar
+				.col-xs-12
+					#advanced-search.row.collapse
+						.col-md-3
+							input.form-control.input-lg(placeholder='Código')
+						.col-md-3
+							select.selectpicker.form-control(title='Categoria' data-container='body')
+								option Tudo
+								option Compra
+								option Aluguel
+						.col-md-3
+							rzslider(rz-slider-model='searchBar.sliderPrice.minValue' rz-slider-high='searchBar.sliderPrice.maxValue' rz-slider-options='searchBar.sliderPrice.options')
+						.col-md-3
+							rzslider(rz-slider-model='searchBar.sliderArea.minValue' rz-slider-high='searchBar.sliderArea.maxValue' rz-slider-options='searchBar.sliderArea.options')
+						.col-md-3
+							select.selectpicker.form-control(title='Dormitórios' data-container='body')
+								option Tudo
+								option 1
+								option 2
+								option 3
+								option 4+
+						.col-md-3
+							select.selectpicker.form-control(title='Banheiros' data-container='body')
+								option Tudo
+								option 1
+								option 2
+								option 3
+								option 4+
+						.col-md-3
+							select.selectpicker.form-control(title='Suítes' data-container='body')
+								option Sim
+								option Não
+						.col-md-3
+							select.selectpicker.form-control(title='Garagem' data-container='body')
+								option Sim
+								option Não
+				.col-xs-12.remove-padding
+					a.collapsed.center-block.text-center(href='' data-toggle='collapse' data-target='#advanced-search')

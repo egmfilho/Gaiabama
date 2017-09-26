@@ -1,0 +1,13 @@
+div(ng-include="'partials/imovel2.html'")
+
+.modal.fade(tabindex='-1' role='dialog')
+	.modal-dialog.modal-sm(role='document')
+		.modal-content
+			.modal-header
+				button.close(data-dismiss='modal' aria-label='Fechar')
+					span(aria-hidden='true') &times;
+				h4.modal-title {{imovel.modal.title}}
+			.modal-body
+				p {{imovel.modal.message}}
+			.modal-footer
+				button.btn.btn-primary(data-dismiss='modal') Fechar

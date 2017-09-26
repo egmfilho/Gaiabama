@@ -1,0 +1,64 @@
+#header.header3
+	.container-narrow
+		.contact-stripe.hidden-xs(ng-if='!!whatsapp || !!tel || !!email')
+			.container
+				.contato
+					span(ng-if='!!whatsapp')
+						i.fa.fa-whatsapp
+						span &nbsp;{{whatsapp}}
+					span(ng-if='!!tel')
+						i.fa.fa-phone
+						span &nbsp;{{tel}}
+					span(ng-if='!!email')
+						i.fa.fa-envelope-o
+						span &nbsp;{{email}}
+
+		.menu
+			.container
+				.row
+					.col-sm-3
+						a(href='/')
+							.logo
+					.col-sm-9
+						ul.nav.nav-pills
+							li(role='presentation' name='{{btn.nome}}' ng-repeat='btn in navButtons track by $index')
+								a(ng-href='{{btn.url}}' target='{{btn.target}}') {{btn.nome}}
+
+		.dirty-joe
+			.blurry(style='background-image: url("{{header.currentPic}}")')
+			.dark-cover
+			.container(style='overflow-x: hidden')
+				.row.container-carousel(ng-show='header.getCurrentPath() == "/"')
+					.col-xs-12
+						#carousel-showcase.drop-shadow.carousel.slide(data-ride='carousel' ng-if='header.featuredList.length')
+							//- Wrapper for slides
+							.carousel-inner.clearfix(role='listbox')
+								.item(ng-repeat='item in header.featuredList track by $index' ng-class='{ "active": $index == 0 }')
+									.picture(style='background-image: url(\' {{item.pictureLg}} \')')
+									.info
+										.subtitle
+											i.glyphicon.glyphicon-map-marker
+											| &nbsp;{{item.subtitle}}
+										.title
+											| {{item.title | truncate: 30}}
+										.description 
+											| {{item.description | truncate: 200}}
+										.price
+											| Valor:
+											strong  {{item.price | currency : 'R$ ' : 0}}
+										.more
+											a.btn.btn-default.btn-lg.btn-outline(ng-href='{{item.url}}')
+												| Ver mais&nbsp;
+												i.fa.fa-chevron-right
+
+							//- Controls
+							span.control.left(data-target='#carousel-showcase' role='button' data-slide='prev')
+								button.btn.btn-default
+									i.fa.fa-angle-left
+							span.control.right(data-target='#carousel-showcase' role='button' data-slide='next')
+								button.btn.btn-default
+									i.fa.fa-angle-right
+
+		.drop-shadow
+			.container(ng-show='header.getCurrentPath() == "/"')
+				searchbar-complete-simplified

@@ -1,0 +1,25 @@
+.page-header(style='background-image: url("../images/Gaia/fundo-equipe.jpg")')
+	.dark-layer
+		.container
+			.row
+				.col-xs-12
+					h1.text-xlg Nossa Equipe
+			.row.hidden-xs.offset-top-30
+				.col-sm-6
+					p.text-sm
+						a(href='/home') Home
+						b &nbsp;/&nbsp;Equipe
+
+.container.offset-top-60.offset-bottom-60
+	.row
+		.col-xs-12
+			h1.text-lg.text-center.offset-bottom-60 Corretores
+
+			.row
+				each val in [1, 2, 3]
+					.col-xs-12.col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-0.offset-bottom-30(style='padding: 30px')
+						img.img-responsive.img-circle(src='http://sguru.org/wp-content/uploads/2017/06/cool-profile-pictures-63a5e8ee8cdcfab2f952bcd46a73e5c4.jpg' style='width: 100%')
+						h3.text-primary.text-center Corretor
+						p.text-sm.text-light.text-center sac@pnimobiliaria.com.br
+
+card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='equipe.array' ng-if='equipe.array.length')

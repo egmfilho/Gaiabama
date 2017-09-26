@@ -1,0 +1,246 @@
+.header3 {
+	@extend .simple-shadow;
+	background-color: $main-color-darker;
+
+	.contact-stripe {
+		width: 100%;
+		height: 30px;
+		color: white;
+		background-color: $main-color-dark;
+
+		.contato {
+			margin-top: 6px;
+			float: right;
+			font-size: 1em;
+			text-align: right;
+			color: white;
+
+			> span {
+				margin-left: 20px;
+
+				i {
+					color: white;
+					vertical-align: middle;
+					font-size: 1.2em;
+					margin-right: 3px;
+				}
+			}
+		}
+	}
+
+	.menu {
+		$menu-height: 100px;
+
+		width: 100%;
+		height: $menu-height;
+		background-color: $main-color-darker;
+		color: $gray-light;
+		-webkit-box-shadow: 0 3px 5px rgba(#000, .2px);
+		-moz-box-shadow:    0 3px 5px rgba(#000, .2px);
+		box-shadow:         0 3px 5px rgba(#000, .2px);
+		position: relative;
+		z-index: 2;
+
+		.logo {
+			width: 100%;
+			height: $menu-height;
+			border: 10px solid transparent;
+			box-sizing: border-box;
+			background-image: url('../images/Gaia/logo.png');
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
+
+		.nav-pills {
+			font-size: 1.2em;
+			margin-top: 28px;
+			float: right;
+
+			a {
+				color: $secondary-color;
+
+				-webkit-transition: background-color .5s ease;
+				-moz-transition:    background-color .5s ease;
+				-ms-transition:     background-color .5s ease;
+				-o-transition:      background-color .5s ease;
+				transition:         background-color .5s ease;
+			}
+
+			.active a {
+				background-color: $secondary-color;
+				color: $main-color-darker;
+			}
+
+			li:hover {
+				a {
+					background-color: $main-color-dark;
+				}
+
+				&.active a {
+					color: $secondary-color;
+				}
+			}
+		}
+	}
+
+	.container-carousel {
+		margin-top: 0;
+	}
+
+	.dirty-joe {
+		position: relative;
+		background-color: #666;
+		overflow: hidden;
+
+		.blurry {
+			width: 100%;
+			height: 100%;
+			background-size: cover; 
+			background-position: center; 
+			transition: background-image .5s;
+			position: absolute;
+			left: 0;
+			top: 0;
+			opacity: .99;
+
+			@include blur(30px);
+		}
+
+		.dark-cover {
+			width: 100%;
+			height: 100%;
+			background-color: rgba($main-color-dark, .2);
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
+
+	#carousel-showcase {
+		$height: 450px;
+		height: $height;
+		overflow-x: hidden;
+
+		.carousel-inner {
+			.item {
+				.info {
+					width: 35%;
+					height: $height;
+					padding: 40px;
+					background-color: $main-color-dark;
+					color: white;
+					float: right;
+					-webkit-box-shadow: -3px 0 5px rgba(#000, .2px);
+					-moz-box-shadow:    -3px 0 5px rgba(#000, .2px);
+					box-shadow:         -3px 0 5px rgba(#000, .2px);
+					position: relative;
+					z-index: 1;
+
+					.subtitle {
+						font-size: 1.1em;
+						margin-bottom: 5px;
+						letter-spacing: 1px;
+						color: $secondary-color;
+						opacity: .7;
+					}
+
+					.title {
+						width: 100%;
+						font-size: 2em;
+						padding-bottom: 10px;
+						border-bottom: 1px solid rgba(#fff, .2);
+						margin-bottom: 20px;
+					}
+
+					.description {
+						opacity: .7;
+						letter-spacing: .5px;
+					}
+
+					.price {
+						margin: 30px 0;
+						font-size: 1.4em;
+						color: $secondary-color;
+
+						strong {
+							font-size: 1.3em;
+							letter-spacing: 1px;
+						}
+					}
+
+					.more {
+						.btn {
+							min-width: 200px;
+
+							i.fa {
+								vertical-align: middle;
+							}
+						}
+					}
+				}
+
+				.picture {
+					background-size: cover;
+					background-position: center;
+					width: 65%;
+					height: $height;
+					float: left;
+				}
+			}
+		}
+
+		&:hover {
+			.control {
+				&.left {
+					left: 40px;
+				}
+
+				&.right {
+					right: 40px;
+				}
+			}
+		}
+
+		.control {
+			position: absolute;
+			top: 50%;
+
+			&.left, &.right {
+				-webkit-box-shadow:  0 2px 4px rgba(#000, .2);
+				-moz-box-shadow:     0 2px 4px rgba(#000, .2);
+				box-shadow:          0 2px 4px rgba(#000, .2);
+
+				-webkit-transition: left .25s, right .25s;
+				-moz-transition:    left .25s, right .25s;
+				-ms-transition:     left .25s, right .25s;
+				-o-transition:      left .25s, right .25s;
+				transition:         left .25s, right .25s;
+
+				.btn {
+					color: gray;
+					font-size: 30px;
+					width: 50px;
+					height: 50px;
+					padding: 0;
+
+					&:hover {
+						color: $main-color;
+					}
+
+					&:hover, &:focus, &:active {
+						background-color: white;
+					}
+				}
+			}
+
+			&.left {
+				left: -70px;
+			}
+
+			&.right {
+				right: -70px;
+			}
+		}
+	}
+}

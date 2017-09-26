@@ -1,0 +1,35 @@
+.row.remove-margin(name='card-list')
+	.contain-horizontally
+		.col-xs-12.section-header
+			div
+				h2.name(ng-if='cardListName') {{cardListName}}
+				.hidden-xs.btn-group.control.pull-right(role='group' ng-if='!cardListHideControls')
+					button.btn.btn-primary(ng-click='setCardListHorizontal(false)' ng-class='{"active": !listHorizontal}')
+						i.fa.fa-th
+					button.btn.btn-primary(ng-click='setCardListHorizontal(true)' ng-class='{"active": listHorizontal}')
+						i.fa.fa-bars
+
+	.contain-horizontally
+		.col-xs-12(ng-repeat='card in cardListArray' ng-class='{"col-sm-6 col-md-4": !listHorizontal}' style='transition: width .25s ease')
+
+			card(
+				is-horizontal='listHorizontal'
+				code='{{card.code}}'
+				picture='{{card.picture}}'
+				title='{{card.title}}'
+				subtitle='{{card.subtitle}}'
+				description='{{card.description}}'
+				category='{{card.category}}'
+				area='{{card.area}}'
+				price='{{card.price}}'
+				url='{{card.url}}'
+				bed='{{card.bed}}'
+				suite='{{card.suite}}'
+				bath='{{card.bath}}'
+				parking='{{card.parking}}'
+				label-text='{{card.labelText}}'
+				label-color='{{card.labelColor}}'
+				thumbs='card.thumbs'
+				dummy='card.dummy'
+				hide-description='!listHorizontal',
+				origin='{{cardListName}}')

@@ -1,0 +1,74 @@
+.page-header(style='background-image: url("../images/Gaia/fundo-fale-conosco.jpg")')
+	.dark-layer
+		.container
+			.row
+				.col-xs-12
+					h1.text-xlg Fale Conosco
+			.row.hidden-xs.offset-top-30
+				.col-sm-6
+					p.text-sm
+						a(href='/home') Home
+						b &nbsp;/&nbsp;Contato
+
+.container
+	.row.offset-bottom-60
+		.col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+			form.row(name='contact' method='POST')
+				.col-xs-12
+					h1.text-center.offset-top-60 Contato
+					p.text-light.text-sm.text-center.offset-bottom-60
+						| A nossa equipe está sempre a sua disposição, para esclarecer qualquer dúvida. 
+						| Para falar com nossa equipe, preencha o formulário abaixo corretamente e envie para nós. Em breve entraremos em contato
+
+				.col-xs-12.offset-top-60.offset-bottom-60(ng-if='contato.enviando')
+					.text-primary.text-center
+						i.fa.fa-envelope-o.fa-4x &nbsp;
+						i.fa.fa-spin.fa-refresh.fa-4x
+						h2.offset-top-60.fa-3x Enviando...
+						h3.offset-top-30 Estamos enviando sua mensagem.
+
+				.col-xs-12(ng-if='!contato.enviando')
+					.row
+						.col-xs-12
+							h4 Nome
+							input.form-control(type='text' name='nome' required)
+						.col-xs-12.col-sm-6
+							h4 Email
+							input.form-control(type='email' name='email' required)
+						.col-xs-12.col-sm-6
+							h4 Telefone
+							input.form-control(type='text' name='telefone')
+						.col-xs-12
+							h4 Mensagem
+							textarea.form-control(type='text' name='mensagem' rows='8' required)
+				
+				.col-xs-12.col-sm-push-8.col-sm-4(ng-if='!contato.enviando')
+					button.btn.btn-primary.btn-lg.btn-block.offset-top-30(type='submit')
+						i.fa.fa-send
+						|  Enviar
+
+	.row
+		.col-xs-12
+			h1.text-center.offset-top-60 Estamos aqui
+
+ng-map.offset-top-30.offset-bottom-30(default-style="true" center='-23.439621,-43.979797' zoom='15' scrollwheel='false')
+	marker(id='#marker' position='-23.439621,-43.979797' on-click='contato.map.showInfoWindow("#info-window")')
+	info-window(id='#info-window' visible-on-marker='#marker')
+		div(ng-non-bindable='')
+			h4 {{contato.mapInfo.title}} 
+			p {{contato.mapInfo.address}}
+			p {{contato.mapInfo.contact}}
+
+card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='contato.array' ng-if='contato.array.length')
+
+.modal.fade(tabindex='-1' role='dialog')
+	.modal-dialog.modal-sm(role='document')
+		.modal-content
+			.modal-header
+				button.close(data-dismiss='modal' aria-label='Fechar')
+					span(aria-hidden='true') &times;
+				h4.modal-title {{contato.modal.title}}
+			.modal-body
+				p {{contato.modal.message}}
+			.modal-footer
+				button.btn.btn-primary(data-dismiss='modal') Fechar

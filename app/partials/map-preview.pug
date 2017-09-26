@@ -1,0 +1,33 @@
+div(ng-non-bindable)
+	.preview
+		
+		.thumb
+		
+		.description
+			.title Título do imóvel
+		
+			.text.text-gray
+				| {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum condimentum lorem id faucibus. Maecenas rutrum sit amet neque nec sagittis. Proin tincidunt massa nec mi tristique, vel volutpat nibh laoreet.' | truncate: 150 }}
+
+				.icons
+					span(name='icon' data-toggle='tooltip' data-placement='top' title='{{mapSearch.selected.area}} m2' ng-if='mapSearch.selected.area && mapSearch.selected.area > 0')
+						| {{mapSearch.selected.area}}&nbsp;
+						b m&#178;
+
+					span(name='icon' data-toggle='tooltip' data-placement='top' title='{{mapSearch.selected.bed}} dormitórios' ng-if='mapSearch.selected.bed && mapSearch.selected.bed > 0')
+						| {{mapSearch.selected.bed}}&nbsp;
+						i.fa.fa-bed
+
+					span(name='icon' data-toggle='tooltip' data-placement='top' title='{{mapSearch.selected.suite}} suítes' ng-if='mapSearch.selected.suite && mapSearch.selected.suite > 0')
+						| {{mapSearch.selected.suite}}&nbsp;
+						i.fa.fa-bathtub
+
+					span(name='icon' data-toggle='tooltip' data-placement='top' title='{{mapSearch.selected.bath}} banheiros' ng-if='mapSearch.selected.bath && mapSearch.selected.bath > 0')
+						| {{mapSearch.selected.bath}}&nbsp;
+						i.fa.fa-shower
+
+					span(name='icon' data-toggle='tooltip' data-placement='top' title='{{mapSearch.selected.parking}} vagas' ng-if='mapSearch.selected.parking && mapSearch.selected.parking > 0')
+						| {{mapSearch.selected.parking}}&nbsp;
+						i.fa.fa-car
+
+			button.btn.btn-block.btn-primary Detalhes

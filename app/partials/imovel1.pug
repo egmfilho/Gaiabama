@@ -1,0 +1,118 @@
+.page-header(style='background-image: url("../images/PN/house_residential_design_beautifully_13642_1920x1080.jpg")')
+	.dark-layer
+		.container
+			.row
+				.col-xs-12
+					h1.text-xlg Informações do Imóvel
+
+button.btn.btn-primary(ng-click='openLightbox()') TESTE
+
+.container.imovel.offset-top-60.offset-bottom-60
+	.row
+		.col-xs-12
+			a(href='/imoveis') 
+				i.fa.fa-angle-left
+				|  Voltar
+
+	.row
+		.col-xs-12
+			h1.title {{immobile.immobile_name}} em {{immobile.address.district.district_name}} {{immobile.address.district.city.city_name}}
+	.row.pane.perfil-imovel(ng-if='imovel.ready')
+		.col-xs-12.col-sm-8
+			slick.slider-for(infinite='true' slides-to-show='1' slides-to-scroll='1' arrows='true' as-nav-for='.slider-nav' current-index='imovel.currentSlide')
+				div.picture(ng-repeat='pic in immobile.gallery_image')
+					div
+						img.img-responsive(ng-src='{{pic.url}}' disable-rclick)
+						.text(ng-if='pic.gallery_image_title || pic.gallery_image_text')
+							h4.text-center {{pic.gallery_image_title}}
+							p.text-sm.text-center {{pic.gallery_image_text}}
+
+			div(ng-if='imovel.ready')
+				slick.hidden-xs.slider-nav(infinite='true' slides-to-show='5' slides-to-scroll='1' as-nav-for='.slider-for' center-mode='true' focus-on-select='false' responsive='imovel.responsive1' arrows='false')
+					.picture(style='height:70px; background-image: url({{pic.thumb}})' ng-repeat='pic in immobile.gallery_image')
+
+		.col-xs-12.col-sm-4.interesse
+			h3 Tenho Interesse
+			input.form-control.offset-top-15(type='text' placeholder='Nome')
+			input.form-control.offset-top-15(type='text' placeholder='Telefone')
+			input.form-control.offset-top-15(type='email' placeholder='Email')
+			textarea.form-control.offset-top-15(rows='5')
+			button.btn.btn-primary.btn-lg.btn-block.offset-top-30(ng-click='teste()')
+				i.fa.fa-envelope-o
+				|  Enviar
+
+	.row.pane.pane-gray.offset-top-30
+		.col-xs-12.info
+			h3.text-primary Características
+			span Cód. {{immobile.immobile_code}}
+			span
+				i.regua-l 
+				|  {{immobile.immobile_area_total}}m
+				sup 2
+			span
+				i.fa.fa-bed 
+				|  {{immobile.immobile_bedroom}} dorms
+			span
+				i.fa.fa-bathtub 
+				|  {{immobile.immobile_suite}} suítes
+			span
+				i.fa.fa-shower 
+				|  {{immobile.immobile_bathroom}} banheiros
+			span
+				i.fa.fa-car
+				|  {{immobile.immobile_parking_spot}} vagas
+	br
+	br
+	.row.pane.pane-gray.offset-top-30
+		.col-xs-12.description
+			h3.text-primary Descrição do Imóvel
+			p {{immobile.immobile_description}}
+		.col-xs-12.col-sm-4.price
+			h3.text-primary Valor
+			p.text-md {{immobile.immobile_value | currency:'R$ ':2}}
+		.col-xs-12.col-sm-4.price(ng-if='immobile.immobile_value_condominium')
+			h3.text-primary Condomínio
+			p.text-md {{immobile.immobile_value_condominium | currency:'R$ ':2}}
+		.col-xs-12.col-sm-4.price
+			h3.text-primary IPTU
+			p.text-md {{immobile.immobile_value_iptu | currency:'R$ ':2}}
+
+	.row.offset-top-60.offset-bottom-60(ng-if='immobile.feature_immobile.length')
+		h2.text-primary.feature-category.offset-bottom-30 Imóvel
+		.col-xs-12.col-sm-6.col-md-4(ng-repeat-start='feature in immobile.feature_immobile track by $index')
+			table.table.table-striped.table-immobile
+				thead
+					tr
+						th {{feature.feature_type}}
+				tbody
+					tr(ng-repeat='data in feature.data')
+						td {{data.feature_name}}
+		.clearfix.visible-lg-block(ng-if='($index + 1) % 3 == 0')
+		.clearfix.visible-md-block(ng-if='($index + 1) % 3 == 0')
+		.clearfix.visible-sm-block(ng-if='($index + 1) % 2 == 0')
+		div(ng-repeat-end='')
+
+	.row.offset-top-60.offset-bottom-60
+		h2.text-primary.feature-category.offset-bottom-30(ng-if='immobile.feature_condominium.length') Condomínio
+		.col-xs-12.col-sm-6.col-md-4(ng-repeat-start='feature in immobile.feature_condominium track by $index')
+			table.table.table-striped.table-immobile
+				thead
+					tr
+						th {{feature.feature_type}}
+				tbody
+					tr(ng-repeat='data in feature.data')
+						td {{data.feature_name}}
+		.clearfix.visible-lg-block(ng-if='($index + 1) % 3 == 0')
+		.clearfix.visible-md-block(ng-if='($index + 1) % 3 == 0')
+		.clearfix.visible-sm-block(ng-if='($index + 1) % 2 == 0')
+		div(ng-repeat-end='')
+
+	.row
+		.col-xs-12(ng-if='imovel.ready')
+			ng-map.offset-top-30.offset-bottom-30(default-style="true" center="{{immobile.immobile_latitude + ',' + immobile.immobile_longitude}}" zoom='15' scrollwheel='false')
+				marker(id='#marker' position="{{immobile.immobile_latitude + ',' + immobile.immobile_longitude}}" on-click='contato.map.showInfoWindow("#info-window")')
+				info-window(id='#info-window' visible-on-marker='#marker')
+					div(ng-non-bindable='')
+						h4 {{immobile.immobile_name}}
+
+card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='root_imoveis')

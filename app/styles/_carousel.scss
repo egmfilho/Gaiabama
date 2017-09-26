@@ -1,0 +1,56 @@
+#carousel-news {
+	$height: 400px;
+
+	height: $height;
+
+	.carousel-inner {
+		.item {
+			.picture {
+				background-size: cover;
+				background-position: center;
+				width: 100%;
+				height: $height;
+			}
+
+			&:nth-child(1) .picture{
+				background-image: url('../images/slides/19104.jpg');
+			}
+
+			&:nth-child(2) .picture {
+				background-image: url('../images/slides/19424.jpg');
+			}
+
+			&:nth-child(3) .picture {
+				background-image: url('../images/slides/82395.jpg');
+			}
+		}
+	}
+}
+
+.card-carousel {
+	.carousel-inner {
+		height: 500px;
+	}
+
+	.left, .right {
+		background: none;
+
+		span.glyphicon {
+			background-color: $main-color;
+			padding: 7px;
+			border-radius: 50%;
+		}
+	}
+
+	.left {
+		span.glyphicon {
+			margin-left: -35px;
+		}
+	}
+
+	.right {
+		span.glyphicon {
+			margin-right: -35px;
+		}
+	}
+}

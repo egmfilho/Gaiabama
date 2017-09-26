@@ -1,0 +1,86 @@
+.header6-mobile.hidden-sm.hidden-md.hidden-lg
+	.close.pull-right(ng-click='header.hideHeader6Mobile()')
+		i.glyphicon.glyphicon-remove
+	ul
+		li(role='presentation' name='home')
+			a(href='/' ng-click='header.hideHeader6Mobile()') Home
+		
+		li(role='presentation' name='sobre')
+			a(href='/sobre' ng-click='header.hideHeader6Mobile()') Sobre
+
+		li(role='presentation' name='imoveis')
+			a(href='/imoveis' ng-click='header.hideHeader6Mobile()') Imóveis
+
+		li(role='presentation' name='equipe')
+			a(href='/equipe' ng-click='header.hideHeader6Mobile()') Equipe
+
+		li(role='presentation' name='contato')
+			a(href='/contato' ng-click='header.hideHeader6Mobile()') Contato
+
+	.contacts(ng-if='!!whatsapp || !!tel || !!email')
+		div(ng-if='!!whatsapp')
+			i.fa.fa-whatsapp &nbsp;
+			span {{whatsapp}}
+		div(ng-if='!!tel')
+			i.fa.fa-phone &nbsp;
+			span {{tel}}
+		div(ng-if='!!email')
+			i.fa.fa-envelope-o &nbsp;
+			span {{email}}
+
+
+#header.header6
+	.container-narrow(ng-if='!!whatsapp || !!tel || !!email')
+		.contact-stripe.hidden-xs
+			.container
+				.contato
+					span(ng-if='!!whatsapp')
+						i.fa.fa-whatsapp
+						span  {{whatsapp}}
+					span(ng-if='!!tel')
+						i.fa.fa-phone
+						span  {{tel}}
+					span(ng-if='!!email')
+						i.fa.fa-envelope-o
+						span {{email}}
+
+		.menu
+			.container
+				.row
+					.col-xs-12.col-sm-3
+						a(href='/' ng-click='header.hideHeader6Mobile()')
+							.logo
+						button.btn.btn-default.pull-right.visible-xs-block(ng-click='header.toggleHeader6Mobile()')
+							i.fa.fa-navicon
+
+					.hidden-xs.col-sm-9
+						ul.nav.nav-pills
+							li(role='presentation' name='{{btn.nome}}' ng-repeat='btn in navButtons track by $index')
+								a(ng-href='{{btn.url}}' target='{{btn.target}}') {{btn.nome}}
+
+		.row.remove-margin.container-carousel(ng-if='currentPath() == "/"')
+			.col-xs-12(style='padding: 0')
+				#carousel-showcase.carousel.slide(data-ride='carousel' data-pause='false')
+					.container
+						.row
+							.col-xs-12
+								.info
+									p.offset-top-30.offset-bottom-15 
+										b {{title}}
+										br 
+										| {{subtitle}}
+									p.offset-top-30
+										| {{message}}
+									a.btn.btn-default.btn-block.btn-lg(href='/imoveis') {{btnLabel}}
+
+					//- Wrapper for slides
+					.carousel-inner.clearfix(role='listbox')
+						.item.active
+							.cover
+							.picture
+						.item
+							.cover
+							.picture
+						.item
+							.cover
+							.picture

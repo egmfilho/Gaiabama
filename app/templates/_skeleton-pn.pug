@@ -1,0 +1,80 @@
+<?php if( $_SERVER["HTTP_HOST"] == "www.alabamaimoveis.com.br" ){ header("Location: http://www.alabamaimoveis.com.br/coming-soon/" ); die(); } ?>
+
+doctype html
+
+html
+	head
+		block title
+			title Grupo Paiva
+
+		meta(name='format-detection' content='telephone=no')
+		meta(name='viewport' content='width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(charset='utf-8')
+
+		link(rel='shortcut icon' href='./favicon.ico' type='image/x-icon')
+
+		// Stylesheets
+		link(rel='stylesheet' href='styles/vendor.min.css')
+		//- link(rel='stylesheet' href='styles/reguas.css')
+		link(rel='stylesheet' href='styles/main.css')
+
+	body(ng-app='alabama')
+
+		//- <?php include "../partials/header5.html" ?>
+
+		header6(
+			navigation=`[
+				{
+					"nome": "Home",
+					"url": "/"
+				},
+				{
+					"nome": "Sobre",
+					"url": "/sobre"
+				},
+				{
+					"nome": "Imóveis",
+					"url": "/imoveis"
+				},
+				{
+					"nome": "Seguros",
+					"url": "http://www.segurospaiva.com.br/",
+					"target": "_blank"
+				},
+				{
+					"nome": "Equipe",
+					"url": "/equipe"
+				},
+				{
+					"nome": "Contato",
+					"url": "/contato"
+				}
+			]`
+			whatsapp='(21) 97169-0349'
+			tel='(21) 2642-3468'
+			email='sac@pnimobiliaria.com.br'
+			title='Grupo Paiva' 
+			subtitle='Corretora e Imobiliária' 
+			message='Trabalhando e pensando na realização do seu sonho.' 
+			btn-label='Ver imóveis')
+
+		.scroll-top.hidden-xs(ng-class='{"visible": scrollY >= 100}' ng-click='scrollTop()')
+			i.fa.fa-chevron-up
+
+		//- #loading(ng-show='loading.isLoading()')
+			.logo
+				.spinner(style='transform: scale(2)')
+					.rect1
+					.rect2
+					.rect3
+					.rect4
+					.rect5
+
+		block page
+
+		div(ng-include='"../partials/footer.html"')
+
+		script(src='http://maps.google.com/maps/api/js?key=AIzaSyAweoS6Re-3ct3tPGEhRW94VsKY8nmZT9E')
+		script(src='scripts/vendors.min.js')
+		script(src='scripts/app.min.js')

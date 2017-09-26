@@ -1,0 +1,19 @@
+*, .bootstrap-select, .btn-group {
+	button.btn, a.btn {
+		border-radius: 0;
+	}
+}
+
+textarea, input {
+	&.form-control {
+		border-radius: 0;
+	}
+}
+
+.nav.nav-pills li a {
+	border-radius: 0;
+}
+
+.dropdown-menu {
+	border-radius: 0;
+}

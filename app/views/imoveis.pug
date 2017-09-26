@@ -1,0 +1,162 @@
+.page-header(style='background-image: url("../images/Gaia/fundo-imoveis.jpg")')
+	.dark-layer
+		.container
+			.row
+				.col-xs-12
+					h1.text-xlg Pesquisar Imóveis
+			.row.hidden-xs.offset-top-30
+				.col-sm-6
+					p.text-sm
+						a(href='/home') Home
+						b &nbsp;/&nbsp;Imóveis
+
+.paint-back-darker
+	.container
+		searchbar-complete
+
+.background-gray
+	//- .container(ng-if='imoveis.cardList.length')
+	.container
+		.row
+			.hidden-xs.col-sm-4.col-md-3.filters(style='position: relative')
+				.offset-top-90
+				.container-doido
+					.panel.panel-primary.simple-shadow(name='Ordenação')
+						.panel-heading
+							a(href='' data-toggle='collapse' data-target='.panel[name="Ordenação"] .collapse')
+								i.fa.fa-list-ol &nbsp;
+								| Ordenação
+								i.fa.fa-angle-down.pull-right
+						.collapse.in
+							.panel-body
+								div(ng-init='bairroAsc={column: 3, order: 1}')
+									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", bairroAsc)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == bairroAsc.column && imoveis.getFiltros().order.order == bairroAsc.order}')
+										i.fa.fa-sort-alpha-asc
+										|  Nome do bairro crescente
+
+								div(ng-init='bairroDesc={column: 3, order: 0}')
+									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", bairroDesc)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == bairroDesc.column  && imoveis.getFiltros().order.order == bairroDesc.order}')
+										i.fa.fa-sort-alpha-desc
+										|  Nome do bairro decrescente
+
+								div(ng-init='menorArea={column: 2, order: 1}')
+									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", menorArea)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == menorArea.column && imoveis.getFiltros().order.order == menorArea.order}')
+										i.fa.fa-sort-amount-asc
+										|  Menor área
+
+								div(ng-init='maiorArea={column: 2, order: 0}')
+									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", maiorArea)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == maiorArea.column  && imoveis.getFiltros().order.order == maiorArea.order}')
+										i.fa.fa-sort-amount-desc
+										|  Maior área
+
+								div(ng-init='menorValor={column: 1, order: 1}')
+									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", menorValor)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == menorValor.column && imoveis.getFiltros().order.order == menorValor.order}')
+										i.fa.fa-sort-numeric-asc
+										|  Menor valor
+
+								div(ng-init='maiorValor={column: 1, order: 0}')
+									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", maiorValor)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == maiorValor.column && imoveis.getFiltros().order.order == maiorValor.order}')
+										i.fa.fa-sort-numeric-desc
+										|  Maior valor
+
+								div(ng-init='maisRecentes={column: 0, order: 0}')
+									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", maisRecentes)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == maisRecentes.column && imoveis.getFiltros().order.order == maisRecentes.order}')
+										i.fa.fa-clock-o
+										|  Mais recentes
+
+					.panel.panel-primary.simple-shadow(name='Dormitorios')
+						.panel-heading
+							a(href='' data-toggle='collapse' data-target='.panel[name="Dormitorios"] .collapse')
+								i.fa.fa-bed &nbsp;
+								| Dormitórios
+								i.fa.fa-angle-down.pull-right
+						.collapse(ng-class='{ "in": !!imoveis.getFiltros().dormitorios }')
+							.panel-body
+								div(style='display: block' ng-repeat='d in imoveis.resumo.bedroom track by $index')
+									a(href='' ng-click='imoveis.setFiltro("bedroom", d.filter)' ng-class='{"text-bold text-uppercase": d.filter == imoveis.getFiltros().dormitorios}')
+										| {{d.filter == 4 ? 'Mais de' : ''}} {{d.filter == 0 ? 'Sem' : d.filter}} {{d.filter == 1 ? 'dormitório' : 'dormitórios'}} ({{d.count}})
+										span(ng-if='d.filter == imoveis.getFiltros().dormitorios')
+											| &nbsp;
+											i.fa.fa-remove
+
+					.panel.panel-primary.simple-shadow(name='Banheiros')
+						.panel-heading
+							a(href='' data-toggle='collapse' data-target='.panel[name="Banheiros"] .collapse')
+								i.fa.fa-shower &nbsp;
+								| Banheiros
+								i.fa.fa-angle-down.pull-right
+						.collapse(ng-class='{ "in": !!imoveis.getFiltros().banheiros }')
+							.panel-body
+								div(style='display: block' ng-repeat='b in imoveis.resumo.bathroom track by $index')
+									a(href='' ng-click='imoveis.setFiltro("bathroom", b.filter)' ng-class='{"text-bold text-uppercase": b.filter == imoveis.getFiltros().banheiros}')
+										| {{b.filter == 4 ? 'Mais de' : ''}} {{b.filter == 0 ? 'Sem' : b.filter}} {{b.filter == 1 ? 'banheiro' : 'banheiros'}} ({{b.count}})
+										span(ng-if='b.filter == imoveis.getFiltros().banheiros')
+											| &nbsp;
+											i.fa.fa-remove
+
+					.panel.panel-primary.simple-shadow(name='Suíte')
+						.panel-heading
+							a(href='' data-toggle='collapse' data-target='.panel[name="Suíte"] .collapse')
+								i.fa.fa-bathtub &nbsp;
+								| Suíte
+								i.fa.fa-angle-down.pull-right
+						.collapse(ng-class='{ "in": !!imoveis.getFiltros().suite }')
+							.panel-body
+								div(style='display: block' ng-repeat='s in imoveis.resumo.suite track by $index')
+									a(href='' ng-click='imoveis.setFiltro("suite", s.filter)' ng-class='{"text-bold text-uppercase": s.filter == imoveis.getFiltros().suite}')
+										| {{s.filter == 1 ? 'Sem suíte' : 'Com suíte'}} ({{s.count}})
+										span(ng-if='s.filter == imoveis.getFiltros().suite')
+											| &nbsp;
+											i.fa.fa-remove
+
+					.panel.panel-primary.simple-shadow(name='Garagem')
+						.panel-heading
+							a(href='' data-toggle='collapse' data-target='.panel[name="Garagem"] .collapse')
+								i.fa.fa-car &nbsp;
+								| Garagem
+								i.fa.fa-angle-down.pull-right
+						.collapse(ng-class='{ "in": !!imoveis.getFiltros().garagem }')
+							.panel-body
+								div(style='display: block' ng-repeat='g in imoveis.resumo.parking_spot track by $index')
+									a(href='' ng-click='imoveis.setFiltro("parking_spot", g.filter)' ng-class='{"text-bold text-uppercase": g.filter == imoveis.getFiltros().garagem}')
+										| {{g.filter == 1 ? 'Sem garagem' : 'Com garagem'}} ({{g.count}})
+										span(ng-if='g.filter == imoveis.getFiltros().garagem')
+											| &nbsp;
+											i.fa.fa-remove
+				
+			.col-xs-12.col-sm-8.col-md-9
+
+				div(ng-if='!imoveis.cardList.length && !imoveis.isLoading()')
+					.no-results
+						.text
+							i.fa.fa-home.icon-xlg.offset-top-120
+							h2 Nenhum resultado.
+							h3 Tente remover alguns filtros.
+
+				div(ng-if='!imoveis.cardList.length && imoveis.isLoading()')
+					.no-results
+						.text
+							i.fa.fa-spin.fa-refresh.fa-4x.offset-top-120
+							h2 Aguarde
+							h3 Carregando imóveis...
+			
+				card-list(cards='imoveis.cardList' name='{{imoveis.pagination.getLabelResultado()}}' is-grid='false' ng-if='imoveis.cardList.length')
+				
+				.col-xs-12
+					nav.pull-right.offset-top-30(ng-show='imoveis.pagination.totalItems > imoveis.pagination.itemsPerPage')
+						ul.pagination
+							li(title='primeira' ng-class='{"disabled": imoveis.pagination.index == 0}')
+								a(href='' ng-click='imoveis.pagination.goTo(0)') 
+									i.fa.fa-angle-double-left
+							li(title='anterior' ng-class='{"disabled": imoveis.pagination.index == 0}')
+								a(href='' ng-click='imoveis.pagination.goTo(imoveis.pagination.index - 1)') 
+									i.fa.fa-angle-left
+							li(ng-repeat='n in getNumber(imoveis.pagination.getPageAmount()) track by $index' ng-class='{"active": $index == imoveis.pagination.index, "display-none": imoveis.pagination.hidePage($index)}')
+								a(href='' ng-click='imoveis.pagination.goTo($index)')
+									span {{$index + 1}}
+							li(title='seguinte' ng-class='{"disabled": imoveis.pagination.index >= imoveis.pagination.getPageAmount() - 1}')
+								a(href='' ng-click='imoveis.pagination.goTo(imoveis.pagination.index + 1)')
+									i.fa.fa-angle-right
+							li(title='última' ng-class='{"disabled": imoveis.pagination.index >= imoveis.pagination.getPageAmount() - 1}')
+								a(href='' ng-click='imoveis.pagination.goTo(imoveis.pagination.getPageAmount() - 1)')
+									i.fa.fa-angle-double-right

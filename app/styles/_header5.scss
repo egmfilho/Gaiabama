@@ -1,0 +1,325 @@
+.header5-mobile {
+	margin-top: 90px;
+	background-color: rgba($main-color-darker, .95);
+	position: fixed;
+	width: 100%;
+	height: calc(100% - 90px);
+	z-index: 2000;
+	padding: 30px 15px;
+	display: none;
+
+	.close {
+		color: white;
+		margin-top: -15px;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin-top: 60px;
+
+		li {
+			text-align: center;
+			margin-top: 15px;
+
+			&:first-child {
+				margin-top: 0;
+			}
+
+			a {
+				color: white;
+				font-size: 24px;
+			}
+		}
+	}
+
+	.contacts {
+		color: white;
+		position: absolute;
+		bottom: 15px;
+		text-align: center;
+		width: 100%;
+		margin-left: -15px;
+
+		> div {
+			margin-top: 5px;
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+}
+
+.header5 {
+	background-color: white;
+
+	.contact-stripe {
+		width: 100%;
+		height: 30px;
+		color: white;
+		background-color: $main-color-dark;
+		padding: 5px 20px;
+
+		.contato {
+			font-size: 1em;
+			font-weight: 200;
+			letter-spacing: 1px;
+			text-align: left;			
+			color: white;
+			opacity: .9;
+
+			> span {
+				margin-left: 20px;
+
+				i {
+					color: white;
+					// vertical-align: bottom;
+					font-size: 1.2em;
+					margin-right: 3px;
+				}
+			}
+		}
+	}
+
+	.menu {
+		$menu-height: 90px;
+
+		width: 100%;
+		height: $menu-height;
+		background-color: white;
+		color: $gray-light;
+		@include box-shadow(0, 3px, 5px, rgba(#000, .2px));
+		position: relative;
+		z-index: 2000;
+		position: fixed;
+
+		@media (min-width: $screen-sm-min) {
+			z-index: 2;
+			position: initial;
+		}
+
+		.logo {
+			width: 100%;
+			height: $menu-height;
+			background-image: url('../images/PN/logo.png');
+			background-position-x: -10px;			
+			background-size: contain;
+			background-repeat: no-repeat;
+
+			@media (min-width: $screen-sm-min) {
+				background-position: center;
+			}
+		}
+
+		.btn {
+			position: absolute;
+			right: 15px;
+			bottom: 28px;
+		}
+
+		.nav-pills {
+			font-size: 1.2em;
+			margin-top: 25px;
+			float: right;
+
+			a {
+				-webkit-transition: background-color .5s ease;
+				-moz-transition:    background-color .5s ease;
+				-ms-transition:     background-color .5s ease;
+				-o-transition:      background-color .5s ease;
+				transition:         background-color .5s ease;
+			}
+		}
+	}
+
+	.container-carousel {
+		margin-top: 0;
+	}
+
+	#carousel-showcase {
+		$height-xs: 300px;
+		$height: 450px;
+		
+		height: $height-xs;
+		margin-top: 90px;
+
+		@media (min-width: $screen-sm-min) {
+			height: $height;
+			margin-top: 0;
+		}
+
+		max-height: $height;
+		overflow: hidden;
+
+		.info {
+			width: 100%;
+			height: 100%;
+			background-color: rgba($main-color-dark, .7);
+
+			@media (min-width: $screen-sm-min) {
+				width: 350px;
+				height: 350px;
+				background-color: rgba($main-color-dark, .9);
+			}
+			
+			color: white;
+			top: 0;
+			left: 0;
+
+			@media (min-width: $screen-sm-min) {
+				top: 50px;
+				left: 15%;
+			}
+			
+			position: absolute;
+			z-index: 3;
+			font-size: 1.7em;
+			text-align: center;
+			padding: 15px;
+
+			p {
+				font-size: .9em;
+
+				@media (min-width: $screen-sm-min) {
+					font-size: 1em;
+				}
+
+				b {
+					font-size: 1.3em;
+				}
+			}
+
+			.btn.btn-default {
+				color: $main-color-dark;
+				position: absolute;
+				width: calc(100% - 30px);
+				bottom: 15px;
+			}
+		}
+
+		.carousel-inner {
+			overflow: hidden;
+			
+			.item {
+				.cover {
+					width: 100%;
+					height: 100%;
+					position: absolute;					
+					background-color: rgba($main-color-dark, .3);
+				}
+
+				.picture {
+					background-size: cover;
+					background-position: center;
+					width: 100%;
+					height: $height-xs;
+
+					@media (min-width: $screen-sm-min) {
+						height: $height;
+					}
+				}
+
+				&:nth-child(1) {
+					.picture {
+						background-image: url('../images/PN/pool-958135_1920.jpg');
+					}
+				}
+
+				&:nth-child(2) {
+					.picture {
+						background-image: url('../images/PN/couch-1835923_1920.jpg');
+					}
+				}
+
+				&:nth-child(3) {
+					.picture {
+						background-image: url('../images/PN/bedroom-1872196_1920.jpg');
+					}
+				}
+			}
+		}
+	}
+
+	.container-fluid {
+		position: relative;
+		padding-left: 0;
+		padding-right: 0;
+		@include box-shadow(0, -1px, 10px, rgba(#000, .4px));
+
+		.search {
+			margin-top: 15px !important;
+
+			.row > div, .row > span > div {
+				margin-top: 15px;
+				min-height: 50px;
+
+				&:last-child {
+					min-height: auto;
+				}
+			}
+
+			#advanced-search {
+				display: block;
+				width: auto;
+				@include transition(height .1s);
+
+				&.collapse {
+					display: none;
+
+					&.in {
+						display: block;
+					}
+				}
+			}
+
+			a[data-toggle='collapse'] {
+				&:after {
+					content: 'Menos opções';
+				}
+
+				&.collapsed:after {
+					content: 'Mais opções';
+				}				
+			}
+
+			.bootstrap-select {
+				height: 46px;
+
+				> button {
+					height: 46px;
+					border-radius: 6px;
+
+					.filter-option {
+						font-size: 15px;
+					}
+				}
+			}
+
+			input.input-lg {
+				font-size: 15px;
+			}
+
+			.rzslider {
+				margin-top: 30px !important;
+
+				.rz-bar {
+					background-color: rgba($main-color-lighter, .5);
+
+					&.rz-selection {
+						background-color: $main-color-light;
+					}
+				}
+
+				.rz-pointer {
+					background-color: $main-color;
+					outline: none;
+
+					&.rz-active:after {
+						background-color: $main-color-dark;
+					}
+				}
+			}
+		}
+	}
+}

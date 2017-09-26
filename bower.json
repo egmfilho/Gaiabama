@@ -1,0 +1,54 @@
+{
+  "name": "alabama",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "@egmfilho"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "angular": "^1.6.2",
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.7",
+    "angular-route": "^1.6.2",
+    "angular-animate": "^1.6.2",
+    "angular-sanitize": "^1.6.2",
+    "angular-touch": "^1.6.2",
+    "font-awesome": "^4.7.0",
+    "bootstrap-select": "^1.12.2",
+    "angularjs-slider": "^6.0.1",
+    "angular-i18n": "^1.6.2",
+    "angular-bootstrap-lightbox": "^0.12.0",
+    "angular-slick": "^0.2.1",
+    "ngmap": "^1.18.4"
+  },
+  "overrides": {
+    "angular-i18n": {
+      "main": [
+        "angular-locale_pt-br.js"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
+      ]
+    },
+    "ngmap": {
+      "main": [
+        "build/scripts/ng-map.min.js",
+        "testapp/scripts/markerclusterer_packed.js"
+      ]
+    }
+  },
+  "devDependencies": {
+    "compass-sass-mixins": "*"
+  }
+}

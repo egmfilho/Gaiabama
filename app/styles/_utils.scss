@@ -1,0 +1,435 @@
+@mixin box-shadow($x, $y, $spread, $color) {
+	-webkit-box-shadow: $x $y $spread $color;
+	-moz-box-shadow:    $x $y $spread $color;
+	box-shadow:         $x $y $spread $color;
+}
+
+@mixin transition($properties...) {
+	-webkit-transition: $properties;
+	-moz-transition:    $properties;
+	-ms-transition:     $properties;
+	-o-transition:      $properties;
+	transition:         $properties;
+}
+
+@mixin tansform($properties) {
+	-webkit-transform: $properties;
+	-moz-transform:    $properties;
+	-ms-transform:     $properties;
+	-o-transform:      $properties;
+	transform:         $properties;
+}
+
+@mixin blur($radius) {
+	-webkit-filter: blur($radius);
+	-moz-filter: blur($radius);
+	-o-filter: blur($radius);
+	-ms-filter: blur($radius);
+	filter: blur($radius);
+}
+
+@mixin rotate($rotation) {
+	-webkit-transform: rotate($rotation);
+	-moz-transform:    rotate($rotation);
+	-ms-transform:     rotate($rotation);
+	-o-transform:      rotate($rotation);
+	transform:         rotate($rotation);
+}
+
+@mixin keyframe ($animation_name) {
+    @-webkit-keyframes #{$animation_name} {
+        @content;
+    }
+
+    @-moz-keyframes #{$animation_name} {
+        @content;
+    }
+
+    @-o-keyframes #{$animation_name} {
+        @content;
+    }
+
+    @keyframes #{$animation_name} {
+        @content;
+    }
+}
+
+@mixin animation ($delay, $duration, $timing, $animation) {
+    -webkit-animation-delay: $delay;
+    -webkit-animation-duration: $duration;
+	-webkit-animation-name: $animation;
+	-webkit-animation-timing-function: $timing;
+	-webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -moz-animation-delay: $delay;
+    -moz-animation-duration: $duration;
+	-moz-animation-name: $animation;
+	-moz-animation-timing-function: $timing;
+	-moz-animation-iteration-count: infinite;	
+    -moz-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -o-animation-delay: $delay;
+    -o-animation-duration: $duration;
+	-o-animation-name: $animation;
+	-o-animation-timing-function: $timing;
+	-o-animation-iteration-count: infinite;
+	-o-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    animation-delay: $delay;
+    animation-duration: $duration;
+	animation-name: $animation;
+	animation-timing-function: $timing;
+	animation-iteration-count: infinite;
+    animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+}
+
+.display-none {
+	display: none !important;
+}
+
+.offset-top-15 {
+	margin-top: 15px !important;
+}
+
+.offset-top-30 {
+	margin-top: 30px !important;
+}
+
+.offset-top-60 {
+	margin-top: 60px !important;
+}
+
+.offset-top-90 {
+	margin-top: 90px !important;
+}
+
+.offset-top-120 {
+	margin-top: 120px !important;
+}
+
+.offset-bottom-15 {
+	margin-bottom: 15px !important;
+}
+
+.offset-bottom-30 {
+	margin-bottom: 30px !important;
+}
+
+.offset-bottom-60 {
+	margin-bottom: 60px !important;
+}
+
+.offset-left-15 {
+	margin-left: 15px !important;
+}
+
+.offset-left-30 {
+	margin-left: 30px !important;
+}
+
+.drop-shadow {
+	@include box-shadow(0, 3px, 5px, rgba(#000, .2px));
+}
+
+.text-line-spacing {
+	line-height: 30px;
+}
+
+.text-primary {
+	color: $brand-primary;
+}
+
+.text-white {
+	color: white;
+}
+
+.text-gray {
+	color: $gray-light;
+}
+
+.text-gray-dark {
+	color: $gray-dark;
+}
+
+.text-light {	
+	font-weight: 300;	
+}
+
+.text-bold {
+	font-weight: bold;
+}
+
+.text-sm {
+	font-size: 1.2em;
+}
+
+.text-md {
+	font-size: 1.6em;
+}
+
+.text-lg {
+	font-size: 3em;
+}
+
+.text-xlg {
+	font-size: 4em;
+}
+
+.icon-xlg {
+	font-size: 8em;
+}
+
+.icon-lg {
+	font-size: 5em;
+}
+
+.icon-md {
+	font-size: 3em;
+}
+
+.icon-sm {
+	font-size: 1.2em;
+}
+
+.paint-back-darker {
+	background-color: $main-color-darker;
+}
+
+// Para alinhar verticalmente duas divs uma do lado da outra
+.vcenter {
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
+}
+
+.separator {
+	display: block;
+	width: 70px;
+	margin: 15px auto !important;
+	border-bottom: 3px solid $main-color;
+
+	&.separator-white {
+		border-color: white;
+	}
+
+	&.separator-lg {
+		margin-top: 30px !important;
+		margin-bottom: 30px !important;
+	}
+}
+
+.btn-default, .btn-primary, .btn-success, .btn-info, .btn-warning, .btn-danger {
+    &:focus, &:active {
+    	outline: none !important;
+    }
+
+    &.btn-pill {
+    	border-radius: 25px;
+    }
+}
+
+.btn.btn-outline {
+	background-color: transparent;
+
+	&.btn-default {
+		color: white !important;
+		&:hover {
+			background-color: white;
+			color: $brand-primary !important;
+		}
+	}
+	
+	&.btn-primary {
+		color: $brand-primary;
+		&:hover {
+			background-color: $brand-primary;
+			color: white;
+		}
+	}
+
+	&.btn-success {
+		color: $brand-success;
+		&:hover {
+			background-color: $brand-primary;
+			color: white;
+		}
+	}
+
+	&.btn-info {
+		color: $brand-info;
+		&:hover {
+			background-color: $brand-info;
+			color: white;
+		}
+	}
+
+	&.btn-warning {
+		color: $brand-warning;
+		&:hover {
+			background-color: $brand-warning;
+			color: white;
+		}
+	}
+
+	&.btn-danger {
+		color: $brand-danger;
+		&:hover {
+			background-color: $brand-danger;
+			color: white;
+		}
+	}
+}
+
+.outline-border {
+	&:focus {
+		border-color: $main-color;
+		outline: none;
+		box-shadow: none;
+	}
+}
+
+.input-style {
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	padding: 15px;
+	background-color: $gray-lighter;
+}
+
+.form-control {
+	// @at-root {
+		// input#{&} {				
+			@extend .outline-border;
+		// }
+
+		// textarea#{&} {
+			@extend .outline-border;
+		// }
+	// }
+}
+
+.remove-margin {
+	margin: 0 !important;
+}
+
+.remove-padding {
+	padding: 0 !important;
+}
+
+.contain-horizontally {
+	max-width: 100%;
+}
+
+// LOADING SCREEN
+// 
+// Example:
+// #loading(ng-show='loading.isLoading()')
+// 			.spinner(style='transform: scale(2)')
+// 				.rect1
+// 				.rect2
+// 				.rect3
+// 				.rect4
+// 				.rect5
+#loading {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 100000;
+	background-color: $main-color;
+
+	> div {
+		position: absolute;
+		transform: scale(0.75);
+		margin: auto;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		.spinner {
+			margin: 100px auto;
+			width: 50px;
+			height: 40px;
+			text-align: center;
+			font-size: 10px;
+		}
+
+		.spinner > div {
+			background-color: white;
+			height: 100%;
+			width: 6px;
+			display: inline-block;
+			margin: 0 1px;
+
+			-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+			animation: sk-stretchdelay 1.2s infinite ease-in-out;
+		}
+
+		.spinner .rect2 {
+			-webkit-animation-delay: -1.1s;
+			animation-delay: -1.1s;
+		}
+
+		.spinner .rect3 {
+			-webkit-animation-delay: -1.0s;
+			animation-delay: -1.0s;
+		}
+
+		.spinner .rect4 {
+			-webkit-animation-delay: -0.9s;
+			animation-delay: -0.9s;
+		}
+
+		.spinner .rect5 {
+			-webkit-animation-delay: -0.8s;
+			animation-delay: -0.8s;
+		}
+
+		@-webkit-keyframes sk-stretchdelay {
+			0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+			20% { -webkit-transform: scaleY(1.0) }
+		}
+
+		@keyframes sk-stretchdelay {
+			0%, 40%, 100% {
+				transform: scaleY(0.4);
+				-webkit-transform: scaleY(0.4);
+			}  20% {
+				transform: scaleY(1.0);
+				-webkit-transform: scaleY(1.0);
+			}
+		}
+	}
+
+	.logo {
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		margin-top: 250px;
+		background-image: url(' ../images/PN/logo2.png');
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
+
+		width: 300px;
+		height: 200px;
+
+		.spinner {
+			margin-top: 150px;
+		}
+
+		@media (min-width: $screen-sm-min) {
+			width: 400px;
+			height: 200px;
+
+			.spinner {
+				margin-top: 200px;
+			}
+		}
+	}
+}
