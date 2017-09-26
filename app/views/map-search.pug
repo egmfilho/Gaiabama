@@ -1,13 +1,359 @@
+.map-search
+	.container-fluid
+		.row
+			.col-xs-12
+				#filters-menu
+					nav.navbar.navbar-default.drop-shadow(role='navigation')
+						button.navbar-toggle(data-toggle='collapse' data-target='#filters-menu .collapse')
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+					
+						.collapse.navbar-collapse
+							ul.nav.navbar-nav
+								li.dropdown
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-map-marker
+										| Cidade
+										.toto
+											b.caret
+									ul.dropdown-menu
+										li
+											div
+												.checkbox-custom
+													input#cidade-1(type='checkbox' value='none' checked)
+													label(for='cidade-1')
+												| Teresopolis
 
-ng-map.map-search(default-style="false" center='[40.74, -74.18]' zoom='15' scrollwheel='false')
-	custom-marker(id='marker-{{p.code}}' position='[{{p.position[0]}}, {{p.position[1]}}]' on-click='mapSearch.showInfo(event, "marker-{{p.code}}")' ng-repeat='p in mapSearch.positions track by $index')
-		.custom-marker
-			.head
-				.hole
-					i.fa.fa-home
-			.arrow
-			.shadow
-				.head
-				.arrow
+								li.dropdown
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-handshake-o
+										| Categoria
+										.toto
+											b.caret
+									ul.dropdown-menu
+										li
+											div
+												.radio-custom
+													input#categoria-todos(name='categoria' type='radio' value='none' checked)
+													label(for='categoria-todos')
+												| Todos
+										li
+											div
+												.radio-custom
+													input#categoria-aluguel(name='categoria' type='radio' value='none')
+													label(for='categoria-aluguel')
+												| Aluguel
+										li
+											div
+												.radio-custom
+													input#categoria-venda(name='categoria' type='radio' value='none')
+													label(for='categoria-venda')
+												| Venda
 
-	info-window#search-info-window(template='../partials/map-preview.html')
+								li.dropdown
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-building-o
+										| Tipos
+										.toto
+											b.caret
+									ul.dropdown-menu
+										li
+											div
+												.checkbox-custom
+													input#pomba(type='checkbox' value='none' checked)
+													label(for='pomba')
+												| Teste
+										li
+											div
+												.checkbox-custom
+													input#pomba(type='checkbox' value='none' checked)
+													label(for='pomba')
+												| Teste
+
+								li.dropdown
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-usd
+										| Valor
+										.toto
+											b.caret
+									.dropdown-menu.dropdown-custom
+										rzslider(rz-slider-model='mapSearch.search.minValue' rz-slider-high='mapSearch.search.maxValue' rz-slider-options='mapSearch.sliderPrice.options')
+
+								li.dropdown
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.futura-ruler-h-o
+										| Área
+										.toto
+											b.caret
+									.dropdown-menu.dropdown-custom
+										rzslider(rz-slider-model='mapSearch.search.minArea' rz-slider-high='mapSearch.search.maxArea' rz-slider-options='mapSearch.sliderArea.options')
+
+								li.dropdown(ng-if='innerWidth >= 1000')
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-bed
+										| Dormitórios
+										.toto
+											b.caret
+									ul.dropdown-menu
+										li
+											div
+												.checkbox-custom
+													input#dorm-1(type='checkbox' value='none')
+													label(for='dorm-1')
+												| 1 Dorm
+										li
+											div
+												.checkbox-custom
+													input#dorm-2(type='checkbox' value='none')
+													label(for='dorm-2')
+												| 2 Dorms
+										li
+											div
+												.checkbox-custom
+													input#dorm-3(type='checkbox' value='none')
+													label(for='dorm-3')
+												| 3 Dorms
+										li
+											div
+												.checkbox-custom
+													input#dorm-4(type='checkbox' value='none')
+													label(for='dorm-4')
+												| 4+ Dorms
+
+								li.dropdown(ng-if='innerWidth >= 1150')
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-shower
+										| Banheiros
+										.toto
+											b.caret
+									ul.dropdown-menu
+										li
+											div
+												.checkbox-custom
+													input#banho-1(type='checkbox' value='none')
+													label(for='banho-1')
+												| 1 Banheiro
+										li
+											div
+												.checkbox-custom
+													input#banho-2(type='checkbox' value='none')
+													label(for='banho-2')
+												| 2 Banheiros
+										li
+											div
+												.checkbox-custom
+													input#banho-3(type='checkbox' value='none')
+													label(for='banho-3')
+												| 3 Banheiros
+										li
+											div
+												.checkbox-custom
+													input#banho-4(type='checkbox' value='none')
+													label(for='banho-4')
+												| 4+ Banheiros
+
+								li.dropdown(ng-if='innerWidth >= 1300')
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-bathtub
+										| Suíte
+										.toto
+											b.caret
+									ul.dropdown-menu
+										li
+											div
+												.radio-custom
+													input#suite-todos(name='suite' type='radio' value='none' checked)
+													label(for='suite-todos')
+												| Todos
+										li
+											div
+												.radio-custom
+													input#suite-sem(name='suite' type='radio' value='none')
+													label(for='suite-sem')
+												| Sem suíte
+										li
+											div
+												.radio-custom
+													input#suite-com(name='suite' type='radio' value='none')
+													label(for='suite-com')
+												| Com suíte
+
+								li.dropdown(ng-if='innerWidth >= 1450')
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-car
+										| Garagem
+										.toto
+											b.caret
+									ul.dropdown-menu.dropdown-menu-right
+										li
+											div
+												.radio-custom
+													input#garagem-todos(name='garagem' type='radio' value='none' checked)
+													label(for='garagem-todos')
+												| Todos
+										li
+											div
+												.radio-custom
+													input#garagem-sem(name='garagem' type='radio' value='none')
+													label(for='garagem-sem')
+												| Sem garagem
+										li
+											div
+												.radio-custom
+													input#garagem-com(name='garagem' type='radio' value='none')
+													label(for='garagem-com')
+												| Com garagem
+
+								li.dropdown
+									a.dropdown-toggle(href='' data-toggle='dropdown')
+										i.fa.fa-bars
+										| Mais
+										.toto
+											b.caret
+									.dropdown-menu.dropdown-menu-right.dropdown-custom
+										.overflowed-filters(ng-if='innerWidth < 1450')
+											.offset-bottom-15(ng-if='innerWidth < 1000')
+												h4.text-primary
+													i.fa.fa-bed &nbsp;
+													| Dormitórios
+												ul.list-unstyled
+													li
+														div
+															.checkbox-custom
+																input#dorm-1(type='checkbox' value='none')
+																label(for='dorm-1')
+															| 1 Dorm
+													li
+														div
+															.checkbox-custom
+																input#dorm-2(type='checkbox' value='none')
+																label(for='dorm-2')
+															| 2 Dorms
+													li
+														div
+															.checkbox-custom
+																input#dorm-3(type='checkbox' value='none')
+																label(for='dorm-3')
+															| 3 Dorms
+													li
+														div
+															.checkbox-custom
+																input#dorm-4(type='checkbox' value='none')
+																label(for='dorm-4')
+															| 4+ Dorms
+
+											.offset-bottom-15(ng-if='innerWidth < 1150')
+												h4.text-primary
+													i.fa.fa-shower &nbsp;
+													| Banheiros
+												ul.list-unstyled
+													li
+														div
+															.checkbox-custom
+																input#banho-1(type='checkbox' value='none')
+																label(for='banho-1')
+															| 1 Banheiro
+													li
+														div
+															.checkbox-custom
+																input#banho-2(type='checkbox' value='none')
+																label(for='banho-2')
+															| 2 Banheiros
+													li
+														div
+															.checkbox-custom
+																input#banho-3(type='checkbox' value='none')
+																label(for='banho-3')
+															| 3 Banheiros
+													li
+														div
+															.checkbox-custom
+																input#banho-4(type='checkbox' value='none')
+																label(for='banho-4')
+															| 4+ Banheiros
+
+											.offset-bottom-15(ng-if='innerWidth < 1300')
+												h4.text-primary
+													i.fa.fa-bathtub &nbsp;
+													| Suíte
+												ul.list-unstyled
+													li
+														div
+															.radio-custom
+																input#suite-todos(name='suite' type='radio' value='none' checked)
+																label(for='suite-todos')
+															| Todos
+													li
+														div
+															.radio-custom
+																input#suite-sem(name='suite' type='radio' value='none')
+																label(for='suite-sem')
+															| Sem suíte
+													li
+														div
+															.radio-custom
+																input#suite-com(name='suite' type='radio' value='none')
+																label(for='suite-com')
+															| Com suíte
+
+											.offset-bottom-15(ng-if='innerWidth < 1450')
+												h4.text-primary
+													i.fa.fa-car &nbsp;
+													| Garagem
+												ul.list-unstyled
+													li
+														div
+															.radio-custom
+																input#garagem-todos(name='garagem' type='radio' value='none' checked)
+																label(for='garagem-todos')
+															| Todos
+													li
+														div
+															.radio-custom
+																input#garagem-sem(name='garagem' type='radio' value='none')
+																label(for='garagem-sem')
+															| Sem garagem
+													li
+														div
+															.radio-custom
+																input#garagem-com(name='garagem' type='radio' value='none')
+																label(for='garagem-com')
+															| Com garagem
+										.code-search
+											h4.text-primary
+												i.fa.fa-tag &nbsp;
+												| Código do imóvel
+											input.form-control(placeholder='Ex. 988021')
+											button.btn.btn-block.btn-lg.btn-primary.offset-top-15 Buscar
+										
+			
+			.hidden-xs.col-sm-5.col-md-4
+				.row.side-menu(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+					.col-sm-12
+						.summary.clearfix.offset-top-15
+							span.text-primary.text-md 20 Imóveis encontrados
+							button.btn.btn-primary.btn-outline.pull-right() Limpar filtros
+
+					.col-sm-12.col-lg-6(ng-repeat='n in mapSearch.positions')
+						card(
+							title='{{n.message}}'
+							subtitle='Teresopolis - Bairro doido'
+							picture='{{n.pic}}'
+							pictureLg='{{n.pic}}'
+							description='{{n.message}}'
+						)
+
+			.col-xs-12.col-sm-7.col-md-8.map-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+				ng-map.map(default-style="false" center='[40.74, -74.18]' zoom='15' scrollwheel='false' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+					custom-marker(id='marker-{{p.code}}' position='[{{p.position[0]}}, {{p.position[1]}}]' on-click='mapSearch.showInfo(event, "marker-{{p.code}}")' ng-repeat='p in mapSearch.positions track by $index')
+						.custom-marker
+							.head
+								.hole
+									i.fa.fa-home
+							.arrow
+							.shadow
+								.head
+								.arrow
+
+					info-window#search-info-window(template='../partials/map-preview.html')

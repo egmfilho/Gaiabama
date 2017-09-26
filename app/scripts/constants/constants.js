@@ -5,6 +5,6 @@ angular.module('alabama.constants')
     // url do servidor, trocar aqui
     //root: ''
     //  root: 'http://www.grupopaiva.net/'
-    root: 'http://172.16.0.92/'
-    //root: 'http://www.grupopaivaweb.com.br/'
+    // root: 'http://172.16.0.92/'
+    root: 'http://www.pnimobiliaria.com.br/gaia/'
   });

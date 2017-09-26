@@ -37,51 +37,51 @@
 }
 
 @mixin keyframe ($animation_name) {
-    @-webkit-keyframes #{$animation_name} {
-        @content;
-    }
-
-    @-moz-keyframes #{$animation_name} {
-        @content;
-    }
-
-    @-o-keyframes #{$animation_name} {
-        @content;
-    }
-
-    @keyframes #{$animation_name} {
-        @content;
-    }
+	@-webkit-keyframes #{$animation_name} {
+		@content;
+	}
+	
+	@-moz-keyframes #{$animation_name} {
+		@content;
+	}
+	
+	@-o-keyframes #{$animation_name} {
+		@content;
+	}
+	
+	@keyframes #{$animation_name} {
+		@content;
+	}
 }
 
 @mixin animation ($delay, $duration, $timing, $animation) {
-    -webkit-animation-delay: $delay;
-    -webkit-animation-duration: $duration;
+	-webkit-animation-delay: $delay;
+	-webkit-animation-duration: $duration;
 	-webkit-animation-name: $animation;
 	-webkit-animation-timing-function: $timing;
 	-webkit-animation-iteration-count: infinite;
-    -webkit-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
-
-    -moz-animation-delay: $delay;
-    -moz-animation-duration: $duration;
+	-webkit-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+	
+	-moz-animation-delay: $delay;
+	-moz-animation-duration: $duration;
 	-moz-animation-name: $animation;
 	-moz-animation-timing-function: $timing;
 	-moz-animation-iteration-count: infinite;	
-    -moz-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
-
-    -o-animation-delay: $delay;
-    -o-animation-duration: $duration;
+	-moz-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+	
+	-o-animation-delay: $delay;
+	-o-animation-duration: $duration;
 	-o-animation-name: $animation;
 	-o-animation-timing-function: $timing;
 	-o-animation-iteration-count: infinite;
 	-o-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
-
-    animation-delay: $delay;
-    animation-duration: $duration;
+	
+	animation-delay: $delay;
+	animation-duration: $duration;
 	animation-name: $animation;
 	animation-timing-function: $timing;
 	animation-iteration-count: infinite;
-    animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+	animation-fill-mode: forwards; /* this prevents the animation from restarting! */
 }
 
 .display-none {
@@ -208,11 +208,11 @@
 	width: 70px;
 	margin: 15px auto !important;
 	border-bottom: 3px solid $main-color;
-
+	
 	&.separator-white {
 		border-color: white;
 	}
-
+	
 	&.separator-lg {
 		margin-top: 30px !important;
 		margin-bottom: 30px !important;
@@ -220,18 +220,18 @@
 }
 
 .btn-default, .btn-primary, .btn-success, .btn-info, .btn-warning, .btn-danger {
-    &:focus, &:active {
-    	outline: none !important;
-    }
-
-    &.btn-pill {
-    	border-radius: 25px;
-    }
+	&:focus, &:active {
+		outline: none !important;
+	}
+	
+	&.btn-pill {
+		border-radius: 25px;
+	}
 }
 
 .btn.btn-outline {
 	background-color: transparent;
-
+	
 	&.btn-default {
 		color: white !important;
 		&:hover {
@@ -247,7 +247,7 @@
 			color: white;
 		}
 	}
-
+	
 	&.btn-success {
 		color: $brand-success;
 		&:hover {
@@ -255,7 +255,7 @@
 			color: white;
 		}
 	}
-
+	
 	&.btn-info {
 		color: $brand-info;
 		&:hover {
@@ -263,7 +263,7 @@
 			color: white;
 		}
 	}
-
+	
 	&.btn-warning {
 		color: $brand-warning;
 		&:hover {
@@ -271,7 +271,7 @@
 			color: white;
 		}
 	}
-
+	
 	&.btn-danger {
 		color: $brand-danger;
 		&:hover {
@@ -298,15 +298,7 @@
 }
 
 .form-control {
-	// @at-root {
-		// input#{&} {				
-			@extend .outline-border;
-		// }
-
-		// textarea#{&} {
-			@extend .outline-border;
-		// }
-	// }
+	@extend .outline-border;
 }
 
 .remove-margin {
@@ -319,6 +311,88 @@
 
 .contain-horizontally {
 	max-width: 100%;
+}
+
+.checkbox-custom {
+	width: 20px;
+	display: inline-block;
+	margin-right: 10px;
+	position: relative;
+	
+	label {
+		width: 20px;
+		height: 20px;
+		cursor: pointer;
+		position: absolute;
+		top: 0;
+		left: 0;
+		border: 1px solid $main-color;
+		
+		&:after {
+			content: '';
+			width: 12px;
+			height: 7px;
+			position: absolute;
+			top: 4px;
+			left: 3px;
+			border: 3px solid $main-color;
+			border-top: none;
+			border-right: none;
+			background: transparent;
+			opacity: 0;
+			transform: rotate(-45deg);
+		}
+		&:hover::after {
+			opacity: 0.3;
+		}
+	}
+	input[type=checkbox] {
+		visibility: hidden;
+		&:checked + label:after {
+			opacity: 1;
+		}    
+	}
+}
+
+.radio-custom {
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+	margin-right: 10px;
+	position: relative;
+	border-radius: 50px;
+
+	label {
+		width: 20px;
+		height: 20px;
+		cursor: pointer;
+		position: absolute;
+		left: 2px;
+		top: 2px;
+		border-radius: 50px;
+		border: 1px solid $main-color;
+
+		&:after {
+			content: '';
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			top: 4px;
+			left: 4px;
+			background: $main-color;
+			opacity: 0;
+			border-radius: 50px;		
+		}
+		&:hover::after {
+			opacity: 0.3;
+		}
+	}
+	input[type=radio] {
+		visibility: hidden;
+		&:checked + label:after {
+			opacity: 1;
+		}
+	}    
 }
 
 // LOADING SCREEN
@@ -339,7 +413,7 @@
 	right: 0;
 	z-index: 100000;
 	background-color: $main-color;
-
+	
 	> div {
 		position: absolute;
 		transform: scale(0.75);
@@ -348,7 +422,7 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-
+		
 		.spinner {
 			margin: 100px auto;
 			width: 50px;
@@ -356,43 +430,43 @@
 			text-align: center;
 			font-size: 10px;
 		}
-
+		
 		.spinner > div {
 			background-color: white;
 			height: 100%;
 			width: 6px;
 			display: inline-block;
 			margin: 0 1px;
-
+			
 			-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
 			animation: sk-stretchdelay 1.2s infinite ease-in-out;
 		}
-
+		
 		.spinner .rect2 {
 			-webkit-animation-delay: -1.1s;
 			animation-delay: -1.1s;
 		}
-
+		
 		.spinner .rect3 {
 			-webkit-animation-delay: -1.0s;
 			animation-delay: -1.0s;
 		}
-
+		
 		.spinner .rect4 {
 			-webkit-animation-delay: -0.9s;
 			animation-delay: -0.9s;
 		}
-
+		
 		.spinner .rect5 {
 			-webkit-animation-delay: -0.8s;
 			animation-delay: -0.8s;
 		}
-
+		
 		@-webkit-keyframes sk-stretchdelay {
 			0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
 			20% { -webkit-transform: scaleY(1.0) }
 		}
-
+		
 		@keyframes sk-stretchdelay {
 			0%, 40%, 100% {
 				transform: scaleY(0.4);
@@ -403,7 +477,7 @@
 			}
 		}
 	}
-
+	
 	.logo {
 		position: fixed;
 		left: 0;
@@ -415,18 +489,18 @@
 		background-size: contain;
 		background-position: center;
 		background-repeat: no-repeat;
-
+		
 		width: 300px;
 		height: 200px;
-
+		
 		.spinner {
 			margin-top: 150px;
 		}
-
+		
 		@media (min-width: $screen-sm-min) {
 			width: 400px;
 			height: 200px;
-
+			
 			.spinner {
 				margin-top: 200px;
 			}

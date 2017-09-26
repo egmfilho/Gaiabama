@@ -95,12 +95,12 @@ angular.module('alabama', [
 			controller: 'ContatoCtrl',
 			controllerAs: 'contato'
 		})
-		// .when('/mapa', {
-		// 	name: 'Mapa',
-		// 	templateUrl: 'views/map-search.html',
-		// 	controller: 'MapSearchCtrl',
-		// 	controllerAs: 'mapSearch'
-		// })
+		.when('/mapa', {
+			name: 'Mapa',
+			templateUrl: 'views/map-search.html',
+			controller: 'MapSearchCtrl',
+			controllerAs: 'mapSearch'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
