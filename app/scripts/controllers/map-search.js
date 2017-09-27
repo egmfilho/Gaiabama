@@ -6,12 +6,17 @@
 	angular.module('alabama.controllers')
 		.controller('MapSearchCtrl', MapSearchCtrl);
 
-	MapSearchCtrl.$inject = [ '$scope', '$filter', '$window', 'NgMap', 'Filters' ];
+	MapSearchCtrl.$inject = [ '$scope', '$filter', '$window', '$timeout', 'NgMap', 'Filters' ];
 
-	function MapSearchCtrl($scope, $filter, $window, NgMap, Filters) {
+	function MapSearchCtrl($scope, $filter, $window, $timeout, NgMap, Filters) {
 
 		var self = this,
-			clusterUrl = "https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m";		
+			clusterUrl = "https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m",
+			_isLoading = 0;
+
+		$scope.isMapLoading = function() {
+			return _isLoading > 0;
+		};
 
 		self.positions = [
 			{ 
@@ -202,24 +207,39 @@
 			self.search.maxValue = self.search.maxValue ? self.search.maxValue : parseFloat(self.filters.value.max);
 			self.sliderPrice.options.floor = parseFloat(self.filters.value.min);
 			self.sliderPrice.options.ceil = parseFloat(self.filters.value.max);
+			self.sliderPrice.options.hidePointerLabels = true;
+			self.sliderPrice.options.hideLimitLabels = true;
 	
 			self.search.minArea = self.search.minArea ? self.search.minArea : parseFloat(self.filters.area.min);
 			self.search.maxArea = self.search.maxArea ? self.search.maxArea : parseFloat(self.filters.area.max);
 			self.sliderArea.options.floor = parseFloat(self.filters.area.min);		
 			self.sliderArea.options.ceil = parseFloat(self.filters.area.max);
+			self.sliderArea.options.hidePointerLabels = true;
+			self.sliderArea.options.hideLimitLabels = true;
 	
 			self.search.order = self.filters.order;
 		});
 
-		$window.addEventListener('resize', function() {
+		function recalcFiltersPosition() {
 			$scope.innerWidth = $window.innerWidth;
+			
+			$timeout(function() {
+				var elems = jQuery('.navbar .navbar-collapse ul.nav li.dropdown'),
+					width = (100 / elems.length) + '%';
 
-			var elems = jQuery('.navbar .navbar-collapse ul.nav li.dropdown');
-			elems.css('width', (100 / elems.length) + '%');
-		});
+				elems.css('width', width);
+			});
+		}
+
+		$window.addEventListener('resize', recalcFiltersPosition);
 
 		$scope.$on('$viewContentLoaded', function() {
+			recalcFiltersPosition();
 			$scope.innerHeight = $window.innerHeight - jQuery('#header').height() - jQuery('#filters-menu').height();
+			
+			jQuery('.dropdown[name="slider"]').on('shown.bs.dropdown', function () {
+				$scope.$broadcast('reCalcViewDimensions');
+			});
 
 			jQuery('.dropdown-menu').click(function(e) {
 				e.stopPropagation();

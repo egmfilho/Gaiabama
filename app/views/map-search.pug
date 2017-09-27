@@ -18,12 +18,12 @@
 										.toto
 											b.caret
 									ul.dropdown-menu
-										li
+										li(ng-repeat='c in mapSearch.filters.city track by $index')
 											div
 												.checkbox-custom
-													input#cidade-1(type='checkbox' value='none' checked)
-													label(for='cidade-1')
-												| Teresopolis
+													input(id='cidade-{{$index + 1}}' type='checkbox' ng-value='c.city_id')
+													label(for='cidade-{{$index + 1}}')
+												| {{c.city_name}}
 
 								li.dropdown
 									a.dropdown-toggle(href='' data-toggle='dropdown')
@@ -35,19 +35,19 @@
 										li
 											div
 												.radio-custom
-													input#categoria-todos(name='categoria' type='radio' value='none' checked)
+													input#categoria-todos(name='categoria' type='radio' value='0')
 													label(for='categoria-todos')
 												| Todos
 										li
 											div
 												.radio-custom
-													input#categoria-aluguel(name='categoria' type='radio' value='none')
+													input#categoria-aluguel(name='categoria' type='radio' value='1')
 													label(for='categoria-aluguel')
 												| Aluguel
 										li
 											div
 												.radio-custom
-													input#categoria-venda(name='categoria' type='radio' value='none')
+													input#categoria-venda(name='categoria' type='radio' value='2')
 													label(for='categoria-venda')
 												| Venda
 
@@ -57,37 +57,47 @@
 										| Tipos
 										.toto
 											b.caret
-									ul.dropdown-menu
-										li
+									ul.dropdown-menu(style='max-height: 400px; overflow-y: auto')
+										li(ng-repeat='c in mapSearch.filters.category track by $index')
 											div
 												.checkbox-custom
-													input#pomba(type='checkbox' value='none' checked)
-													label(for='pomba')
-												| Teste
-										li
-											div
-												.checkbox-custom
-													input#pomba(type='checkbox' value='none' checked)
-													label(for='pomba')
-												| Teste
+													input(id='category-{{$index + 1}}' type='checkbox' ng-value='c.immobile_category_id')
+													label(for='category-{{$index + 1}}')
+												| {{c.immobile_category_name}}
 
-								li.dropdown
+								li.dropdown(name='slider')
 									a.dropdown-toggle(href='' data-toggle='dropdown')
 										i.fa.fa-usd
 										| Valor
 										.toto
 											b.caret
 									.dropdown-menu.dropdown-custom
-										rzslider(rz-slider-model='mapSearch.search.minValue' rz-slider-high='mapSearch.search.maxValue' rz-slider-options='mapSearch.sliderPrice.options')
+										.slider
+											.input-container.price-label
+												input.form-control(ng-model='mapSearch.search.minValue')
+												span R$
+											.slider-container
+												rzslider(rz-slider-model='mapSearch.search.minValue' rz-slider-high='mapSearch.search.maxValue' rz-slider-options='mapSearch.sliderPrice.options')
+											.input-container.price-label
+												input.form-control(ng-model='mapSearch.search.maxValue')
+												span R$
 
-								li.dropdown
+								li.dropdown(name='slider')
 									a.dropdown-toggle(href='' data-toggle='dropdown')
 										i.futura-ruler-h-o
 										| Área
 										.toto
 											b.caret
 									.dropdown-menu.dropdown-custom
-										rzslider(rz-slider-model='mapSearch.search.minArea' rz-slider-high='mapSearch.search.maxArea' rz-slider-options='mapSearch.sliderArea.options')
+										.slider
+											.input-container.area-label
+												input.form-control(ng-model='mapSearch.search.minArea')
+												span m&#178;
+											.slider-container
+												rzslider(rz-slider-model='mapSearch.search.minArea' rz-slider-high='mapSearch.search.maxArea' rz-slider-options='mapSearch.sliderArea.options')
+											.input-container.area-label
+												input.form-control(ng-model='mapSearch.search.maxArea')
+												span m&#178;
 
 								li.dropdown(ng-if='innerWidth >= 1000')
 									a.dropdown-toggle(href='' data-toggle='dropdown')
@@ -99,25 +109,25 @@
 										li
 											div
 												.checkbox-custom
-													input#dorm-1(type='checkbox' value='none')
+													input#dorm-1(type='checkbox' value='1')
 													label(for='dorm-1')
 												| 1 Dorm
 										li
 											div
 												.checkbox-custom
-													input#dorm-2(type='checkbox' value='none')
+													input#dorm-2(type='checkbox' value='2')
 													label(for='dorm-2')
 												| 2 Dorms
 										li
 											div
 												.checkbox-custom
-													input#dorm-3(type='checkbox' value='none')
+													input#dorm-3(type='checkbox' value='3')
 													label(for='dorm-3')
 												| 3 Dorms
 										li
 											div
 												.checkbox-custom
-													input#dorm-4(type='checkbox' value='none')
+													input#dorm-4(type='checkbox' value='4')
 													label(for='dorm-4')
 												| 4+ Dorms
 
@@ -131,25 +141,25 @@
 										li
 											div
 												.checkbox-custom
-													input#banho-1(type='checkbox' value='none')
+													input#banho-1(type='checkbox' value='1')
 													label(for='banho-1')
 												| 1 Banheiro
 										li
 											div
 												.checkbox-custom
-													input#banho-2(type='checkbox' value='none')
+													input#banho-2(type='checkbox' value='2')
 													label(for='banho-2')
 												| 2 Banheiros
 										li
 											div
 												.checkbox-custom
-													input#banho-3(type='checkbox' value='none')
+													input#banho-3(type='checkbox' value='3')
 													label(for='banho-3')
 												| 3 Banheiros
 										li
 											div
 												.checkbox-custom
-													input#banho-4(type='checkbox' value='none')
+													input#banho-4(type='checkbox' value='4')
 													label(for='banho-4')
 												| 4+ Banheiros
 
@@ -163,19 +173,19 @@
 										li
 											div
 												.radio-custom
-													input#suite-todos(name='suite' type='radio' value='none' checked)
+													input#suite-todos(name='suite' type='radio' value='0' checked)
 													label(for='suite-todos')
 												| Todos
 										li
 											div
 												.radio-custom
-													input#suite-sem(name='suite' type='radio' value='none')
+													input#suite-sem(name='suite' type='radio' value='1')
 													label(for='suite-sem')
 												| Sem suíte
 										li
 											div
 												.radio-custom
-													input#suite-com(name='suite' type='radio' value='none')
+													input#suite-com(name='suite' type='radio' value='2')
 													label(for='suite-com')
 												| Com suíte
 
@@ -189,19 +199,19 @@
 										li
 											div
 												.radio-custom
-													input#garagem-todos(name='garagem' type='radio' value='none' checked)
+													input#garagem-todos(name='garagem' type='radio' value='0' checked)
 													label(for='garagem-todos')
 												| Todos
 										li
 											div
 												.radio-custom
-													input#garagem-sem(name='garagem' type='radio' value='none')
+													input#garagem-sem(name='garagem' type='radio' value='1')
 													label(for='garagem-sem')
 												| Sem garagem
 										li
 											div
 												.radio-custom
-													input#garagem-com(name='garagem' type='radio' value='none')
+													input#garagem-com(name='garagem' type='radio' value='2')
 													label(for='garagem-com')
 												| Com garagem
 
@@ -221,25 +231,25 @@
 													li
 														div
 															.checkbox-custom
-																input#dorm-1(type='checkbox' value='none')
+																input#dorm-1(type='checkbox' value='1')
 																label(for='dorm-1')
 															| 1 Dorm
 													li
 														div
 															.checkbox-custom
-																input#dorm-2(type='checkbox' value='none')
+																input#dorm-2(type='checkbox' value='2')
 																label(for='dorm-2')
 															| 2 Dorms
 													li
 														div
 															.checkbox-custom
-																input#dorm-3(type='checkbox' value='none')
+																input#dorm-3(type='checkbox' value='3')
 																label(for='dorm-3')
 															| 3 Dorms
 													li
 														div
 															.checkbox-custom
-																input#dorm-4(type='checkbox' value='none')
+																input#dorm-4(type='checkbox' value='4')
 																label(for='dorm-4')
 															| 4+ Dorms
 
@@ -251,25 +261,25 @@
 													li
 														div
 															.checkbox-custom
-																input#banho-1(type='checkbox' value='none')
+																input#banho-1(type='checkbox' value='1')
 																label(for='banho-1')
 															| 1 Banheiro
 													li
 														div
 															.checkbox-custom
-																input#banho-2(type='checkbox' value='none')
+																input#banho-2(type='checkbox' value='2')
 																label(for='banho-2')
 															| 2 Banheiros
 													li
 														div
 															.checkbox-custom
-																input#banho-3(type='checkbox' value='none')
+																input#banho-3(type='checkbox' value='3')
 																label(for='banho-3')
 															| 3 Banheiros
 													li
 														div
 															.checkbox-custom
-																input#banho-4(type='checkbox' value='none')
+																input#banho-4(type='checkbox' value='4')
 																label(for='banho-4')
 															| 4+ Banheiros
 
@@ -281,19 +291,19 @@
 													li
 														div
 															.radio-custom
-																input#suite-todos(name='suite' type='radio' value='none' checked)
+																input#suite-todos(name='suite' type='radio' value='0')
 																label(for='suite-todos')
 															| Todos
 													li
 														div
 															.radio-custom
-																input#suite-sem(name='suite' type='radio' value='none')
+																input#suite-sem(name='suite' type='radio' value='1')
 																label(for='suite-sem')
 															| Sem suíte
 													li
 														div
 															.radio-custom
-																input#suite-com(name='suite' type='radio' value='none')
+																input#suite-com(name='suite' type='radio' value='2')
 																label(for='suite-com')
 															| Com suíte
 
@@ -305,36 +315,46 @@
 													li
 														div
 															.radio-custom
-																input#garagem-todos(name='garagem' type='radio' value='none' checked)
+																input#garagem-todos(name='garagem' type='radio' value='0')
 																label(for='garagem-todos')
 															| Todos
 													li
 														div
 															.radio-custom
-																input#garagem-sem(name='garagem' type='radio' value='none')
+																input#garagem-sem(name='garagem' type='radio' value='1')
 																label(for='garagem-sem')
 															| Sem garagem
 													li
 														div
 															.radio-custom
-																input#garagem-com(name='garagem' type='radio' value='none')
+																input#garagem-com(name='garagem' type='radio' value='2')
 																label(for='garagem-com')
 															| Com garagem
 										.code-search
 											h4.text-primary
-												i.fa.fa-tag &nbsp;
 												| Código do imóvel
 											input.form-control(placeholder='Ex. 988021')
 											button.btn.btn-block.btn-lg.btn-primary.offset-top-15 Buscar
-										
-			
-			.hidden-xs.col-sm-5.col-md-4
-				.row.side-menu(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
-					.col-sm-12
-						.summary.clearfix.offset-top-15
-							span.text-primary.text-md 20 Imóveis encontrados
-							button.btn.btn-primary.btn-outline.pull-right() Limpar filtros
 
+	.uber-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+		.map-loading(ng-if='isMapLoading()')
+			.loading-spinner
+				.spinner(style='transform: scale(2)')
+					.rect1
+					.rect2
+					.rect3
+					.rect4
+					.rect5
+
+		//- .hidden-xs.col-sm-5.col-md-4
+		.side-menu-container
+			.row.side-menu
+				.col-sm-12
+					.summary.clearfix.offset-top-15
+						span.text-primary.text-md 20 Imóveis encontrados
+						button.btn.btn-primary.btn-outline.pull-right() Limpar filtros
+
+				.cards-container
 					.col-sm-12.col-lg-6(ng-repeat='n in mapSearch.positions')
 						card(
 							title='{{n.message}}'
@@ -344,16 +364,17 @@
 							description='{{n.message}}'
 						)
 
-			.col-xs-12.col-sm-7.col-md-8.map-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
-				ng-map.map(default-style="false" center='[40.74, -74.18]' zoom='15' scrollwheel='false' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
-					custom-marker(id='marker-{{p.code}}' position='[{{p.position[0]}}, {{p.position[1]}}]' on-click='mapSearch.showInfo(event, "marker-{{p.code}}")' ng-repeat='p in mapSearch.positions track by $index')
-						.custom-marker
+		//- .col-xs-12.col-sm-7.col-md-8.map-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+		.map-container
+			ng-map.map(default-style="false" center='[40.74, -74.18]' zoom='15' scrollwheel='true' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+				custom-marker(id='marker-{{p.code}}' position='[{{p.position[0]}}, {{p.position[1]}}]' on-click='mapSearch.showInfo(event, "marker-{{p.code}}")' ng-repeat='p in mapSearch.positions track by $index')
+					.custom-marker
+						.head
+							.hole
+								i.fa.fa-home
+						.arrow
+						.shadow
 							.head
-								.hole
-									i.fa.fa-home
 							.arrow
-							.shadow
-								.head
-								.arrow
 
-					info-window#search-info-window(template='../partials/map-preview.html')
+				info-window#search-info-window(template='../partials/map-preview.html')
