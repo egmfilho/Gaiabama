@@ -2,7 +2,7 @@
 	.container-fluid
 		.row
 			.col-xs-12
-				#filters-menu
+				form#filters-menu(name='filters' ng-submit='teste()' novalidate)
 					nav.navbar.navbar-default.drop-shadow(role='navigation')
 						button.navbar-toggle(data-toggle='collapse' data-target='#filters-menu .collapse')
 							span.icon-bar
@@ -21,7 +21,7 @@
 										li(ng-repeat='c in mapSearch.filters.city track by $index')
 											div
 												.checkbox-custom
-													input(id='cidade-{{$index + 1}}' type='checkbox' ng-value='c.city_id')
+													input(id='cidade-{{$index + 1}}' name='cidade' type='checkbox' ng-value='c.city_id' ng-click='mapSearch.toggleCheckbox("cidade", c.city_id)')
 													label(for='cidade-{{$index + 1}}')
 												| {{c.city_name}}
 
@@ -35,19 +35,19 @@
 										li
 											div
 												.radio-custom
-													input#categoria-todos(name='categoria' type='radio' value='0')
+													input#categoria-todos(name='categoria' type='radio' value='0' ng-model='mapSearch.search.categoria')
 													label(for='categoria-todos')
 												| Todos
 										li
 											div
 												.radio-custom
-													input#categoria-aluguel(name='categoria' type='radio' value='1')
+													input#categoria-aluguel(name='categoria' type='radio' value='1' ng-model='mapSearch.search.categoria')
 													label(for='categoria-aluguel')
 												| Aluguel
 										li
 											div
 												.radio-custom
-													input#categoria-venda(name='categoria' type='radio' value='2')
+													input#categoria-venda(name='categoria' type='radio' value='2' ng-model='mapSearch.search.categoria')
 													label(for='categoria-venda')
 												| Venda
 
@@ -61,7 +61,7 @@
 										li(ng-repeat='c in mapSearch.filters.category track by $index')
 											div
 												.checkbox-custom
-													input(id='category-{{$index + 1}}' type='checkbox' ng-value='c.immobile_category_id')
+													input(id='category-{{$index + 1}}' name='tipo' type='checkbox' ng-value='c.immobile_category_id' ng-click='mapSearch.toggleCheckbox("tipo", c.immobile_category_id)')
 													label(for='category-{{$index + 1}}')
 												| {{c.immobile_category_name}}
 
@@ -74,12 +74,12 @@
 									.dropdown-menu.dropdown-custom
 										.slider
 											.input-container.price-label
-												input.form-control(ng-model='mapSearch.search.minValue')
+												input.form-control(name='minValue' ng-model='mapSearch.search.minValue')
 												span R$
 											.slider-container
 												rzslider(rz-slider-model='mapSearch.search.minValue' rz-slider-high='mapSearch.search.maxValue' rz-slider-options='mapSearch.sliderPrice.options')
 											.input-container.price-label
-												input.form-control(ng-model='mapSearch.search.maxValue')
+												input.form-control(name='maxValue' ng-model='mapSearch.search.maxValue')
 												span R$
 
 								li.dropdown(name='slider')
@@ -91,12 +91,12 @@
 									.dropdown-menu.dropdown-custom
 										.slider
 											.input-container.area-label
-												input.form-control(ng-model='mapSearch.search.minArea')
+												input.form-control(name='minArea' ng-model='mapSearch.search.minArea')
 												span m&#178;
 											.slider-container
 												rzslider(rz-slider-model='mapSearch.search.minArea' rz-slider-high='mapSearch.search.maxArea' rz-slider-options='mapSearch.sliderArea.options')
 											.input-container.area-label
-												input.form-control(ng-model='mapSearch.search.maxArea')
+												input.form-control(name='maxArea' ng-model='mapSearch.search.maxArea')
 												span m&#178;
 
 								li.dropdown(ng-if='innerWidth >= 1000')
@@ -109,25 +109,25 @@
 										li
 											div
 												.checkbox-custom
-													input#dorm-1(type='checkbox' value='1')
+													input#dorm-1(name='dormitorio' type='checkbox' value='1' ng-click='mapSearch.toggleCheckbox("dormitorio", 1)')
 													label(for='dorm-1')
 												| 1 Dorm
 										li
 											div
 												.checkbox-custom
-													input#dorm-2(type='checkbox' value='2')
+													input#dorm-2(name='dormitorio' type='checkbox' value='2' ng-click='mapSearch.toggleCheckbox("dormitorio", 2)')
 													label(for='dorm-2')
 												| 2 Dorms
 										li
 											div
 												.checkbox-custom
-													input#dorm-3(type='checkbox' value='3')
+													input#dorm-3(name='dormitorio' type='checkbox' value='3' ng-click='mapSearch.toggleCheckbox("dormitorio", 3)')
 													label(for='dorm-3')
 												| 3 Dorms
 										li
 											div
 												.checkbox-custom
-													input#dorm-4(type='checkbox' value='4')
+													input#dorm-4(name='dormitorio' type='checkbox' value='4' ng-click='mapSearch.toggleCheckbox("dormitorio", 4)')
 													label(for='dorm-4')
 												| 4+ Dorms
 
@@ -141,25 +141,25 @@
 										li
 											div
 												.checkbox-custom
-													input#banho-1(type='checkbox' value='1')
+													input#banho-1(name='banheiro' type='checkbox' value='1' ng-click='mapSearch.toggleCheckbox("banheiro", 1)')
 													label(for='banho-1')
 												| 1 Banheiro
 										li
 											div
 												.checkbox-custom
-													input#banho-2(type='checkbox' value='2')
+													input#banho-2(name='banheiro' type='checkbox' value='2' ng-click='mapSearch.toggleCheckbox("banheiro", 2)')
 													label(for='banho-2')
 												| 2 Banheiros
 										li
 											div
 												.checkbox-custom
-													input#banho-3(type='checkbox' value='3')
+													input#banho-3(name='banheiro' type='checkbox' value='3' ng-click='mapSearch.toggleCheckbox("banheiro", 3)')
 													label(for='banho-3')
 												| 3 Banheiros
 										li
 											div
 												.checkbox-custom
-													input#banho-4(type='checkbox' value='4')
+													input#banho-4(name='banheiro' type='checkbox' value='4' ng-click='mapSearch.toggleCheckbox("banheiro", 4)')
 													label(for='banho-4')
 												| 4+ Banheiros
 
@@ -173,19 +173,19 @@
 										li
 											div
 												.radio-custom
-													input#suite-todos(name='suite' type='radio' value='0' checked)
+													input#suite-todos(name='suite' type='radio' value='0' ng-model='mapSearch.search.suite')
 													label(for='suite-todos')
 												| Todos
 										li
 											div
 												.radio-custom
-													input#suite-sem(name='suite' type='radio' value='1')
+													input#suite-sem(name='suite' type='radio' value='1' ng-model='mapSearch.search.suite')
 													label(for='suite-sem')
 												| Sem suíte
 										li
 											div
 												.radio-custom
-													input#suite-com(name='suite' type='radio' value='2')
+													input#suite-com(name='suite' type='radio' value='2' ng-model='mapSearch.search.suite')
 													label(for='suite-com')
 												| Com suíte
 
@@ -199,19 +199,19 @@
 										li
 											div
 												.radio-custom
-													input#garagem-todos(name='garagem' type='radio' value='0' checked)
+													input#garagem-todos(name='garagem' type='radio' value='0' ng-model='mapSearch.search.garagem')
 													label(for='garagem-todos')
 												| Todos
 										li
 											div
 												.radio-custom
-													input#garagem-sem(name='garagem' type='radio' value='1')
+													input#garagem-sem(name='garagem' type='radio' value='1' ng-model='mapSearch.search.garagem')
 													label(for='garagem-sem')
 												| Sem garagem
 										li
 											div
 												.radio-custom
-													input#garagem-com(name='garagem' type='radio' value='2')
+													input#garagem-com(name='garagem' type='radio' value='2' ng-model='mapSearch.search.garagem')
 													label(for='garagem-com')
 												| Com garagem
 
@@ -231,25 +231,25 @@
 													li
 														div
 															.checkbox-custom
-																input#dorm-1(type='checkbox' value='1')
+																input#dorm-1(name='dormitorio' type='checkbox' value='1' ng-click='mapSearch.toggleCheckbox("dormitorio", 1)')
 																label(for='dorm-1')
 															| 1 Dorm
 													li
 														div
 															.checkbox-custom
-																input#dorm-2(type='checkbox' value='2')
+																input#dorm-2(name='dormitorio' type='checkbox' value='2' ng-click='mapSearch.toggleCheckbox("dormitorio", 2)')
 																label(for='dorm-2')
 															| 2 Dorms
 													li
 														div
 															.checkbox-custom
-																input#dorm-3(type='checkbox' value='3')
+																input#dorm-3(name='dormitorio' type='checkbox' value='3' ng-click='mapSearch.toggleCheckbox("dormitorio", 3)')
 																label(for='dorm-3')
 															| 3 Dorms
 													li
 														div
 															.checkbox-custom
-																input#dorm-4(type='checkbox' value='4')
+																input#dorm-4(name='dormitorio' type='checkbox' value='4' ng-click='mapSearch.toggleCheckbox("dormitorio", 4)')
 																label(for='dorm-4')
 															| 4+ Dorms
 
@@ -261,25 +261,25 @@
 													li
 														div
 															.checkbox-custom
-																input#banho-1(type='checkbox' value='1')
+																input#banho-1(name='banheiro' type='checkbox' value='1' ng-click='mapSearch.toggleCheckbox("banheiro", 1)')
 																label(for='banho-1')
 															| 1 Banheiro
 													li
 														div
 															.checkbox-custom
-																input#banho-2(type='checkbox' value='2')
+																input#banho-2(name='banheiro' type='checkbox' value='2' ng-click='mapSearch.toggleCheckbox("banheiro", 2)')
 																label(for='banho-2')
 															| 2 Banheiros
 													li
 														div
 															.checkbox-custom
-																input#banho-3(type='checkbox' value='3')
+																input#banho-3(name='banheiro' type='checkbox' value='3' ng-click='mapSearch.toggleCheckbox("banheiro", 3)')
 																label(for='banho-3')
 															| 3 Banheiros
 													li
 														div
 															.checkbox-custom
-																input#banho-4(type='checkbox' value='4')
+																input#banho-4(name='banheiro' type='checkbox' value='4' ng-click='mapSearch.toggleCheckbox("banheiro", 4)')
 																label(for='banho-4')
 															| 4+ Banheiros
 
@@ -291,19 +291,19 @@
 													li
 														div
 															.radio-custom
-																input#suite-todos(name='suite' type='radio' value='0')
+																input#suite-todos(name='suite' type='radio' value='0' ng-model='mapSearch.search.suite')
 																label(for='suite-todos')
 															| Todos
 													li
 														div
 															.radio-custom
-																input#suite-sem(name='suite' type='radio' value='1')
+																input#suite-sem(name='suite' type='radio' value='1' ng-model='mapSearch.search.suite')
 																label(for='suite-sem')
 															| Sem suíte
 													li
 														div
 															.radio-custom
-																input#suite-com(name='suite' type='radio' value='2')
+																input#suite-com(name='suite' type='radio' value='2' ng-model='mapSearch.search.suite')
 																label(for='suite-com')
 															| Com suíte
 
@@ -315,26 +315,26 @@
 													li
 														div
 															.radio-custom
-																input#garagem-todos(name='garagem' type='radio' value='0')
+																input#garagem-todos(name='garagem' type='radio' value='0' ng-model='mapSearch.search.garagem')
 																label(for='garagem-todos')
 															| Todos
 													li
 														div
 															.radio-custom
-																input#garagem-sem(name='garagem' type='radio' value='1')
+																input#garagem-sem(name='garagem' type='radio' value='1' ng-model='mapSearch.search.garagem')
 																label(for='garagem-sem')
 															| Sem garagem
 													li
 														div
 															.radio-custom
-																input#garagem-com(name='garagem' type='radio' value='2')
+																input#garagem-com(name='garagem' type='radio' value='2' ng-model='mapSearch.search.garagem')
 																label(for='garagem-com')
 															| Com garagem
 										.code-search
 											h4.text-primary
 												| Código do imóvel
-											input.form-control(placeholder='Ex. 988021')
-											button.btn.btn-block.btn-lg.btn-primary.offset-top-15 Buscar
+											input.form-control(placeholder='Ex. 988021' ng-model='mapSearch.search.codigo')
+											button.btn.btn-block.btn-lg.btn-primary.offset-top-15(type='submit') Buscar
 
 	.uber-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
 		.map-loading(ng-if='isMapLoading()')

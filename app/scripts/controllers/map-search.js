@@ -6,9 +6,9 @@
 	angular.module('alabama.controllers')
 		.controller('MapSearchCtrl', MapSearchCtrl);
 
-	MapSearchCtrl.$inject = [ '$scope', '$filter', '$window', '$timeout', 'NgMap', 'Filters' ];
+	MapSearchCtrl.$inject = [ '$scope', '$filter', '$window', '$timeout', 'NgMap', 'Filters', 'ImmobileManager' ];
 
-	function MapSearchCtrl($scope, $filter, $window, $timeout, NgMap, Filters) {
+	function MapSearchCtrl($scope, $filter, $window, $timeout, NgMap, Filters, ImmobileManager) {
 
 		var self = this,
 			clusterUrl = "https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m",
@@ -143,6 +143,21 @@
 
 		this.search = { };
 
+		this.toggleCheckbox = function(key, value) {
+			if (!self.search[key] || !self.search[key].length) {
+				self.search[key] = [ value ];
+				return;
+			}
+
+			var index = self.search[key].indexOf(value);
+			
+			if (index < 0) {
+				self.search[key].push(value);
+			} else {
+				self.search[key].splice(index, 1);
+			}
+		};
+
 		this.sliderPrice = {
 			options: {
 				disabled: false,
@@ -231,11 +246,18 @@
 			});
 		}
 
-		$window.addEventListener('resize', recalcFiltersPosition);
+		function recalcInnerHeight() {
+			$scope.innerHeight = $window.innerHeight - jQuery('#header').height() - jQuery('#filters-menu').height();
+		}
+
+		$window.addEventListener('resize', function() {
+			recalcFiltersPosition();
+			recalcInnerHeight();
+		});
 
 		$scope.$on('$viewContentLoaded', function() {
 			recalcFiltersPosition();
-			$scope.innerHeight = $window.innerHeight - jQuery('#header').height() - jQuery('#filters-menu').height();
+			recalcInnerHeight();
 			
 			jQuery('.dropdown[name="slider"]').on('shown.bs.dropdown', function () {
 				$scope.$broadcast('reCalcViewDimensions');
@@ -244,7 +266,20 @@
 			jQuery('.dropdown-menu').click(function(e) {
 				e.stopPropagation();
 			});
+
+			loadAll();
 		});
+
+		function loadAll() {
+			_isLoading++;
+			ImmobileManager.loadMap(null, self.filters).then(function(success) {
+				console.log(success);
+				_isLoading = Math.max(_isLoading - 1, 0);
+			}, function(error) {
+				console.log(error);
+				_isLoading = Math.max(_isLoading - 1, 0);
+			});
+		}
 
 		self.dynMarkers = [];
 		NgMap.getMap().then(function(map) {
@@ -274,6 +309,20 @@
 			self.selected.parking = 12;
 			
 			self.map.showInfoWindow("search-info-window", id);
+		};
+
+		$scope.teste = function() {
+			// var serialized = jQuery('form[name="filters"]').serializeArray(),
+			// 	parsed = { };
+
+			// angular.forEach(serialized, function(item) {
+			// 	if (!parsed[item.name]) 
+			// 		parsed[item.name] = [ ];
+
+			// 	parsed[item.name].push(item.value);
+			// });
+
+			console.log(self.search);
 		};
 
 	}

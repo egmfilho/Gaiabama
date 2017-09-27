@@ -55,7 +55,7 @@ angular.module('alabama.services')
 
 					deferred.resolve({info: immobileData.data.info, data: array});
 				}, function(error) {
-					console.log('deu erro: ' + error);
+					console.error('deu erro', error);
 					deferred.reject();
 				});
 
@@ -85,7 +85,7 @@ angular.module('alabama.services')
 
 					deferred.resolve(array);
 				}, function(error) {
-					console.log('deu erro: ' + error);
+					console.error('deu erro', error);
 					deferred.reject();
 				});
 
@@ -115,7 +115,7 @@ angular.module('alabama.services')
 
 					deferred.resolve(array);
 				}, function(error) {
-					console.log('deu erro: ' + error);
+					console.error('deu erro', error);
 					deferred.reject();
 				});
 
@@ -145,7 +145,63 @@ angular.module('alabama.services')
 
 					deferred.resolve(array);
 				}, function(error) {
-					console.log('deu erro: ' + error);
+					console.error('deu erro', error);
+					deferred.reject();
+				});
+
+				return deferred.promise;
+			},
+
+			loadMap: function(limit, filtros) {
+				var deferred = $q.defer(),
+					filters, data;
+
+				filters = !filtros ? {} : {
+					immobile_code: filtros.codigo,
+					immobile_type: filtros.categoria,
+					immobile_address: {
+						city_id: filtros.cidade || [],
+						district_id: filtros.bairro || []
+					},
+					immobile_category_id: filtros.tipo || [],
+					immobile_area_total: {
+						min: filtros.minArea,
+						max: filtros.maxArea
+					},
+					immobile_value: {
+						min: filtros.minValue,
+						max: filtros.maxValue
+					},
+					immobile_bedroom: filtros.dormitorios || [],
+					immobile_bathroom: filtros.banheiros || [],
+					immobile_suite: filtros.suite || null,
+					immobile_parking_spot: filtros.garagem || null,
+					order: filtros.order
+				};
+
+				data = {
+					get_immobile_address: true,
+					get_address_district: true,
+					get_address_city: true,
+					get_address_uf: true,
+					limit: limit
+				};
+
+				$http({
+					method: 'POST',
+					url: URLS.root + 'api/immobile.php?getList',
+					crossDomain: true,
+					data: Object.assign(data, filters)
+				}).then(function(immobileData) {
+					var array = [ ];						
+					
+					array = immobileData.data.data.map(function(i) {
+						return new Immobile(i);
+					});
+
+					deferred.resolve({ info: immobileData.data.info, data: array });
+				}, function(error) {
+					console.error('deu erro', error);
 					deferred.reject();
 				});
 
