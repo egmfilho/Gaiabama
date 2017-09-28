@@ -6,3 +6,13 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^(.*)$ /#/$1
+
+### VERSAO ALABAMA
+# RewriteEngine On
+
+# RewriteBase /
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{HTTP_HOST} ^(www.grupopaivaweb.com.br|www.grupopaiva.net|www.pnimobiliaria.com.br)$
+# RewriteRule ^(.*)$ /paiva/#/$1

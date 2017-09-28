@@ -6,13 +6,17 @@
 	angular.module('alabama.controllers')
 		.controller('MapSearchCtrl', MapSearchCtrl);
 
-	MapSearchCtrl.$inject = [ '$scope', '$filter', '$window', '$timeout', 'NgMap', 'Filters', 'ImmobileManager' ];
+	MapSearchCtrl.$inject = [ '$scope', '$filter', '$location', '$window', '$timeout', 'NgMap', 'Filters', 'ImmobileManager' ];
 
-	function MapSearchCtrl($scope, $filter, $window, $timeout, NgMap, Filters, ImmobileManager) {
+	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, NgMap, Filters, ImmobileManager) {
 
 		var self = this,
 			clusterUrl = "https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m",
 			_isLoading = 0;
+
+		function getParams() {
+			
+		}
 
 		$scope.isMapLoading = function() {
 			return _isLoading > 0;
@@ -146,25 +150,37 @@
 		this.toggleCheckbox = function(key, value) {
 			if (!self.search[key] || !self.search[key].length) {
 				self.search[key] = [ value ];
-				return;
-			}
-
-			var index = self.search[key].indexOf(value);
-			
-			if (index < 0) {
-				self.search[key].push(value);
 			} else {
-				self.search[key].splice(index, 1);
+				var index = self.search[key].indexOf(value);
+				
+				if (index < 0) {
+					self.search[key].push(value);
+				} else {
+					self.search[key].splice(index, 1);
+				}
 			}
 		};
 
+		this.updateSliderValues = function() {
+			self.search.minValue = self.sliderPrice.min;
+			self.search.maxValue = self.sliderPrice.max;
+
+			self.search.minArea = self.sliderArea.min;
+			self.search.maxArea = self.sliderArea.max;
+
+			console.log('helecopeto');
+		};
+
 		this.sliderPrice = {
+			min: 0,
+			max: 1,
 			options: {
 				disabled: false,
 				floor: 1,
 				ceil: 2000000,
+				hidePointerLabels: true,
 				hideLimitLabels: true,
-				// logScale: true,
+				onEnd: self.updateSliderValues,
 	
 				customValueToPosition: function(val, minVal, maxVal) {
 					val = Math.sqrt(val);
@@ -197,11 +213,15 @@
 		};
 	
 		this.sliderArea = {
+			min: 0,
+			max: 1,
 			options: {
 				floor: 1,
 				ceil: 5000,
+				hidePointerLabels: true,
 				hideLimitLabels: true,
 				showTicks: false,
+				onEnd: self.updateSliderValues,
 				translate: function(value, sliderId, label) {
 	
 					switch (label) {
@@ -218,21 +238,23 @@
 
 		this.filters = new Filters();
 		this.filters.load().then(function(res) {
-			self.search.minValue = self.search.minValue ? self.search.minValue : parseFloat(self.filters.value.min);
-			self.search.maxValue = self.search.maxValue ? self.search.maxValue : parseFloat(self.filters.value.max);
+			self.sliderPrice.min = parseFloat(self.filters.value.min);
+			self.sliderPrice.max = parseFloat(self.filters.value.max);
 			self.sliderPrice.options.floor = parseFloat(self.filters.value.min);
 			self.sliderPrice.options.ceil = parseFloat(self.filters.value.max);
-			self.sliderPrice.options.hidePointerLabels = true;
-			self.sliderPrice.options.hideLimitLabels = true;
 	
-			self.search.minArea = self.search.minArea ? self.search.minArea : parseFloat(self.filters.area.min);
-			self.search.maxArea = self.search.maxArea ? self.search.maxArea : parseFloat(self.filters.area.max);
+			self.sliderArea.min = parseFloat(self.filters.area.min);
+			self.sliderArea.max = parseFloat(self.filters.area.max);
 			self.sliderArea.options.floor = parseFloat(self.filters.area.min);		
 			self.sliderArea.options.ceil = parseFloat(self.filters.area.max);
-			self.sliderArea.options.hidePointerLabels = true;
-			self.sliderArea.options.hideLimitLabels = true;
 	
 			self.search.order = self.filters.order;
+
+			$scope.$watch(function() {
+				return self.search;
+			}, function(newVal, oldVal) {
+				self.loadAll();
+			}, true);
 		});
 
 		function recalcFiltersPosition() {
@@ -251,26 +273,32 @@
 		}
 
 		$window.addEventListener('resize', function() {
-			recalcFiltersPosition();
-			recalcInnerHeight();
+			console.log('ogo');
+			$timeout(function() {
+				recalcFiltersPosition();
+				recalcInnerHeight();
+			});
 		});
 
 		$scope.$on('$viewContentLoaded', function() {
 			recalcFiltersPosition();
-			recalcInnerHeight();
+			
+			$timeout(function() {
+				recalcInnerHeight();
+
+				jQuery('.dropdown-menu').click(function(e) {
+					e.stopPropagation();
+				});
+			}, 100);
 			
 			jQuery('.dropdown[name="slider"]').on('shown.bs.dropdown', function () {
 				$scope.$broadcast('reCalcViewDimensions');
 			});
-
-			jQuery('.dropdown-menu').click(function(e) {
-				e.stopPropagation();
-			});
-
-			loadAll();
 		});
 
-		function loadAll() {
+		self.loadAll = function() {
+			console.log(self.search);
+
 			_isLoading++;
 			ImmobileManager.loadMap(null, self.filters).then(function(success) {
 				console.log(success);
@@ -280,6 +308,12 @@
 				_isLoading = Math.max(_isLoading - 1, 0);
 			});
 		}
+
+		self.getImmobileByCode = function(code) {
+			if (!code) return;
+
+			console.log('get by code', code);
+		};
 
 		self.dynMarkers = [];
 		NgMap.getMap().then(function(map) {
@@ -309,20 +343,6 @@
 			self.selected.parking = 12;
 			
 			self.map.showInfoWindow("search-info-window", id);
-		};
-
-		$scope.teste = function() {
-			// var serialized = jQuery('form[name="filters"]').serializeArray(),
-			// 	parsed = { };
-
-			// angular.forEach(serialized, function(item) {
-			// 	if (!parsed[item.name]) 
-			// 		parsed[item.name] = [ ];
-
-			// 	parsed[item.name].push(item.value);
-			// });
-
-			console.log(self.search);
 		};
 
 	}

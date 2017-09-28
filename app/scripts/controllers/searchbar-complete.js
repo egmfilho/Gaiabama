@@ -125,7 +125,7 @@ function SearchBar($rootScope, $scope, $location, $filter, $timeout, Filters) {
 		angular.extend(self.search, value);
 		$timeout(function() { 
 			jQuery('.selectpicker').selectpicker('refresh'); 
-			$scope.$broadcast('rzSliderForceRender');
+			$scope.$broadcast('reCalcViewDimensions');
 		});
 	}
 

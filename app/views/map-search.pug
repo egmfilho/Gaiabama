@@ -2,7 +2,7 @@
 	.container-fluid
 		.row
 			.col-xs-12
-				form#filters-menu(name='filters' ng-submit='teste()' novalidate)
+				form#filters-menu(name='filters' ng-submit='mapSearch.loadAll()' novalidate)
 					nav.navbar.navbar-default.drop-shadow(role='navigation')
 						button.navbar-toggle(data-toggle='collapse' data-target='#filters-menu .collapse')
 							span.icon-bar
@@ -74,12 +74,12 @@
 									.dropdown-menu.dropdown-custom
 										.slider
 											.input-container.price-label
-												input.form-control(name='minValue' ng-model='mapSearch.search.minValue')
+												input.form-control(name='minValue' ng-model='mapSearch.sliderPrice.min' ng-model-options='{ debounce: 1000 }' ng-change='mapSearch.updateSliderValues()' number-only)
 												span R$
 											.slider-container
-												rzslider(rz-slider-model='mapSearch.search.minValue' rz-slider-high='mapSearch.search.maxValue' rz-slider-options='mapSearch.sliderPrice.options')
+												rzslider(rz-slider-model='mapSearch.sliderPrice.min' rz-slider-high='mapSearch.sliderPrice.max' rz-slider-options='mapSearch.sliderPrice.options')
 											.input-container.price-label
-												input.form-control(name='maxValue' ng-model='mapSearch.search.maxValue')
+												input.form-control(name='maxValue' ng-model='mapSearch.sliderPrice.max' ng-model-options='{ debounce: 1000 }' ng-change='mapSearch.updateSliderValues()' number-only)
 												span R$
 
 								li.dropdown(name='slider')
@@ -91,12 +91,12 @@
 									.dropdown-menu.dropdown-custom
 										.slider
 											.input-container.area-label
-												input.form-control(name='minArea' ng-model='mapSearch.search.minArea')
+												input.form-control(name='minArea' ng-model='mapSearch.sliderArea.min' ng-model-options='{ debounce: 1000 }' ng-change='mapSearch.updateSliderValues()' number-only)
 												span m&#178;
 											.slider-container
-												rzslider(rz-slider-model='mapSearch.search.minArea' rz-slider-high='mapSearch.search.maxArea' rz-slider-options='mapSearch.sliderArea.options')
+												rzslider(rz-slider-model='mapSearch.sliderArea.min' rz-slider-high='mapSearch.sliderArea.max' rz-slider-options='mapSearch.sliderArea.options')
 											.input-container.area-label
-												input.form-control(name='maxArea' ng-model='mapSearch.search.maxArea')
+												input.form-control(name='maxArea' ng-model='mapSearch.sliderArea.max' ng-model-options='{ debounce: 1000 }' ng-change='mapSearch.updateSliderValues()' number-only)
 												span m&#178;
 
 								li.dropdown(ng-if='innerWidth >= 1000')
@@ -333,8 +333,8 @@
 										.code-search
 											h4.text-primary
 												| Código do imóvel
-											input.form-control(placeholder='Ex. 988021' ng-model='mapSearch.search.codigo')
-											button.btn.btn-block.btn-lg.btn-primary.offset-top-15(type='submit') Buscar
+											input.form-control(placeholder='Ex. 988021' ng-model='code')
+											button.btn.btn-block.btn-lg.btn-primary.offset-top-15(type='button' ng-click='mapSearch.getImmobileByCode(code)') Buscar
 
 	.uber-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
 		.map-loading(ng-if='isMapLoading()')

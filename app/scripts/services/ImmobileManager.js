@@ -189,7 +189,7 @@ angular.module('alabama.services')
 
 				$http({
 					method: 'POST',
-					url: URLS.root + 'api/immobile.php?getList',
+					url: URLS.root + 'api/map.php?getList',
 					crossDomain: true,
 					data: Object.assign(data, filters)
 				}).then(function(immobileData) {

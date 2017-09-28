@@ -28,7 +28,8 @@
     "angular-i18n": "^1.6.2",
     "angular-bootstrap-lightbox": "^0.12.0",
     "angular-slick": "^0.2.1",
-    "ngmap": "^1.18.4"
+    "ngmap": "^1.18.4",
+    "egmfilho-input-filters": "https://github.com/egmfilho/input-filters.git"
   },
   "overrides": {
     "angular-i18n": {

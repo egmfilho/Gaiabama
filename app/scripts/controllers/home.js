@@ -43,7 +43,6 @@ angular.module('alabama.controllers')
 		ImmobileManager.loadAllFeatured().then(function(success) {
 			self.featuredList = [ ];
 			angular.forEach(success, function(item) {			
-				// angular.extend(self.featuredList[index], item.convertToCardInfo());
 				self.featuredList.push(item.convertToCardInfo());
 			});
 			$scope.$broadcast('update-cardCarousel');
