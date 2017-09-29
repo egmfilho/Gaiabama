@@ -337,7 +337,7 @@
 											button.btn.btn-block.btn-lg.btn-primary.offset-top-15(type='button' ng-click='mapSearch.getImmobileByCode(code)') Buscar
 
 	.uber-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
-		.map-loading(ng-if='isMapLoading()')
+		.map-loading(ng-if='mapSearch.isLoading()')
 			.loading-spinner
 				.spinner(style='transform: scale(2)')
 					.rect1
@@ -346,28 +346,37 @@
 					.rect4
 					.rect5
 
-		//- .hidden-xs.col-sm-5.col-md-4
 		.side-menu-container
 			.row.side-menu
 				.col-sm-12
 					.summary.clearfix.offset-top-15
-						span.text-primary.text-md 20 Imóveis encontrados
+						span.text-primary.text-md {{mapSearch.array.length}} Imóveis encontrados
 						button.btn.btn-primary.btn-outline.pull-right() Limpar filtros
 
 				.cards-container
-					.col-sm-12.col-lg-6(ng-repeat='n in mapSearch.positions')
+					.col-sm-12.col-lg-6(ng-repeat='n in mapSearch.cards')
 						card(
-							title='{{n.message}}'
-							subtitle='Teresopolis - Bairro doido'
-							picture='{{n.pic}}'
-							pictureLg='{{n.pic}}'
-							description='{{n.message}}'
+							code='{{n.code}}'
+							picture='{{n.picture}}'
+							pictureLg='{{n.pictureLg}}'
+							title='{{n.title}}'
+							parsedName='{{n.parsedName}}'
+							subtitle='{{n.subtitle}}'
+							description='{{n.description}}'
+							category='{{n.category}}'
+							area='{{n.area}}'
+							price='{{n.price}}'
+							url='{{n.url}}'
+							bed='{{n.bed}}'
+							suite='{{n.suite}}'
+							bath='{{n.bath}}'
+							parking='{{n.parking}}'
+							thumbs='n.thumbs'
 						)
 
-		//- .col-xs-12.col-sm-7.col-md-8.map-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
 		.map-container
-			ng-map.map(default-style="false" center='[40.74, -74.18]' zoom='15' scrollwheel='true' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
-				custom-marker(id='marker-{{p.code}}' position='[{{p.position[0]}}, {{p.position[1]}}]' on-click='mapSearch.showInfo(event, "marker-{{p.code}}")' ng-repeat='p in mapSearch.positions track by $index')
+			ng-map#map-search.map(default-style="false" lazy-init='true' scrollwheel='true' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+				custom-marker(id='{{n.immobile_id}}' position='[{{n.immobile_latitude}}, {{n.immobile_longitude}}]' on-click='mapSearch.showInfo(event, {{n.immobile_id}})' ng-repeat='n in mapSearch.array track by $index')
 					.custom-marker
 						.head
 							.hole

@@ -161,7 +161,6 @@ angular.module('alabama.services')
 					immobile_type: filtros.categoria,
 					immobile_address: {
 						city_id: filtros.cidade || [],
-						district_id: filtros.bairro || []
 					},
 					immobile_category_id: filtros.tipo || [],
 					immobile_area_total: {
@@ -172,8 +171,8 @@ angular.module('alabama.services')
 						min: filtros.minValue,
 						max: filtros.maxValue
 					},
-					immobile_bedroom: filtros.dormitorios || [],
-					immobile_bathroom: filtros.banheiros || [],
+					immobile_bedroom: filtros.dormitorio || [],
+					immobile_bathroom: filtros.banheiro || [],
 					immobile_suite: filtros.suite || null,
 					immobile_parking_spot: filtros.garagem || null,
 					order: filtros.order
@@ -184,12 +183,13 @@ angular.module('alabama.services')
 					get_address_district: true,
 					get_address_city: true,
 					get_address_uf: true,
+					get_immobile_gallery: true,
 					limit: limit
 				};
 
 				$http({
 					method: 'POST',
-					url: URLS.root + 'api/map.php?getList',
+					url: URLS.root + 'api/map.php?action=getList',
 					crossDomain: true,
 					data: Object.assign(data, filters)
 				}).then(function(immobileData) {
@@ -199,7 +199,7 @@ angular.module('alabama.services')
 						return new Immobile(i);
 					});
 
-					deferred.resolve({ info: immobileData.data.info, data: array });
+					deferred.resolve({ data: array });
 				}, function(error) {
 					console.error('deu erro', error);
 					deferred.reject();

@@ -1,13 +1,13 @@
 div(ng-non-bindable)
 	.preview
 		
-		.thumb
+		.thumb(style='background-image: url("{{ mapSearch.selected.picture }}")')
 		
 		.description
-			.title Título do imóvel
+			.title {{ mapSearch.selected.title | truncate: 25 }}
 		
 			.text.text-gray
-				| {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum condimentum lorem id faucibus. Maecenas rutrum sit amet neque nec sagittis. Proin tincidunt massa nec mi tristique, vel volutpat nibh laoreet.' | truncate: 150 }}
+				| {{ mapSearch.selected.description | truncate: 150 }}
 
 				.icons
 					span(name='icon' data-toggle='tooltip' data-placement='top' title='{{mapSearch.selected.area}} m2' ng-if='mapSearch.selected.area && mapSearch.selected.area > 0')
@@ -30,4 +30,4 @@ div(ng-non-bindable)
 						| {{mapSearch.selected.parking}}&nbsp;
 						i.fa.fa-car
 
-			button.btn.btn-block.btn-primary Detalhes
+			a.btn.btn-block.btn-primary(ng-href='{{ mapSearch.selected.url }}') Detalhes
