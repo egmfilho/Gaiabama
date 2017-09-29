@@ -14,6 +14,7 @@
 			clusterUrl = "https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m",
 			_map = null,
 			_markerClusterer = null,
+			_clusterClickListener = null,
 			_isLoading = 0;
 
 		this.isLoading = function() {
@@ -184,7 +185,9 @@
 
 				if (!_map) {
 					console.log('Iniciando o mapa...');
+					
 					_map = NgMap.initMap('map-search');
+					
 					google.maps.event.addListener(_map, 'idle', showVisibleMarkers);
 				}
 
@@ -227,10 +230,27 @@
 
 				map.setCenter(bounds.getCenter());
 				map.fitBounds(bounds);
+
+				if (!_clusterClickListener) {
+					_clusterClickListener = google.maps.event.addListener(_markerClusterer, 'clusterclick', function (cluster) {
+						if (_map.getZoom() >= 20) {
+							var ids = cluster.getMarkers().map(function(n) { return n.id });
+							console.log(ids);
+							self.showInfo(null, ids, cluster);
+						}
+					});
+				}
 			});
 		}
 
-		self.showInfo = function(event, id) {
+		self.showInfo = function(event, id, cluster) {
+			if (Array.isArray(id)) {
+				var infoWindow = $scope.map.infoWindows["search-info-window"];
+				infoWindow.setPosition(cluster.getCenter());
+				_map.showInfoWindow("search-info-window", cluster);
+				return;
+			}
+
 			self.selected = self.array.find(function(item) {
 				return item.immobile_id == id;
 			}).convertToCardInfo();
@@ -257,8 +277,6 @@
 
 				return a;
 			}, [ ]);
-
-			// console.log(markers.length + ' marcadores visíveis.');
 		}
 
 	}

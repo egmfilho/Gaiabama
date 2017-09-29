@@ -375,7 +375,7 @@
 						)
 
 		.map-container
-			ng-map#map-search.map(default-style="false" lazy-init='true' scrollwheel='true' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+			ng-map#map-search.map(default-style="false" lazy-init='true' max-zoom='20' scrollwheel='true' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
 				custom-marker(id='{{n.immobile_id}}' position='[{{n.immobile_latitude}}, {{n.immobile_longitude}}]' on-click='mapSearch.showInfo(event, {{n.immobile_id}})' ng-repeat='n in mapSearch.array track by $index')
 					.custom-marker
 						.head
