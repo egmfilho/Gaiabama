@@ -244,18 +244,29 @@
 		}
 
 		self.showInfo = function(event, id, cluster) {
+			var infoWindow = $scope.map.infoWindows["search-info-window"],
+				target;
+
 			if (Array.isArray(id)) {
-				var infoWindow = $scope.map.infoWindows["search-info-window"];
-				infoWindow.setPosition(cluster.getCenter());
-				_map.showInfoWindow("search-info-window", cluster);
-				return;
+				target = cluster;
+				infoWindow.setPosition(target.getCenter());
+			} else {
+				target = id.toString();				
 			}
 
-			self.selected = self.array.find(function(item) {
-				return item.immobile_id == id;
-			}).convertToCardInfo();
-			
-			_map.showInfoWindow("search-info-window", id.toString());
+			self.selected = self.array.reduce(function(a, b) {
+				if (Array.isArray(id)) {
+					if (id.indexOf(b.immobile_id) >= 0)
+						a.push(b.convertToCardInfo());
+				} else {
+					if (b.immobile_id == id)
+						a.push(b.convertToCardInfo());
+				}
+				
+				return a;
+			}, [ ]);
+
+			_map.showInfoWindow("search-info-window", target);
 		};
 
 		function showVisibleMarkers() {
