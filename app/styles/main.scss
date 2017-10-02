@@ -6,16 +6,16 @@ $paiva: #06648F;
 $paiva2: #FFF;
 
 
-$gaia: lighten(#0F1342, 15%);
+$gaia: lighten(#322310, 5%);
 $gaia2: #f5be4e;
 
 $background-color: #eeeeee;
 
 $main-color: $gaia;
-$main-color-darker: darken($main-color, 23%);
-$main-color-dark: darken($main-color, 13.5%);
-$main-color-light: lighten($main-color, 13.5%);
-$main-color-lighter: lighten($main-color, 20%);
+$main-color-darker: darken($main-color, 13%);
+$main-color-dark: darken($main-color, 6.5%);
+$main-color-light: lighten($main-color, 6.5%);
+$main-color-lighter: lighten($main-color, 13%);
 
 $secondary-color: $gaia2;
 

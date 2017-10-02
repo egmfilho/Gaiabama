@@ -21,7 +21,7 @@
 										li(ng-repeat='c in mapSearch.filters.city track by $index')
 											div
 												.checkbox-custom
-													input(id='cidade-{{$index + 1}}' name='cidade' type='checkbox' ng-value='c.city_id' ng-click='mapSearch.toggleCheckbox("cidade", c.city_id)')
+													input(id='cidade-{{$index + 1}}' name='cidade' type='checkbox' ng-value='c.city_id' ng-click='mapSearch.toggleCheckbox("cidade", c.city_id)' checked)
 													label(for='cidade-{{$index + 1}}')
 												| {{c.city_name}}
 
@@ -350,7 +350,8 @@
 			.row.side-menu
 				.col-sm-12
 					.summary.clearfix.offset-top-15
-						span.text-primary.text-md {{mapSearch.array.length}} Imóveis encontrados
+						//- span.text-primary.text-md {{mapSearch.array.length}} Imóveis encontrados
+						span.text-primary.text-md Exibindo {{mapSearch.cards.length}} {{mapSearch.cards.length == 1 ? 'imóvel' : 'imóveis'}}
 						button.btn.btn-primary.btn-outline.pull-right() Limpar filtros
 
 				.cards-container

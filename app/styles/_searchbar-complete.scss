@@ -62,6 +62,10 @@
 			}
 		}
 
+		.rz-bubble {
+			color: $main-color-lighter;
+		}
+
 		.rz-pointer {
 			background-color: $main-color;
 			outline: none;
@@ -78,9 +82,9 @@
 }
 
 .searchbar-complete {
-	$input-bg: #1f2347;
-	$input-border: darken(#1f2347, 15%);
-	$input-color-placeholder: #585E8F;
+	$input-bg: $main-color-dark;
+	$input-border: $main-color-darker;
+	$input-color-placeholder: $main-color-lighter;
 
 	input {
 		background-color: $input-bg;
@@ -100,7 +104,7 @@
 		}
 
 		span.bs-caret {
-			color: #777;
+			color: $main-color-darker;
 		}
 	}
 

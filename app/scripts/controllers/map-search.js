@@ -127,6 +127,10 @@
 	
 			self.search.order = self.filters.order;
 
+			self.search.cidade = self.filters.city.map(function(n) {
+				return n.city_id;
+			});
+
 			$scope.$watch(function() {
 				return self.search;
 			}, function(newVal, oldVal) {
@@ -262,7 +266,7 @@
 					if (b.immobile_id == id)
 						a.push(b.convertToCardInfo());
 				}
-				
+
 				return a;
 			}, [ ]);
 
@@ -270,6 +274,7 @@
 		};
 
 		function showVisibleMarkers() {
+			console.log('updating markers');
 			var bounds = _map.getBounds(),
 				markers = [];
 
@@ -282,12 +287,14 @@
 				}
 			});
 
-			self.cards = self.array.reduce(function(a, b) {
-				if (markers.indexOf(b.immobile_id.toString()) >= 0)
-					a.push(b.convertToCardInfo());
-
-				return a;
-			}, [ ]);
+			$timeout(function() {
+				self.cards = self.array.reduce(function(a, b) {
+					if (markers.indexOf(b.immobile_id.toString()) >= 0)
+						a.push(b.convertToCardInfo());
+	
+					return a;
+				}, [ ]);
+			});
 		}
 
 	}
