@@ -6,9 +6,9 @@
 	angular.module('alabama.controllers')
 		.controller('MapSearchCtrl', MapSearchCtrl);
 
-	MapSearchCtrl.$inject = [ '$scope', '$filter', '$location', '$window', '$timeout', 'NgMap', 'Filters', 'ImmobileManager' ];
+	MapSearchCtrl.$inject = [ '$scope', '$filter', '$location', '$window', '$timeout', 'Filters', 'ImmobileManager' ];
 
-	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, NgMap, Filters, ImmobileManager) {
+	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, Filters, ImmobileManager) {
 
 		var self = this,
 			clusterUrl = "https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m",
@@ -16,6 +16,54 @@
 			_markerClusterer = null,
 			_clusterClickListener = null,
 			_isLoading = 0;
+
+		self.map = {
+			center: { latitude: 0, longitude: 0},
+			bounds: { },
+			zoom: 4,
+			options: {
+				maxZoom: 20
+			},
+			control: { },
+			markers: [ ],
+			window: {
+				coords: { latitude: 0, longitude: 0 },
+				selected: { },
+				show: false,
+				options: {
+					pixelOffset: { width: 0, height: 0 }
+				}
+			},
+			events: {
+				idle: function() {
+					var bounds = self.map.control.getGMap().getBounds();
+	
+					self.cards = [ ];
+					angular.forEach(self.map.markers, function(value, key) {
+						if (bounds.contains({ "lat": parseFloat(value.latitude), "lng": parseFloat(value.longitude) }) === true) {
+							self.cards.push(value.card);
+						}
+					});
+				}
+			},
+			markerEvents: {
+				click: function(marker, eventName, model, args) {
+					self.map.window.selected = [ model ];
+					self.map.window.coords = model;
+					self.map.window.show = true;
+				}
+			},
+			clusterEvents: {
+				click: function(cluster, clusterModels) {
+					console.log(cluster);
+					if (self.map.control.getGMap().getZoom() >= 20) {
+						self.map.window.selected = clusterModels.map(function(n) { return n.card });
+						self.map.window.coords = cluster.center;
+						self.map.window.show = true;
+					}
+				}
+			}
+		};
 
 		this.isLoading = function() {
 			return _isLoading > 0;
@@ -187,12 +235,21 @@
 					return n.convertToCardInfo();
 				});
 
+				self.map.markers = self.array.map(function(n) {
+					return {
+						latitude: n.immobile_latitude,
+						longitude: n.immobile_longitude,
+						id: n.immobile_id,
+						card: n.convertToCardInfo()
+					}
+				});
+
 				if (!_map) {
-					console.log('Iniciando o mapa...');
+					// console.log('Iniciando o mapa...');
 					
-					_map = NgMap.initMap('map-search');
+					// _map = NgMap.initMap('map-search');
 					
-					google.maps.event.addListener(_map, 'idle', showVisibleMarkers);
+					// google.maps.event.addListener(_map, 'idle', showVisibleMarkers);
 				}
 
 				$timeout(function() {
@@ -220,6 +277,8 @@
 		}
 
 		function updateMap() {
+			return;
+
 			self.dynMarkers = [];
 			NgMap.getMap().then(function(map) {
 				var bounds = new google.maps.LatLngBounds();

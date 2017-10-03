@@ -376,7 +376,7 @@
 						)
 
 		.map-container
-			ng-map#map-search.map(default-style="false" lazy-init='true' max-zoom='20' scrollwheel='true' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
+			//- ng-map#map-search.map(default-style="false" lazy-init='true' max-zoom='20' scrollwheel='true' ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
 				custom-marker(id='{{n.immobile_id}}' position='[{{n.immobile_latitude}}, {{n.immobile_longitude}}]' on-click='mapSearch.showInfo(event, {{n.immobile_id}})' ng-repeat='n in mapSearch.array track by $index')
 					.custom-marker
 						.head
@@ -388,3 +388,7 @@
 							.arrow
 
 				info-window#search-info-window(template='../partials/map-preview.html')
+
+			ui-gmap-google-map(center='mapSearch.map.center' bounds='mapSearch.map.bounds' zoom='mapSearch.map.zoom' events='mapSearch.map.events' control='mapSearch.map.control' options='mapSearch.map.options')
+				ui-gmap-markers(models='mapSearch.map.markers' type='"cluster"' fit='true' coords='"self"' icon='"icon"' events='mapSearch.map.markerEvents' typeEvents='mapSearch.map.clusterEvents')
+				ui-gmap-window(show='mapSearch.map.window.show' coords='mapSearch.map.window.coords' templateUrl='"./partials/map-preview.html"' templateParameter='mapSearch.map.window.selected' options='mapSearch.map.window.options' ng-cloak)

@@ -19,8 +19,9 @@ angular.module('alabama', [
 		'egmfilho.inputFilters',
 		'slick',
 		'rzModule',
-		'ngMap',
-		'bootstrapLightbox'
+		// 'ngMap',
+		'bootstrapLightbox',
+		'uiGmapgoogle-maps'
 	])
 	.config(['$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
 		$httpProvider.interceptors.push('HttpInterceptor');
@@ -41,6 +42,12 @@ angular.module('alabama', [
 		LightboxProvider.getImageCaption = function(image) {
 			return image.label;
 		};
+	}])
+	.config(['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
+		uiGmapGoogleMapApiProvider.configure({
+			v: '3.26',
+			libraries: 'weather, geometry, visualization'
+		});
 	}])
 	.config(['$routeProvider', function($routeProvider) {
 

@@ -1,15 +1,15 @@
 'use script';
 
 angular.module('alabama.controllers')
-	.controller('ContatoCtrl', ['$rootScope', '$scope', '$timeout', 'NgMap', 'ImmobileManager', 'URLS', function($rootScope, $scope, $timeout, NgMap, ImmobileManager, URLS) {
+	.controller('ContatoCtrl', ['$rootScope', '$scope', '$timeout', 'ImmobileManager', 'URLS', function($rootScope, $scope, $timeout, ImmobileManager, URLS) {
 
 		var self = this;
 
 		self.enviando = false;
 
-		NgMap.getMap().then(function(map) {
-			self.map = map;
-		});
+		// NgMap.getMap().then(function(map) {
+			// self.map = map;
+		// });
 
 		this.mapInfo = {
 			title: 'Gaia',

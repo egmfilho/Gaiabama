@@ -29,7 +29,8 @@
     "angular-bootstrap-lightbox": "^0.12.0",
     "angular-slick": "^0.2.1",
     "ngmap": "^1.18.4",
-    "egmfilho-input-filters": "https://github.com/egmfilho/input-filters.git"
+    "egmfilho-input-filters": "https://github.com/egmfilho/input-filters.git",
+    "angular-google-maps": "^2.4.1"
   },
   "overrides": {
     "angular-i18n": {
