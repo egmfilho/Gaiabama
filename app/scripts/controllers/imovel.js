@@ -26,6 +26,205 @@ function ImovelCtrl($rootScope, $scope, $location, $window, $http, $timeout, Imm
 		mensagem: null
 	};
 
+	self.map = {
+		center: { latitude: 0, longitude: 0 },
+		zoom: 14,
+		options: {
+			clickableIcons: false,
+			maxZoom: 20,
+			styles: [
+				{
+					"featureType": "landscape",
+					"elementType": "geometry",
+					"stylers": [
+						{
+							"saturation": "-100"
+						},
+						{
+							"lightness": "-1"
+						},
+						{
+							"color": "#ddd4cc"
+						}
+					]
+				},
+				{
+					"featureType": "poi",
+					"elementType": "all",
+					"stylers": [
+						{
+							"visibility": "on"
+						}
+					]
+				},
+				{
+					"featureType": "poi",
+					"elementType": "geometry",
+					"stylers": [
+						{
+							"visibility": "simplified"
+						}
+					]
+				},
+				{
+					"featureType": "poi",
+					"elementType": "labels",
+					"stylers": [
+						{
+							"visibility": "on"
+						},
+						{
+							"lightness": "0"
+						}
+					]
+				},
+				{
+					"featureType": "poi",
+					"elementType": "labels.text.stroke",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+					]
+				},
+				{
+					"featureType": "poi.park",
+					"elementType": "geometry",
+					"stylers": [
+						{
+							"color": "#adcab2"
+						}
+					]
+				},
+				{
+					"featureType": "road",
+					"elementType": "labels.text",
+					"stylers": [
+						{
+							"color": "#545454"
+						}
+					]
+				},
+				{
+					"featureType": "road",
+					"elementType": "labels.text.stroke",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+					]
+				},
+				{
+					"featureType": "road.highway",
+					"elementType": "geometry.fill",
+					"stylers": [
+						{
+							"saturation": "-87"
+						},
+						{
+							"lightness": "-40"
+						},
+						{
+							"color": "#ffffff"
+						}
+					]
+				},
+				{
+					"featureType": "road.highway",
+					"elementType": "geometry.stroke",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+					]
+				},
+				{
+					"featureType": "road.highway.controlled_access",
+					"elementType": "geometry.fill",
+					"stylers": [
+						{
+							"color": "#f0f0f0"
+						},
+						{
+							"saturation": "-22"
+						},
+						{
+							"lightness": "-16"
+						}
+					]
+				},
+				{
+					"featureType": "road.highway.controlled_access",
+					"elementType": "geometry.stroke",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+					]
+				},
+				{
+					"featureType": "road.highway.controlled_access",
+					"elementType": "labels.icon",
+					"stylers": [
+						{
+							"visibility": "on"
+						}
+					]
+				},
+				{
+					"featureType": "road.arterial",
+					"elementType": "geometry.stroke",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+					]
+				},
+				{
+					"featureType": "road.local",
+					"elementType": "geometry.stroke",
+					"stylers": [
+						{
+							"visibility": "off"
+						}
+					]
+				},
+				{
+					"featureType": "water",
+					"elementType": "geometry.fill",
+					"stylers": [
+						{
+							"saturation": "-63"
+						},
+						{
+							"hue": "#00e4ff"
+						},
+						{
+							"lightness": "-10"
+						}
+					]
+				}
+			]
+		},
+		marker: { 
+			coords: { latitude: 0, longitude: 0 },
+			options: {
+				icon: '../images/marker.png',
+				click: function() {
+					self.map.window.show = !self.map.window.show;
+				}
+			}
+		},
+		window: {
+			options: {
+				show: false,
+			},
+			closeClick: function() {
+				self.map.window.show = false;
+			}
+		},
+	};
+
 	$scope.$on('$viewContentLoaded', function () {
 		$timeout(function() {
 			$scope.$broadcast('updateFilters', SearchFilters.get());
@@ -42,11 +241,16 @@ function ImovelCtrl($rootScope, $scope, $location, $window, $http, $timeout, Imm
 		if ($location.search()['codigo']) {
 			$rootScope.loading.load();
 			$scope.immobile.get($location.search()['codigo']).then(function(success) {
+				self.map.marker.coords.latitude = $scope.immobile.immobile_latitude;
+				self.map.marker.coords.longitude = $scope.immobile.immobile_longitude;
+				self.map.center = { latitude: self.map.marker.coords.latitude, longitude: self.map.marker.coords.longitude };
+				
 				self.ready = true;
-
-				angular.forEach($scope.immobile.getRelated(), function(item, index) {
-					self.related.push(item.convertToCardInfo());
+				
+				self.related = $scope.immobile.getRelated().map(function(n) {
+					return n.convertToCardInfo();
 				});
+				
 				self.interest.immobile_id = $scope.immobile.immobile_id;
 				self.interest.immobile_code = $scope.immobile.immobile_code;
 				self.interest.immobile_name = $scope.immobile.immobile_name;

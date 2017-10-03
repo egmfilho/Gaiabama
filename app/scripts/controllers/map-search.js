@@ -19,7 +19,6 @@
 			bounds: { },
 			zoom: 9,
 			options: {
-				
 				clickableIcons: false,
 				maxZoom: 20,
 				styles: [
@@ -250,9 +249,23 @@
 			return _isLoading > 0;
 		};
 
+		this.array = [];
 		this.cards = [];
 
-		this.search = { };
+		this.search = { 
+			codigo: null,
+			categoria: null,
+			cidade: [],
+			tipo: [],
+			minArea: null,
+			maxArea: null,
+			minValue: null,
+			maxValue: null,
+			dormitorio: [],
+			banheiro: [],
+			suite: null,
+			garagem: null
+		};
 
 		this.toggleCheckbox = function(key, value) {
 			if (!self.search[key] || !self.search[key].length) {
@@ -359,10 +372,33 @@
 				return n.city_id;
 			});
 
+			self.search.tipo = self.filters.category.map(function(n) {
+				return n.immobile_category_id;
+			});
+
+			self.loadAll();
 			$scope.$watch(function() {
 				return self.search;
 			}, function(newVal, oldVal) {
-				self.loadAll();
+				console.log(newVal);
+				self.cards = [ ];
+				self.map.markers = self.array.reduce(function(array, item) {
+					if ( !((newVal.minValue && item.immobile_value < newVal.minValue) || 
+						  (newVal.maxValue && item.immobile_value > newVal.maxValue) ||
+						  (newVal.minArea && item.immobile_area_total < newVal.minArea) || 
+						  (newVal.maxArea && item.immobile_area_total > newVal.maxArea) ||
+						  (newVal.tipo.length && newVal.tipo.indexOf(item.immobile_category_id) < 0) || 
+						  (newVal.categoria && newVal.categoria != item.immobile_type)) ) {
+
+						self.cards.push(item.convertToCardInfo());
+						array.push(item.convertToMapMarker());
+					}
+					
+					return array;
+				}, [ ]);
+
+				console.log(self.map.markers);
+
 			}, true);
 		});
 
@@ -388,7 +424,7 @@
 			});
 		});
 
-		$scope.$on('$viewContentLoaded', function() {
+		$scope.$on('$viewContentLoaded', function() {		
 			recalcFiltersPosition();
 			
 			$timeout(function() {
@@ -406,17 +442,13 @@
 
 		self.loadAll = function() {
 			_isLoading++;
+			self.array = [];
 			self.cards = [];
 			ImmobileManager.loadMap(null, self.search).then(function(success) {
+				self.array = success.data;
 				self.map.markers = success.data.map(function(n) {
 					self.cards.push(n.convertToCardInfo());
-					return {
-						latitude: parseFloat(n.immobile_latitude),
-						longitude: parseFloat(n.immobile_longitude),
-						id: n.immobile_id,
-						icon: self.map.icon,
-						card: n.convertToCardInfo()
-					}
+					return n.convertToMapMarker();
 				});
 				self.map.isReady = true;
 				_isLoading = Math.max(_isLoading - 1, 0);

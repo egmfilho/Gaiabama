@@ -50,14 +50,18 @@
 	.row
 		.col-xs-12
 			h1.text-center.offset-top-60 Estamos aqui
-
-//- ng-map.offset-top-30.offset-bottom-30(default-style="true" center='-23.439621,-43.979797' zoom='15' scrollwheel='false')
-	marker(id='#marker' position='-23.439621,-43.979797' on-click='contato.map.showInfoWindow("#info-window")')
-	info-window(id='#info-window' visible-on-marker='#marker')
-		div(ng-non-bindable='')
-			h4 {{contato.mapInfo.title}} 
-			p {{contato.mapInfo.address}}
-			p {{contato.mapInfo.contact}}
+	
+.contact-map
+	ui-gmap-google-map(center='contato.map.center' zoom='contato.map.zoom' options='contato.map.options')
+		ui-gmap-marker(idKey='"contato-marker"' coords='contato.map.marker.coords' options='contato.map.marker.options' click='contato.map.marker.click')
+			ui-gmap-window(options='contato.map.window.options' closeClick='contato.map.window.closeClick()' ng-cloak)
+				div
+					h5.hidden-xs 
+						b {{contato.map.title}} 
+					p
+						| {{contato.map.address}}
+						br
+						| {{contato.map.contact}}
 
 card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='contato.array' ng-if='contato.array.length')
 

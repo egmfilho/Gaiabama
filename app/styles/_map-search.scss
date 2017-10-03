@@ -39,7 +39,7 @@
 						max-height: 40px;
 						padding: 10px;
 						overflow: hidden;
-						color: $main-color-lighter;
+						color: darken($secondary-color, 20%);
 
 						i {
 							font-size: 18px;

@@ -41,13 +41,13 @@
 										li
 											div
 												.radio-custom
-													input#categoria-aluguel(name='categoria' type='radio' value='1' ng-model='mapSearch.search.categoria')
+													input#categoria-aluguel(name='categoria' type='radio' value='2' ng-model='mapSearch.search.categoria')
 													label(for='categoria-aluguel')
 												| Aluguel
 										li
 											div
 												.radio-custom
-													input#categoria-venda(name='categoria' type='radio' value='2' ng-model='mapSearch.search.categoria')
+													input#categoria-venda(name='categoria' type='radio' value='1' ng-model='mapSearch.search.categoria')
 													label(for='categoria-venda')
 												| Venda
 
@@ -61,7 +61,7 @@
 										li(ng-repeat='c in mapSearch.filters.category track by $index')
 											div
 												.checkbox-custom
-													input(id='category-{{$index + 1}}' name='tipo' type='checkbox' ng-value='c.immobile_category_id' ng-click='mapSearch.toggleCheckbox("tipo", c.immobile_category_id)')
+													input(id='category-{{$index + 1}}' name='tipo' type='checkbox' ng-value='c.immobile_category_id' ng-click='mapSearch.toggleCheckbox("tipo", c.immobile_category_id)' checked)
 													label(for='category-{{$index + 1}}')
 												| {{c.immobile_category_name}}
 
@@ -377,5 +377,5 @@
 
 		.map-container(ng-if='mapSearch.map.isReady')
 			ui-gmap-google-map(center='mapSearch.map.center' bounds='mapSearch.map.bounds' zoom='mapSearch.map.zoom' events='mapSearch.map.events' control='mapSearch.map.control' options='mapSearch.map.options')
-				ui-gmap-markers(models='mapSearch.map.markers' type='"cluster"' fit='true' coords='"self"' icon='"icon"' events='mapSearch.map.markerEvents' typeEvents='mapSearch.map.clusterEvents')
+				ui-gmap-markers(models='mapSearch.map.markers' type='"cluster"' fit='true' coords='"self"' icon='"icon"' options='"options"' events='mapSearch.map.markerEvents' typeEvents='mapSearch.map.clusterEvents')
 				ui-gmap-window(show='mapSearch.map.window.show' coords='mapSearch.map.window.coords' templateUrl='"./partials/map-preview.html"' templateParameter='mapSearch.map.window.selected' options='mapSearch.map.window.options' closeClick='mapSearch.map.window.closeClick()' ng-cloak)

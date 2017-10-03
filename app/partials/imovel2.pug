@@ -179,12 +179,16 @@
 					i.fa.fa-map-o.fa-3x
 					h3 Localização indisponível
 			
-			ng-map.map(default-style="false" center="{{immobile.immobile_latitude + ',' + immobile.immobile_longitude}}" zoom='15' scrollwheel='false' ng-if='imovel.ready && immobile.immobile_latitude && immobile.immobile_latitude != 0 && immobile.immobile_longitude && immobile.immobile_longitude != 0')
-				marker(id='#marker' position="{{immobile.immobile_latitude + ',' + immobile.immobile_longitude}}" on-click='contato.map.showInfoWindow("#info-window")')
-				info-window(id='#info-window' visible-on-marker='#marker')
-					div(ng-non-bindable='')
-						h4.hidden-xs {{immobile.immobile_name}}
-						p {{immobile.address.address_public_place}} {{immobile.address.address_number}}
-						p {{immobile.address.district.district_name}}, {{immobile.address.district.city.city_name}} - {{immobile.address.district.city.uf.uf_code}}
+			.map(ng-if='imovel.ready && immobile.immobile_latitude && immobile.immobile_latitude != 0 && immobile.immobile_longitude && immobile.immobile_longitude != 0')
+				ui-gmap-google-map(center='imovel.map.center' zoom='imovel.map.zoom' options='imovel.map.options')
+					ui-gmap-marker(idKey='immobile.immobile_id' coords='imovel.map.marker.coords' options='imovel.map.marker.options' click='imovel.map.marker.click')
+						ui-gmap-window(options='imovel.map.window.options' closeClick='imovel.map.window.closeClick()' ng-cloak)
+							div
+								h5.hidden-xs 
+									b {{immobile.immobile_name}}
+								p
+									| {{immobile.address.address_public_place}} {{immobile.address.address_number}}
+									br
+									| {{immobile.address.district.district_name}}, {{immobile.address.district.city.city_name}} - {{immobile.address.district.city.uf.uf_code}}
 
 card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='imovel.related' ng-if='imovel.related.length')

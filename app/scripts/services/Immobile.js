@@ -134,7 +134,18 @@ angular.module('alabama.services')
 					dummy: false
 				};
 			},
-
+			convertToMapMarker: function() {
+				return {
+					latitude: parseFloat(this.immobile_latitude),
+					longitude: parseFloat(this.immobile_longitude),
+					id: this.immobile_id,
+					icon: '../images/marker.png',
+					card: this.convertToCardInfo(),
+					options: {
+						visible: true
+					}
+				}
+			},
 			getRelated: function() {
 				return related;
 			}
