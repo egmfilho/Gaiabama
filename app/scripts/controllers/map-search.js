@@ -11,10 +11,6 @@
 	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, Filters, ImmobileManager) {
 
 		var self = this,
-			clusterUrl = "https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m",
-			_map = null,
-			_markerClusterer = null,
-			_clusterClickListener = null,
 			_isLoading = 0;
 
 		self.map = {
@@ -32,6 +28,10 @@
 				show: false,
 				options: {
 					pixelOffset: { width: 0, height: 0 }
+				},
+				closeClick: function() {
+					console.log('infowindow close click');
+					self.map.window.show = false;
 				}
 			},
 			events: {
@@ -48,17 +48,22 @@
 			},
 			markerEvents: {
 				click: function(marker, eventName, model, args) {
-					self.map.window.selected = [ model ];
+					self.map.window.selected = { 
+						array: [ model.card ] 
+					};
 					self.map.window.coords = model;
 					self.map.window.show = true;
 				}
 			},
 			clusterEvents: {
 				click: function(cluster, clusterModels) {
-					console.log(cluster);
 					if (self.map.control.getGMap().getZoom() >= 20) {
-						self.map.window.selected = clusterModels.map(function(n) { return n.card });
-						self.map.window.coords = cluster.center;
+						var coords = cluster.getCenter().toJSON();
+
+						self.map.window.selected = {
+							array: clusterModels.map(function(n) { return n.card })
+						};
+						self.map.window.coords =  { latitude: coords.lat, longitude: coords.lng };
 						self.map.window.show = true;
 					}
 				}
@@ -69,7 +74,6 @@
 			return _isLoading > 0;
 		};
 
-		this.array = [];
 		this.cards = [];
 
 		this.search = { };
@@ -226,16 +230,10 @@
 
 		self.loadAll = function() {
 			_isLoading++;
-			self.array = [];
 			self.cards = [];
-			clearMap();
 			ImmobileManager.loadMap(null, self.search).then(function(success) {
-				self.array = success.data;
-				self.cards = self.array.map(function(n) {
-					return n.convertToCardInfo();
-				});
-
-				self.map.markers = self.array.map(function(n) {
+				self.map.markers = success.data.map(function(n) {
+					self.cards.push(n.convertToCardInfo());
 					return {
 						latitude: n.immobile_latitude,
 						longitude: n.immobile_longitude,
@@ -243,19 +241,7 @@
 						card: n.convertToCardInfo()
 					}
 				});
-
-				if (!_map) {
-					// console.log('Iniciando o mapa...');
-					
-					// _map = NgMap.initMap('map-search');
-					
-					// google.maps.event.addListener(_map, 'idle', showVisibleMarkers);
-				}
-
-				$timeout(function() {
-					updateMap();
-					_isLoading = Math.max(_isLoading - 1, 0);
-				}, 500);
+				_isLoading = Math.max(_isLoading - 1, 0);
 			}, function(error) {
 				console.log(error);
 				_isLoading = Math.max(_isLoading - 1, 0);
@@ -267,94 +253,6 @@
 
 			console.log('get by code', code);
 		};
-
-		function clearMap() {
-			if (_markerClusterer) {
-				_markerClusterer.clearMarkers();
-				_markerClusterer.map.customMarkers = { };
-				console.log(_markerClusterer);
-			}
-		}
-
-		function updateMap() {
-			return;
-
-			self.dynMarkers = [];
-			NgMap.getMap().then(function(map) {
-				var bounds = new google.maps.LatLngBounds();
-	
-				for (var k in map.customMarkers) {
-					var cm = map.customMarkers[k];
-					self.dynMarkers.push(cm);
-					bounds.extend(cm.getPosition());
-				}
-	
-				_markerClusterer = new MarkerClusterer(map, self.dynMarkers, { imagePath: clusterUrl });
-
-				map.setCenter(bounds.getCenter());
-				map.fitBounds(bounds);
-
-				if (!_clusterClickListener) {
-					_clusterClickListener = google.maps.event.addListener(_markerClusterer, 'clusterclick', function (cluster) {
-						if (_map.getZoom() >= 20) {
-							var ids = cluster.getMarkers().map(function(n) { return n.id });
-							console.log(ids);
-							self.showInfo(null, ids, cluster);
-						}
-					});
-				}
-			});
-		}
-
-		self.showInfo = function(event, id, cluster) {
-			var infoWindow = $scope.map.infoWindows["search-info-window"],
-				target;
-
-			if (Array.isArray(id)) {
-				target = cluster;
-				infoWindow.setPosition(target.getCenter());
-			} else {
-				target = id.toString();				
-			}
-
-			self.selected = self.array.reduce(function(a, b) {
-				if (Array.isArray(id)) {
-					if (id.indexOf(b.immobile_id) >= 0)
-						a.push(b.convertToCardInfo());
-				} else {
-					if (b.immobile_id == id)
-						a.push(b.convertToCardInfo());
-				}
-
-				return a;
-			}, [ ]);
-
-			_map.showInfoWindow("search-info-window", target);
-		};
-
-		function showVisibleMarkers() {
-			console.log('updating markers');
-			var bounds = _map.getBounds(),
-				markers = [];
-
-			angular.forEach(_map.customMarkers, function(value, key) {
-				if (bounds.contains(value.getPosition()) === true) {
-					markers.push(key);
-					value.setVisible(true);
-				} else {
-					value.setVisible(false);
-				}
-			});
-
-			$timeout(function() {
-				self.cards = self.array.reduce(function(a, b) {
-					if (markers.indexOf(b.immobile_id.toString()) >= 0)
-						a.push(b.convertToCardInfo());
-	
-					return a;
-				}, [ ]);
-			});
-		}
 
 	}
 

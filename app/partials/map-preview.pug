@@ -1,7 +1,7 @@
-div(ng-non-bindable)
+div
 	.custom-infowindow
 		.scroll-content
-			.preview(ng-repeat='n in card track by $index')
+			.preview(ng-repeat='n in parameter.array track by $index')
 				
 				.thumb(style='background-image: url("{{ n.picture }}")')
 				
