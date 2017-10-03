@@ -375,7 +375,7 @@
 							thumbs='n.thumbs'
 						)
 
-		.map-container
+		.map-container(ng-if='mapSearch.map.isReady')
 			ui-gmap-google-map(center='mapSearch.map.center' bounds='mapSearch.map.bounds' zoom='mapSearch.map.zoom' events='mapSearch.map.events' control='mapSearch.map.control' options='mapSearch.map.options')
 				ui-gmap-markers(models='mapSearch.map.markers' type='"cluster"' fit='true' coords='"self"' icon='"icon"' events='mapSearch.map.markerEvents' typeEvents='mapSearch.map.clusterEvents')
 				ui-gmap-window(show='mapSearch.map.window.show' coords='mapSearch.map.window.coords' templateUrl='"./partials/map-preview.html"' templateParameter='mapSearch.map.window.selected' options='mapSearch.map.window.options' closeClick='mapSearch.map.window.closeClick()' ng-cloak)

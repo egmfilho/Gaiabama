@@ -14,14 +14,191 @@
 			_isLoading = 0;
 
 		self.map = {
-			center: { latitude: 0, longitude: 0},
+			isReady: false,
+			center: { latitude: -22.2864705, longitude: -42.9383006 },
 			bounds: { },
-			zoom: 4,
+			zoom: 9,
 			options: {
-				maxZoom: 20
+				
+				clickableIcons: false,
+				maxZoom: 20,
+				styles: [
+					{
+						"featureType": "landscape",
+						"elementType": "geometry",
+						"stylers": [
+							{
+								"saturation": "-100"
+							},
+							{
+								"lightness": "-1"
+							},
+							{
+								"color": "#ddd4cc"
+							}
+						]
+					},
+					{
+						"featureType": "poi",
+						"elementType": "all",
+						"stylers": [
+							{
+								"visibility": "on"
+							}
+						]
+					},
+					{
+						"featureType": "poi",
+						"elementType": "geometry",
+						"stylers": [
+							{
+								"visibility": "simplified"
+							}
+						]
+					},
+					{
+						"featureType": "poi",
+						"elementType": "labels",
+						"stylers": [
+							{
+								"visibility": "on"
+							},
+							{
+								"lightness": "0"
+							}
+						]
+					},
+					{
+						"featureType": "poi",
+						"elementType": "labels.text.stroke",
+						"stylers": [
+							{
+								"visibility": "off"
+							}
+						]
+					},
+					{
+						"featureType": "poi.park",
+						"elementType": "geometry",
+						"stylers": [
+							{
+								"color": "#adcab2"
+							}
+						]
+					},
+					{
+						"featureType": "road",
+						"elementType": "labels.text",
+						"stylers": [
+							{
+								"color": "#545454"
+							}
+						]
+					},
+					{
+						"featureType": "road",
+						"elementType": "labels.text.stroke",
+						"stylers": [
+							{
+								"visibility": "off"
+							}
+						]
+					},
+					{
+						"featureType": "road.highway",
+						"elementType": "geometry.fill",
+						"stylers": [
+							{
+								"saturation": "-87"
+							},
+							{
+								"lightness": "-40"
+							},
+							{
+								"color": "#ffffff"
+							}
+						]
+					},
+					{
+						"featureType": "road.highway",
+						"elementType": "geometry.stroke",
+						"stylers": [
+							{
+								"visibility": "off"
+							}
+						]
+					},
+					{
+						"featureType": "road.highway.controlled_access",
+						"elementType": "geometry.fill",
+						"stylers": [
+							{
+								"color": "#f0f0f0"
+							},
+							{
+								"saturation": "-22"
+							},
+							{
+								"lightness": "-16"
+							}
+						]
+					},
+					{
+						"featureType": "road.highway.controlled_access",
+						"elementType": "geometry.stroke",
+						"stylers": [
+							{
+								"visibility": "off"
+							}
+						]
+					},
+					{
+						"featureType": "road.highway.controlled_access",
+						"elementType": "labels.icon",
+						"stylers": [
+							{
+								"visibility": "on"
+							}
+						]
+					},
+					{
+						"featureType": "road.arterial",
+						"elementType": "geometry.stroke",
+						"stylers": [
+							{
+								"visibility": "off"
+							}
+						]
+					},
+					{
+						"featureType": "road.local",
+						"elementType": "geometry.stroke",
+						"stylers": [
+							{
+								"visibility": "off"
+							}
+						]
+					},
+					{
+						"featureType": "water",
+						"elementType": "geometry.fill",
+						"stylers": [
+							{
+								"saturation": "-63"
+							},
+							{
+								"hue": "#00e4ff"
+							},
+							{
+								"lightness": "-10"
+							}
+						]
+					}
+				]
 			},
 			control: { },
 			markers: [ ],
+			icon: '../images/marker.png', // vai dentro de cada marker
 			window: {
 				coords: { latitude: 0, longitude: 0 },
 				selected: { },
@@ -30,7 +207,6 @@
 					pixelOffset: { width: 0, height: 0 }
 				},
 				closeClick: function() {
-					console.log('infowindow close click');
 					self.map.window.show = false;
 				}
 			},
@@ -40,7 +216,7 @@
 	
 					self.cards = [ ];
 					angular.forEach(self.map.markers, function(value, key) {
-						if (bounds.contains({ "lat": parseFloat(value.latitude), "lng": parseFloat(value.longitude) }) === true) {
+						if (bounds.contains({ "lat": value.latitude, "lng": value.longitude })) {
 							self.cards.push(value.card);
 						}
 					});
@@ -235,12 +411,14 @@
 				self.map.markers = success.data.map(function(n) {
 					self.cards.push(n.convertToCardInfo());
 					return {
-						latitude: n.immobile_latitude,
-						longitude: n.immobile_longitude,
+						latitude: parseFloat(n.immobile_latitude),
+						longitude: parseFloat(n.immobile_longitude),
 						id: n.immobile_id,
+						icon: self.map.icon,
 						card: n.convertToCardInfo()
 					}
 				});
+				self.map.isReady = true;
 				_isLoading = Math.max(_isLoading - 1, 0);
 			}, function(error) {
 				console.log(error);
