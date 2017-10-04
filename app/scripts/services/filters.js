@@ -4,6 +4,8 @@ angular.module('alabama.services')
 	.factory('Filters', ['$http', '$q', 'URLS', function($http, $q, URLS) {
 
 		function Filters(filtersData) {
+			this.loaded = false;
+			
 			if (filtersData) {
 				this.setData(filtersData);
 			}
@@ -11,7 +13,7 @@ angular.module('alabama.services')
 
 		Filters.prototype = {
 			setData: function(filtersData) {
-				angular.extend(this, filtersData);
+				angular.extend(this, filtersData, { loaded: true });
 			},
 			setDistricts: function(data) {
 				this.districts = { };

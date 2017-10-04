@@ -1,5 +1,13 @@
 .map-search
 	.container-fluid
+		.map-loading(ng-if='mapSearch.isLoading()')
+			.loading-spinner
+				.spinner(style='transform: scale(2)')
+					.rect1
+					.rect2
+					.rect3
+					.rect4
+					.rect5
 		.row
 			.col-xs-12
 				form#filters-menu(name='filters' ng-submit='mapSearch.loadAll()' novalidate)
@@ -20,10 +28,11 @@
 									ul.dropdown-menu
 										li(ng-repeat='c in mapSearch.filters.city track by $index')
 											div
-												.checkbox-custom
-													input(id='cidade-{{$index + 1}}' name='cidade' type='checkbox' ng-value='c.city_id' ng-click='mapSearch.toggleCheckbox("cidade", c.city_id)' checked)
+												.radio-custom
+													input(id='cidade-{{$index + 1}}' name='cidade' type='radio' value='{{c.city_id}}' ng-model='mapSearch.search.cidade'  ng-checked='mapSearch.search.cidade.indexOf(c.city_id) >= 0)')
 													label(for='cidade-{{$index + 1}}')
-												| {{c.city_name}}
+												label(for='cidade-{{$index + 1}}')
+													| {{c.city_name}}
 
 								li.dropdown
 									a.dropdown-toggle(href='' data-toggle='dropdown')
@@ -35,21 +44,24 @@
 										li
 											div
 												.radio-custom
-													input#categoria-todos(name='categoria' type='radio' value='0' ng-model='mapSearch.search.categoria')
+													input#categoria-todos(name='categoria' type='radio' value='0' ng-model='mapSearch.search.categoria' ng-checked='mapSearch.search.categoria == 0')
 													label(for='categoria-todos')
-												| Todos
+												label(for='categoria-todos')
+													| Todos
 										li
 											div
 												.radio-custom
-													input#categoria-aluguel(name='categoria' type='radio' value='2' ng-model='mapSearch.search.categoria')
+													input#categoria-aluguel(name='categoria' type='radio' value='2' ng-model='mapSearch.search.categoria' ng-checked='mapSearch.search.categoria == 2')
 													label(for='categoria-aluguel')
-												| Aluguel
+												label(for='categoria-aluguel')
+													| Aluguel
 										li
 											div
 												.radio-custom
-													input#categoria-venda(name='categoria' type='radio' value='1' ng-model='mapSearch.search.categoria')
+													input#categoria-venda(name='categoria' type='radio' value='1' ng-model='mapSearch.search.categoria' ng-checked='mapSearch.search.categoria == 1')
 													label(for='categoria-venda')
-												| Venda
+												label(for='categoria-venda')
+													| Venda
 
 								li.dropdown
 									a.dropdown-toggle(href='' data-toggle='dropdown')
@@ -61,9 +73,10 @@
 										li(ng-repeat='c in mapSearch.filters.category track by $index')
 											div
 												.checkbox-custom
-													input(id='category-{{$index + 1}}' name='tipo' type='checkbox' ng-value='c.immobile_category_id' ng-click='mapSearch.toggleCheckbox("tipo", c.immobile_category_id)' checked)
+													input(id='category-{{$index + 1}}' name='tipo' type='checkbox' ng-value='c.immobile_category_id' ng-click='mapSearch.toggleCheckbox("tipo", c.immobile_category_id)' ng-checked='mapSearch.search.tipo.indexOf(c.immobile_category_id) >= 0')
 													label(for='category-{{$index + 1}}')
-												| {{c.immobile_category_name}}
+												label(for='category-{{$index + 1}}')
+													| {{c.immobile_category_name}}
 
 								li.dropdown(name='slider')
 									a.dropdown-toggle(href='' data-toggle='dropdown')
@@ -337,24 +350,21 @@
 											button.btn.btn-block.btn-lg.btn-primary.offset-top-15(type='button' ng-click='mapSearch.getImmobileByCode(code)') Buscar
 
 	.uber-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
-		.map-loading(ng-if='mapSearch.isLoading()')
-			.loading-spinner
-				.spinner(style='transform: scale(2)')
-					.rect1
-					.rect2
-					.rect3
-					.rect4
-					.rect5
-
 		.side-menu-container
 			.row.side-menu
 				.col-sm-12
 					.summary.clearfix.offset-top-15
-						//- span.text-primary.text-md {{mapSearch.array.length}} Imóveis encontrados
 						span.text-primary.text-md Exibindo {{mapSearch.cards.length}} {{mapSearch.cards.length == 1 ? 'imóvel' : 'imóveis'}}
-						button.btn.btn-primary.btn-outline.pull-right() Limpar filtros
+						button.btn.btn-primary.btn-outline.pull-right(ng-click='mapSearch.clearSearch()') Limpar filtros
 
-				.cards-container
+				.col-sm-12
+					.no-results(ng-if='!mapSearch.cards.length')
+						.icon
+							i.fa.fa-home
+						.info
+							| Nenhum imóvel na área de exibição
+
+				.cards-container(ng-if='mapSearch.cards.length')
 					.col-sm-12.col-lg-6(ng-repeat='n in mapSearch.cards')
 						card(
 							code='{{n.code}}'
@@ -376,6 +386,55 @@
 						)
 
 		.map-container(ng-if='mapSearch.map.isReady')
-			ui-gmap-google-map(center='mapSearch.map.center' bounds='mapSearch.map.bounds' zoom='mapSearch.map.zoom' events='mapSearch.map.events' control='mapSearch.map.control' options='mapSearch.map.options')
-				ui-gmap-markers(models='mapSearch.map.markers' type='"cluster"' fit='true' coords='"self"' icon='"icon"' options='"options"' events='mapSearch.map.markerEvents' typeEvents='mapSearch.map.clusterEvents')
-				ui-gmap-window(show='mapSearch.map.window.show' coords='mapSearch.map.window.coords' templateUrl='"./partials/map-preview.html"' templateParameter='mapSearch.map.window.selected' options='mapSearch.map.window.options' closeClick='mapSearch.map.window.closeClick()' ng-cloak)
+			ui-gmap-google-map(
+					center='mapSearch.map.center' 
+					bounds='mapSearch.map.bounds' 
+					zoom='mapSearch.map.zoom'
+					events='mapSearch.map.events' 
+					control='mapSearch.map.control' 
+					options='mapSearch.map.options')
+				ui-gmap-markers(
+						models='mapSearch.map.markers' 
+						type='"cluster"' 
+						fit='false' 
+						coords='"self"' 
+						icon='"icon"' 
+						control='mapSearch.map.markersControl' 
+						options='"options"' 
+						events='mapSearch.map.markerEvents' 
+						typeEvents='mapSearch.map.cluster.events' 
+						typeOptions='mapSearch.map.cluster.options')
+				ui-gmap-window(
+						show='mapSearch.map.window.show' 
+						coords='mapSearch.map.window.coords' 
+						templateUrl='"./partials/map-preview.html"' 
+						templateParameter='mapSearch.map.window.selected' 
+						options='mapSearch.map.window.options' 
+						closeClick='mapSearch.map.window.closeClick()' 
+						ng-cloak)
+
+	#golimar.modal.fade(tabindex='-1' role='dialog')
+		.vertical-alignment-helper
+			.modal-dialog.modal-sm.vertical-align-center(role='document')
+				.modal-content
+					.modal-header
+						//- button.close(data-dismiss='modal' aria-label='Fechar')
+							span(aria-hidden='true') &times;
+						h4.modal-title 
+							i.fa.fa-map-o
+							| Escolha uma cidade
+					.modal-body
+						p.text-center.text-gray.text-sm(ng-if='!mapSearch.filters.loaded')
+							i.fa.fa-spinner.fa-spin
+							br
+							| Carregando cidades...
+						.dropdown(ng-if='mapSearch.filters.loaded')
+							button.btn.btn-default.btn-block.dropdown-toggle(data-toggle='dropdown' aria-haspopup='true' aria-expanded='true')
+								i.fa.fa-map-marker
+								| Cidade
+								.toto
+									b.caret
+							ul.dropdown-menu
+								li(ng-repeat='c in mapSearch.filters.city track by $index' data-dismiss='modal')
+									a(href='' ng-click='mapSearch.search.cidade = c.city_id')
+										| {{c.city_name}}

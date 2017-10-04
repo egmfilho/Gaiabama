@@ -6,197 +6,105 @@
 	angular.module('alabama.controllers')
 		.controller('MapSearchCtrl', MapSearchCtrl);
 
-	MapSearchCtrl.$inject = [ '$scope', '$filter', '$location', '$window', '$timeout', 'Filters', 'ImmobileManager' ];
+	MapSearchCtrl.$inject = [ '$scope', '$filter', '$location', '$window', '$timeout', 'Filters', 'ImmobileManager', 'uiGmapIsReady', 'MapTheme' ];
 
-	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, Filters, ImmobileManager) {
+	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, Filters, ImmobileManager, uiGmapIsReady, MapTheme) {
 
 		var self = this,
 			_isLoading = 0;
 
+		// uiGmapIsReady.promise().then(function(maps) {
+		// 	alert('Map ready!');
+		// 	self.map.isReady = true;
+		// });
+
+		jQuery('#golimar').modal({
+			backdrop: 'static',
+			keyboard: false
+		}).on('shown.bs.modal', function(e) {
+			jQuery('.modal-backdrop').css('z-index', 3);
+		}).modal('show');
+
+		$scope.$on('$viewContentLoaded', function() {		
+			recalcFiltersPosition();
+			
+			$timeout(function() {
+				recalcInnerHeight();
+
+				jQuery('.dropdown-menu').click(function(e) {
+					e.stopPropagation();
+				});
+
+			}, 100);
+
+			$timeout(function() {
+				self.map.isReady = true;
+			}, 500);
+			
+			jQuery('.dropdown[name="slider"]').on('shown.bs.dropdown', function () {
+				$scope.$broadcast('reCalcViewDimensions');
+			});
+		});
+
+		$scope.$on('$locationChangeStart', function() {
+			jQuery('body').removeClass('modal-open').removeAttr('style');
+			jQuery('.modal-backdrop').remove();
+		});
+
+		self.loadAll = function() {
+			_isLoading++;
+			self.array = [];
+			self.cards = [];
+			self.clearSearch();
+			ImmobileManager.loadMap(null, self.search).then(function(success) {
+				var bounds = new google.maps.LatLngBounds();
+
+				self.array = success.data;
+				self.map.markers = success.data.map(function(n) {
+					bounds.extend(new google.maps.LatLng(n.immobile_latitude, n.immobile_longitude));
+
+					self.cards.push(n.convertToCardInfo());
+					return n.convertToMapMarker();
+				});
+
+				self.map.bounds = {
+					northeast: { 
+						latitude: bounds.getNorthEast().lat(),
+						longitude: bounds.getNorthEast().lng()
+					},
+					southwest: {
+						latitude: bounds.getSouthWest().lat(),
+						longitude: bounds.getSouthWest().lng()
+					}
+				};
+				
+				self.map.isReady = true;
+				_isLoading = Math.max(_isLoading - 1, 0);
+			}, function(error) {
+				console.log(error);
+				_isLoading = Math.max(_isLoading - 1, 0);
+			});
+		}
+
+		self.getImmobileByCode = function(code) {
+			if (!code) return;
+
+			console.log('get by code', code);
+		};
+
 		self.map = {
 			isReady: false,
-			center: { latitude: -22.2864705, longitude: -42.9383006 },
+			center: { latitude: -13.6498968, longitude: -50.1548565 },
 			bounds: { },
-			zoom: 9,
+			zoom: 5,
 			options: {
 				clickableIcons: false,
 				maxZoom: 20,
-				styles: [
-					{
-						"featureType": "landscape",
-						"elementType": "geometry",
-						"stylers": [
-							{
-								"saturation": "-100"
-							},
-							{
-								"lightness": "-1"
-							},
-							{
-								"color": "#ddd4cc"
-							}
-						]
-					},
-					{
-						"featureType": "poi",
-						"elementType": "all",
-						"stylers": [
-							{
-								"visibility": "on"
-							}
-						]
-					},
-					{
-						"featureType": "poi",
-						"elementType": "geometry",
-						"stylers": [
-							{
-								"visibility": "simplified"
-							}
-						]
-					},
-					{
-						"featureType": "poi",
-						"elementType": "labels",
-						"stylers": [
-							{
-								"visibility": "on"
-							},
-							{
-								"lightness": "0"
-							}
-						]
-					},
-					{
-						"featureType": "poi",
-						"elementType": "labels.text.stroke",
-						"stylers": [
-							{
-								"visibility": "off"
-							}
-						]
-					},
-					{
-						"featureType": "poi.park",
-						"elementType": "geometry",
-						"stylers": [
-							{
-								"color": "#adcab2"
-							}
-						]
-					},
-					{
-						"featureType": "road",
-						"elementType": "labels.text",
-						"stylers": [
-							{
-								"color": "#545454"
-							}
-						]
-					},
-					{
-						"featureType": "road",
-						"elementType": "labels.text.stroke",
-						"stylers": [
-							{
-								"visibility": "off"
-							}
-						]
-					},
-					{
-						"featureType": "road.highway",
-						"elementType": "geometry.fill",
-						"stylers": [
-							{
-								"saturation": "-87"
-							},
-							{
-								"lightness": "-40"
-							},
-							{
-								"color": "#ffffff"
-							}
-						]
-					},
-					{
-						"featureType": "road.highway",
-						"elementType": "geometry.stroke",
-						"stylers": [
-							{
-								"visibility": "off"
-							}
-						]
-					},
-					{
-						"featureType": "road.highway.controlled_access",
-						"elementType": "geometry.fill",
-						"stylers": [
-							{
-								"color": "#f0f0f0"
-							},
-							{
-								"saturation": "-22"
-							},
-							{
-								"lightness": "-16"
-							}
-						]
-					},
-					{
-						"featureType": "road.highway.controlled_access",
-						"elementType": "geometry.stroke",
-						"stylers": [
-							{
-								"visibility": "off"
-							}
-						]
-					},
-					{
-						"featureType": "road.highway.controlled_access",
-						"elementType": "labels.icon",
-						"stylers": [
-							{
-								"visibility": "on"
-							}
-						]
-					},
-					{
-						"featureType": "road.arterial",
-						"elementType": "geometry.stroke",
-						"stylers": [
-							{
-								"visibility": "off"
-							}
-						]
-					},
-					{
-						"featureType": "road.local",
-						"elementType": "geometry.stroke",
-						"stylers": [
-							{
-								"visibility": "off"
-							}
-						]
-					},
-					{
-						"featureType": "water",
-						"elementType": "geometry.fill",
-						"stylers": [
-							{
-								"saturation": "-63"
-							},
-							{
-								"hue": "#00e4ff"
-							},
-							{
-								"lightness": "-10"
-							}
-						]
-					}
-				]
+				styles: MapTheme.styles
 			},
 			control: { },
-			markers: [ ],
+			markers: null,
+			markersControl: { },
 			icon: '../images/marker.png', // vai dentro de cada marker
 			window: {
 				coords: { latitude: 0, longitude: 0 },
@@ -210,8 +118,9 @@
 				}
 			},
 			events: {
-				idle: function() {
-					var bounds = self.map.control.getGMap().getBounds();
+				idle: function(map) {
+					// var bounds = self.map.control.getGMap().getBounds();
+					var bounds = map.getBounds();
 	
 					self.cards = [ ];
 					angular.forEach(self.map.markers, function(value, key) {
@@ -230,16 +139,21 @@
 					self.map.window.show = true;
 				}
 			},
-			clusterEvents: {
-				click: function(cluster, clusterModels) {
-					if (self.map.control.getGMap().getZoom() >= 20) {
-						var coords = cluster.getCenter().toJSON();
-
-						self.map.window.selected = {
-							array: clusterModels.map(function(n) { return n.card })
-						};
-						self.map.window.coords =  { latitude: coords.lat, longitude: coords.lng };
-						self.map.window.show = true;
+			cluster: {
+				options: {
+					// imagePath: 'https://app.weathercloud.net/images/map/clusters/cluster_blue_medium.png'
+				},
+				events: {
+					click: function(cluster, clusterModels) {
+						if (self.map.control.getGMap().getZoom() >= 20) {
+							var coords = cluster.getCenter().toJSON();
+	
+							self.map.window.selected = {
+								array: clusterModels.map(function(n) { return n.card })
+							};
+							self.map.window.coords =  { latitude: coords.lat, longitude: coords.lng };
+							self.map.window.show = true;
+						}
 					}
 				}
 			}
@@ -252,19 +166,27 @@
 		this.array = [];
 		this.cards = [];
 
-		this.search = { 
-			codigo: null,
-			categoria: null,
-			cidade: [],
-			tipo: [],
-			minArea: null,
-			maxArea: null,
-			minValue: null,
-			maxValue: null,
-			dormitorio: [],
-			banheiro: [],
-			suite: null,
-			garagem: null
+		this.search = { };
+
+		this.clearSearch = function() {
+			this.search = angular.extend({ }, { 
+				codigo: null,
+				categoria: 0,
+				tipo: self.filters.category.map(function(n) {
+					return n.immobile_category_id;
+				}),
+				minArea: self.filters.area.min,
+				maxArea: self.filters.area.max,
+				minValue: self.filters.value.min,
+				maxValue: self.filters.value.max,
+				dormitorio: [],
+				banheiro: [],
+				suite: 0,
+				garagem: 0,
+				order: self.filters.order
+			}, {
+				cidade: this.search.cidade
+			});
 		};
 
 		this.toggleCheckbox = function(key, value) {
@@ -366,22 +288,20 @@
 			self.sliderArea.options.floor = parseFloat(self.filters.area.min);		
 			self.sliderArea.options.ceil = parseFloat(self.filters.area.max);
 	
-			self.search.order = self.filters.order;
+			self.clearSearch();
 
-			self.search.cidade = self.filters.city.map(function(n) {
-				return n.city_id;
-			});
-
-			self.search.tipo = self.filters.category.map(function(n) {
-				return n.immobile_category_id;
-			});
-
-			self.loadAll();
 			$scope.$watch(function() {
 				return self.search;
 			}, function(newVal, oldVal) {
 				console.log(newVal);
+
+				if (newVal.cidade != oldVal.cidade) {
+					self.loadAll();
+					return;
+				}
+
 				self.cards = [ ];
+
 				self.map.markers = self.array.reduce(function(array, item) {
 					if ( !((newVal.minValue && item.immobile_value < newVal.minValue) || 
 						  (newVal.maxValue && item.immobile_value > newVal.maxValue) ||
@@ -396,8 +316,6 @@
 					
 					return array;
 				}, [ ]);
-
-				console.log(self.map.markers);
 
 			}, true);
 		});
@@ -423,46 +341,6 @@
 				recalcInnerHeight();
 			});
 		});
-
-		$scope.$on('$viewContentLoaded', function() {		
-			recalcFiltersPosition();
-			
-			$timeout(function() {
-				recalcInnerHeight();
-
-				jQuery('.dropdown-menu').click(function(e) {
-					e.stopPropagation();
-				});
-			}, 100);
-			
-			jQuery('.dropdown[name="slider"]').on('shown.bs.dropdown', function () {
-				$scope.$broadcast('reCalcViewDimensions');
-			});
-		});
-
-		self.loadAll = function() {
-			_isLoading++;
-			self.array = [];
-			self.cards = [];
-			ImmobileManager.loadMap(null, self.search).then(function(success) {
-				self.array = success.data;
-				self.map.markers = success.data.map(function(n) {
-					self.cards.push(n.convertToCardInfo());
-					return n.convertToMapMarker();
-				});
-				self.map.isReady = true;
-				_isLoading = Math.max(_isLoading - 1, 0);
-			}, function(error) {
-				console.log(error);
-				_isLoading = Math.max(_isLoading - 1, 0);
-			});
-		}
-
-		self.getImmobileByCode = function(code) {
-			if (!code) return;
-
-			console.log('get by code', code);
-		};
 
 	}
 

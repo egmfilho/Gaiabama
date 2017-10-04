@@ -142,6 +142,7 @@ angular.module('alabama.services')
 					icon: '../images/marker.png',
 					card: this.convertToCardInfo(),
 					options: {
+						animation: google.maps.Animation.DROP,
 						visible: true
 					}
 				}

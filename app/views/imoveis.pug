@@ -32,12 +32,12 @@
 								div(ng-init='bairroAsc={column: 3, order: 1}')
 									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", bairroAsc)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == bairroAsc.column && imoveis.getFiltros().order.order == bairroAsc.order}')
 										i.fa.fa-sort-alpha-asc
-										|  Nome do bairro crescente
+										|  Bairro crescente
 
 								div(ng-init='bairroDesc={column: 3, order: 0}')
 									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", bairroDesc)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == bairroDesc.column  && imoveis.getFiltros().order.order == bairroDesc.order}')
 										i.fa.fa-sort-alpha-desc
-										|  Nome do bairro decrescente
+										|  Bairro decrescente
 
 								div(ng-init='menorArea={column: 2, order: 1}')
 									a(href='' style='display: block' ng-click='imoveis.setFiltro("order", menorArea)' ng-class='{"text-bold text-uppercase": imoveis.getFiltros().order.column == menorArea.column && imoveis.getFiltros().order.order == menorArea.order}')

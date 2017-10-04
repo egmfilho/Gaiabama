@@ -1,6 +1,8 @@
 .header3 {
 	@extend .simple-shadow;
 	background-color: $main-color-darker;
+	position: relative;
+	z-index: 5;
 
 	.contact-stripe {
 		width: 100%;

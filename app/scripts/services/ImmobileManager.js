@@ -160,7 +160,7 @@ angular.module('alabama.services')
 					immobile_code: filtros.codigo,
 					immobile_type: filtros.categoria,
 					immobile_address: {
-						city_id: filtros.cidade || [],
+						city_id: [ filtros.cidade ] || [],
 					},
 					immobile_category_id: filtros.tipo || [],
 					immobile_area_total: {
