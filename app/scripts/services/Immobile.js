@@ -113,6 +113,7 @@ angular.module('alabama.services')
 			},
 			convertToCardInfo: function() {
 				return {
+					id: this.immobile_id,
 					code: this.immobile_code,
 					picture: this.getMainThumbUrl(),
 					pictureLg: this.getMainPictureUrl(),

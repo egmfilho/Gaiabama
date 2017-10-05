@@ -6,17 +6,12 @@
 	angular.module('alabama.controllers')
 		.controller('MapSearchCtrl', MapSearchCtrl);
 
-	MapSearchCtrl.$inject = [ '$scope', '$filter', '$location', '$window', '$timeout', 'Filters', 'ImmobileManager', 'uiGmapIsReady', 'MapTheme' ];
+	MapSearchCtrl.$inject = [ '$scope', '$filter', '$location', '$window', '$timeout', 'Filters', 'ImmobileManager', 'MapTheme' ];
 
-	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, Filters, ImmobileManager, uiGmapIsReady, MapTheme) {
+	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, Filters, ImmobileManager, MapTheme) {
 
 		var self = this,
 			_isLoading = 0;
-
-		// uiGmapIsReady.promise().then(function(maps) {
-		// 	alert('Map ready!');
-		// 	self.map.isReady = true;
-		// });
 
 		jQuery('#golimar').modal({
 			backdrop: 'static',
@@ -56,16 +51,11 @@
 			self.array = [];
 			self.cards = [];
 			self.clearSearch();
-			ImmobileManager.loadMap(null, self.search).then(function(success) {
-				var bounds = new google.maps.LatLngBounds();
-
+			ImmobileManager.loadMap(null, { cidade: self.search.cidade, order: self.search.order }).then(function(success) {
+				
 				self.array = success.data;
-				self.map.markers = success.data.map(function(n) {
-					bounds.extend(new google.maps.LatLng(n.immobile_latitude, n.immobile_longitude));
 
-					self.cards.push(n.convertToCardInfo());
-					return n.convertToMapMarker();
-				});
+				var bounds = applyFilters();
 
 				self.map.bounds = {
 					northeast: { 
@@ -94,16 +84,16 @@
 
 		self.map = {
 			isReady: false,
-			center: { latitude: -13.6498968, longitude: -50.1548565 },
+			center: { latitude: -22.5, longitude: -43 },
 			bounds: { },
-			zoom: 5,
+			zoom: 9,
 			options: {
 				clickableIcons: false,
 				maxZoom: 20,
 				styles: MapTheme.styles
 			},
 			control: { },
-			markers: null,
+			markers: [ ],
 			markersControl: { },
 			icon: '../images/marker.png', // vai dentro de cada marker
 			window: {
@@ -119,15 +109,7 @@
 			},
 			events: {
 				idle: function(map) {
-					// var bounds = self.map.control.getGMap().getBounds();
-					var bounds = map.getBounds();
-	
-					self.cards = [ ];
-					angular.forEach(self.map.markers, function(value, key) {
-						if (bounds.contains({ "lat": value.latitude, "lng": value.longitude })) {
-							self.cards.push(value.card);
-						}
-					});
+					updateCards();
 				}
 			},
 			markerEvents: {
@@ -141,7 +123,14 @@
 			},
 			cluster: {
 				options: {
-					// imagePath: 'https://app.weathercloud.net/images/map/clusters/cluster_blue_medium.png'
+					styles:[{
+						url: "../images/cluster.png",
+							width: 58,
+							height: 58,
+							textSize: 15,
+							textColor:"white",
+						}
+					]
 				},
 				events: {
 					click: function(cluster, clusterModels) {
@@ -170,19 +159,18 @@
 
 		this.clearSearch = function() {
 			this.search = angular.extend({ }, { 
+				cidade: [ ],
 				codigo: null,
 				categoria: 0,
-				tipo: self.filters.category.map(function(n) {
-					return n.immobile_category_id;
-				}),
+				tipo: [ ],
 				minArea: self.filters.area.min,
 				maxArea: self.filters.area.max,
 				minValue: self.filters.value.min,
 				maxValue: self.filters.value.max,
-				dormitorio: [],
-				banheiro: [],
-				suite: 0,
-				garagem: 0,
+				dormitorio: [ ],
+				banheiro: [ ],
+				suite: -1,
+				garagem: -1,
 				order: self.filters.order
 			}, {
 				cidade: this.search.cidade
@@ -293,32 +281,56 @@
 			$scope.$watch(function() {
 				return self.search;
 			}, function(newVal, oldVal) {
-				console.log(newVal);
-
 				if (newVal.cidade != oldVal.cidade) {
 					self.loadAll();
 					return;
 				}
 
-				self.cards = [ ];
-
-				self.map.markers = self.array.reduce(function(array, item) {
-					if ( !((newVal.minValue && item.immobile_value < newVal.minValue) || 
-						  (newVal.maxValue && item.immobile_value > newVal.maxValue) ||
-						  (newVal.minArea && item.immobile_area_total < newVal.minArea) || 
-						  (newVal.maxArea && item.immobile_area_total > newVal.maxArea) ||
-						  (newVal.tipo.length && newVal.tipo.indexOf(item.immobile_category_id) < 0) || 
-						  (newVal.categoria && newVal.categoria != item.immobile_type)) ) {
-
-						self.cards.push(item.convertToCardInfo());
-						array.push(item.convertToMapMarker());
-					}
-					
-					return array;
-				}, [ ]);
+				applyFilters();
+				updateCards();
 
 			}, true);
 		});
+
+		function updateCards() {
+			if (!self.map.control || !self.map.control.getGMap)
+				return;
+
+			var bounds = self.map.control.getGMap().getBounds();
+			
+			self.cards = [ ];
+			angular.forEach(self.map.markers, function(value, key) {
+				if (bounds.contains({ "lat": value.latitude, "lng": value.longitude })) {
+					self.cards.push(value.card);
+				}
+			});
+		}
+		
+		function applyFilters() {
+			var bounds = new google.maps.LatLngBounds();
+
+			self.map.markers = self.array.reduce(function(array, item) {
+				if (!((self.search.minValue           && item.immobile_value       < self.search.minValue)                       || 
+					  (self.search.maxValue           && item.immobile_value       > self.search.maxValue)                       ||
+					  (self.search.minArea            && item.immobile_area_total  < self.search.minArea)                        || 
+					  (self.search.maxArea            && item.immobile_area_total  > self.search.maxArea)                        ||
+					  (self.search.categoria          && self.search.categoria    != item.immobile_type)                         || 
+					  (self.search.suite >= 0         && self.search.suite        != Math.min(item.immobile_suite, 1))           ||
+					  (self.search.garagem >= 0       && self.search.garagem      != Math.min(item.immobile_parking_spot, 1))    ||
+					  (self.search.tipo.length        && self.search.tipo.indexOf(item.immobile_category_id)                < 0) || 
+					  (self.search.dormitorio.length  && self.search.dormitorio.indexOf(Math.min(item.immobile_bedroom, 4)) < 0) ||
+					  (self.search.banheiro.length    && self.search.banheiro.indexOf(Math.min(item.immobile_bathroom, 4))  < 0)) ) {
+
+					self.cards.push(item.convertToCardInfo());
+					array.push(item.convertToMapMarker());
+					bounds.extend(new google.maps.LatLng(item.immobile_latitude, item.immobile_longitude));
+				}
+				
+				return array;
+			}, [ ]);
+
+			return bounds;
+		}
 
 		function recalcFiltersPosition() {
 			$scope.innerWidth = $window.innerWidth;
@@ -341,6 +353,42 @@
 				recalcInnerHeight();
 			});
 		});
+
+		this.cardEnter = function(id) {
+			var manager = self.map.markersControl.getManager();
+			
+			if (manager && manager.propMapGMarkers && manager.propMapGMarkers.get(id).map == null) {
+				var marker = manager.propMapGMarkers.get(id);
+
+				manager.clusterer.clusters_.find(function(c) {
+					return c.isMarkerInClusterBounds(marker);
+				}).clusterIcon_.div_.firstChild.src = '../images/cluster2.png';
+
+				// manager.draw();
+			} else {
+				self.map.markers.find(function(n) {
+					return n.id == id;
+				}).options.animation = google.maps.Animation.BOUNCE;
+			}
+		};
+
+		this.cardLeave = function(id) {
+			var manager = self.map.markersControl.getManager();
+			
+			if (manager.propMapGMarkers.get(id).map == null) {
+				var marker = manager.propMapGMarkers.get(id);
+
+				manager.clusterer.clusters_.find(function(c) {
+					return c.isMarkerInClusterBounds(marker);
+				}).clusterIcon_.div_.firstChild.src = '../images/cluster.png';
+
+				// manager.draw();
+			} else {
+				self.map.markers.find(function(n) {
+					return n.id == id;
+				}).options.animation = google.maps.Animation.Uo;
+			}
+		};
 
 	}
 

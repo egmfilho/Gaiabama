@@ -4,32 +4,34 @@ div
 			.preview(ng-repeat='n in parameter.array track by $index')
 				
 				.thumb(style='background-image: url("{{ n.picture }}")')
+					.price {{ n.price | currency : 'R$ ' : '0'}}
 				
 				.description
 					.title {{ n.title | truncate: 25 }}
 				
-					.text.text-gray
-						| {{ n.description | truncate: 150 }}
+					.text
+						//- | {{ n.description | truncate: 150 }}
 
 						.icons
-							span(name='icon' data-toggle='tooltip' data-placement='top' title='{{n.area}} m2' ng-if='n.area && n.area > 0')
-								| {{n.area}}&nbsp;
-								b m&#178;
+							span(name='icon' ng-if='n.area && n.area > 0')
+								.buscape
+									i.futura-ruler-h-o 
+								| {{n.area}} m&#178;
 
-							span(name='icon' data-toggle='tooltip' data-placement='top' title='{{n.bed}} dormitórios' ng-if='n.bed && n.bed > 0')
-								| {{n.bed}}&nbsp;
+							span(name='icon' ng-if='n.bed && n.bed > 0')
 								i.fa.fa-bed
+								| {{n.bed}} {{ n.bed == 1 ? 'dormitório' : 'dormitórios' }}
 
-							span(name='icon' data-toggle='tooltip' data-placement='top' title='{{n.suite}} suítes' ng-if='n.suite && n.suite > 0')
-								| {{n.suite}}&nbsp;
+							span(name='icon' ng-if='n.suite && n.suite > 0')
 								i.fa.fa-bathtub
+								| {{n.suite}} {{ n.suite == 1 ? 'suíte' : 'suítes' }}
 
-							span(name='icon' data-toggle='tooltip' data-placement='top' title='{{n.bath}} banheiros' ng-if='n.bath && n.bath > 0')
-								| {{n.bath}}&nbsp;
+							span(name='icon' ng-if='n.bath && n.bath > 0')
 								i.fa.fa-shower
+								| {{n.bath}} {{ n.bath == 1 ? 'banheiro' : 'banheiros' }}
 
-							span(name='icon' data-toggle='tooltip' data-placement='top' title='{{n.parking}} vagas' ng-if='n.parking && n.parking > 0')
-								| {{n.parking}}&nbsp;
+							span(name='icon' ng-if='n.parking && n.parking > 0')
 								i.fa.fa-car
+								| {{n.parking}} {{ n.parking == 1 ? 'vaga' : 'vagas' }}
 
-					a.btn.btn-block.btn-primary(ng-href='{{ n.url }}') Detalhes
+					a.btn.btn-block.btn-primary(ng-href='{{ n.url }}') Ver mais
