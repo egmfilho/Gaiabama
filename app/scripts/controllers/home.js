@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('alabama.controllers')
-.controller('HomeCtrl', ['$rootScope', '$scope', 'ImmobileManager', function ($rootScope, $scope, ImmobileManager) {
+.controller('HomeCtrl', ['$rootScope', '$scope', '$window', 'ImmobileManager', function ($rootScope, $scope, $window, ImmobileManager) {
 
 	var self = this;
 

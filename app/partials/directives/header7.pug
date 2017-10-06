@@ -1,0 +1,112 @@
+.header7-mobile.hidden-sm.hidden-md.hidden-lg
+	.close.pull-right(ng-click='header.hideHeader7Mobile()')
+		i.glyphicon.glyphicon-remove
+	ul
+		li(role='presentation' name='home')
+			a(href='/' ng-click='header.hideHeader7Mobile()') Home
+		
+		li(role='presentation' name='sobre')
+			a(href='/sobre' ng-click='header.hideHeader7Mobile()') Sobre
+
+		li(role='presentation' name='imoveis')
+			a(href='/imoveis' ng-click='header.hideHeader7Mobile()') Imóveis
+
+		li(role='presentation' name='equipe')
+			a(href='/equipe' ng-click='header.hideHeader7Mobile()') Equipe
+
+		li(role='presentation' name='contato')
+			a(href='/contato' ng-click='header.hideHeader7Mobile()') Contato
+
+	.contacts(ng-if='!!whatsapp || !!tel || !!email')
+		div(ng-if='!!whatsapp')
+			i.fa.fa-whatsapp &nbsp;
+			span {{whatsapp}}
+		div(ng-if='!!tel')
+			i.fa.fa-phone &nbsp;
+			span {{tel}}
+		div(ng-if='!!email')
+			i.fa.fa-envelope-o &nbsp;
+			span {{email}}
+
+
+#header.header7(ng-class='{ "opaque": currentPath() != "/" }')
+	.dark-cover.hidden-xs(ng-if='currentPath() == "/"')
+	.container-narrow(ng-if='!!whatsapp || !!tel || !!email')
+		.contact-stripe.hidden-xs
+			.container
+				.contato
+					span(ng-if='!!whatsapp')
+						i.fa.fa-whatsapp
+						span {{whatsapp}}
+					span(ng-if='!!tel')
+						i.fa.fa-phone
+						span {{tel}}
+					span(ng-if='!!email')
+						i.fa.fa-envelope-o
+						span {{email}}
+
+		.menu
+			.container
+				.row
+					.col-xs-12.col-sm-3
+						a(href='/' ng-click='header.hideHeader7Mobile()')
+							.logo
+						button.btn.btn-default.btn-outline.pull-right.visible-xs-block(ng-click='header.toggleHeader7Mobile()')
+							i.fa.fa-navicon
+
+					.hidden-xs.col-sm-9
+						ul.nav.nav-pills
+							li(role='presentation' name='{{btn.nome}}' ng-repeat='btn in navButtons track by $index')
+								a(ng-href='{{btn.url}}' target='{{btn.target}}') {{btn.nome}}
+
+		.repolho(ng-if='currentPath() == "/"')
+
+			.info-mobile.visible-xs-block
+				.dark-cover
+				.title {{title}}
+
+			.container.hidden-xs
+				.container-header
+					.info-container.hidden-xs
+						.info
+							p.title
+								| {{title}}
+							p.message
+								| {{message}}
+							a.btn.btn-default.btn-outline.btn-lg(href='{{btnUrl}}') {{btnLabel}}
+
+					.search-container.hidden-xs
+						.search(ng-if='header.isReady')
+
+							.search-item
+								span Código
+								input.form-control(ng-model='header.search.codigo' placeholder='Ex. 988021')
+
+							.search-item
+								span Categoria
+								select.selectpicker.form-control(title='Categoria' data-container='body' autocomplete='off' ng-model='header.search.categoria')
+									option(value='0') Todas as categorias
+									option(value='1') Venda
+									option(value='2') Aluguel	
+
+							.search-item
+								span Tipo
+								select.selectpicker.form-control(title='Tipo' data-container='body' ng-model='header.search.tipo')
+									option(value='0') Todos os tipos
+									option(ng-repeat='categoria in header.filters.category' ng-value='categoria.immobile_category_id')
+										| {{categoria.immobile_category_name}}	
+
+							.search-item
+								span Cidade
+								select.selectpicker.form-control(title='Cidade' data-container='body' ng-model='header.search.cidade')
+									option(value='0') Qualquer cidade
+									option(ng-repeat='cidade in header.filters.city' ng-value='cidade.city_id') 
+										| {{cidade.city_name}}
+
+							.search-item
+								span Valor
+								rzslider(rz-slider-model='header.search.minValue' rz-slider-high='header.search.maxValue' rz-slider-options='header.sliderPrice.options')
+							
+							.search-item
+								button.btn.btn-info.btn-lg.btn-block.offset-top-30(ng-click='header.redirect()')
+									| Pesquisar

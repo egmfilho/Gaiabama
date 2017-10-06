@@ -1,0 +1,355 @@
+.header7-mobile {
+	background-color: rgba($main-color-darker, .95);
+	position: fixed;
+	width: 100%;
+	height: calc(100% - 90px);
+	z-index: 2000;
+	padding: 30px 15px;
+	display: none;
+	top: 90px;
+
+	.close {
+		color: white;
+		margin-top: -15px;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin-top: 60px;
+
+		li {
+			text-align: center;
+			margin-top: 15px;
+
+			&:first-child {
+				margin-top: 0;
+			}
+
+			a {
+				color: white;
+				font-size: 24px;
+			}
+		}
+	}
+
+	.contacts {
+		color: white;
+		position: absolute;
+		bottom: 15px;
+		text-align: center;
+		width: 100%;
+		margin-left: -15px;
+
+		> div {
+			margin-top: 5px;
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+}
+
+.header7 {
+	@media (min-width: $screen-sm-min) {
+		background-image: url('../images/Gaia/fundo-header.jpg');
+		background-size: cover;
+		background-position: center;
+		position: relative;
+	}
+
+	.dark-cover {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-color: rgba($main-color-darker, .5);
+	}
+
+	.contact-stripe {
+		width: 100%;
+		height: 30px;
+		color: white;
+		background-color: rgba(#000, .4);
+		padding: 5px 20px;
+
+		.contato {
+			font-size: 1em;
+			font-weight: 200;
+			letter-spacing: 1px;
+			text-align: left;			
+			color: white;
+			opacity: .9;
+
+			> span {
+				margin-left: 20px;
+				font-weight: bold;
+
+				i {
+					color: white;
+					// vertical-align: bottom;
+					font-size: 1.2em;
+					margin-right: 5px;
+				}
+			}
+		}
+	}
+
+	.menu {
+		$menu-height: 90px;
+
+		width: 100%;
+		height: $menu-height;
+		position: relative;
+		z-index: 5;
+		position: fixed;
+		top: 0;
+		background-color: $main-color-dark;
+		
+		@media (min-width: $screen-sm-min) {
+			margin-top: 40px;
+			position: initial;
+			background-color: transparent;
+		}
+
+		.logo {
+			width: 100%;
+			height: $menu-height;
+			background-image: url('../images/Gaia/logo.png');
+			background-size: contain;
+			background-repeat: no-repeat;
+			box-sizing: border-box;
+			border: 20px solid transparent;
+			border-left: none;
+			
+			@media (min-width: $screen-sm-min) {
+				background-position: center;
+				background-position-x: 0;
+				border: 10px solid transparent;
+				border-left: none;
+			}
+			
+		}
+
+		.btn {
+			position: absolute;
+			right: 15px;
+			bottom: 28px;
+		}
+
+		.nav-pills {
+			font-size: 1.2em;
+			margin-top: 25px;
+			float: right;
+
+			a {
+				color: white;
+				@include transition(background-color .5s ease);
+			}
+
+			.active a {
+				background-color: rgba(#fff, .2);
+				font-weight: bold;
+			}
+
+			li:hover {
+				a {
+					background-color: rgba(#fff, .2);
+				}
+			}
+		}
+	}
+
+	&.opaque {
+		background: none;
+
+		.contact-stripe {
+			background-color: $main-color-darker;
+		}
+
+		.menu {
+			background-color: $main-color-dark;
+			color: $gray-light;
+			@include box-shadow(0, 3px, 5px, rgba(#000, .2px));
+			margin-top: 0;
+
+			@media (min-width: $screen-sm-min) {
+				.logo {
+					border: 17px solid transparent;
+					border-left: none;
+					background-position-x: 0;
+				}
+			}
+
+			.nav-pills {
+				.active a {
+					background-color: $secondary-color;
+					color: $main-color-darker;
+					font-weight: normal;
+				}
+
+				li:hover {
+					a {
+						background-color: $secondary-color;
+					}
+	
+					&.active a {
+						color: $main-color-darker;
+					}
+				}
+			}
+		}
+	}
+
+	.info-mobile {
+		height: 200px;
+		padding: 15px;
+		margin-top: 90px;
+		position: relative;
+
+		background-image: url('../images/Gaia/fundo-header.jpg');
+		background-size: cover;
+		background-position: center;
+	
+		.title {		
+			color: white;
+			text-align: center;
+			font-size: 24px;
+			font-family: 'Archivo Black', sans-serif;
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: 1;
+		}
+	}
+
+	.container-header {
+		$height-xs: 300px;
+		$height: 530px;
+		height: $height-xs;
+		
+		max-height: $height;
+		overflow: hidden;
+		position: relative;
+		display: table;
+
+		@media (min-width: $screen-sm-min) {
+			height: $height;
+			margin: 0;
+			margin-top: 30px;
+			margin-bottom: 60px;
+			background: none;
+		}
+
+		.info-container {
+			display: table-cell;
+
+			.info {
+				color: white;
+				margin-top: 45px;
+	
+				.title {
+					font-size: 60px;
+					line-height: 70px;
+					font-family: 'Archivo Black', sans-serif;
+					letter-spacing: 1px;
+
+					@media (min-width: $screen-sm-min) {
+						font-size: 40px;
+						line-height: 45px;
+					}
+
+					@media (min-width: $screen-md-min) {
+						font-size: 50px;
+						line-height: 55px;
+					}
+
+					@media (min-width: $screen-lg-min) {
+						font-size: 60px;
+						line-height: 70px;
+					}
+				}
+	
+				.message {
+					margin-top: 30px;
+					font-size: 20px;
+					opacity: .8;
+				}
+	
+				.btn {
+					margin-top: 30px;
+				}
+			}
+		}
+
+		.search-container {
+			display: table-cell;
+			width: 400px;
+			position: relative;
+
+			@media (min-width: $screen-md-min) {
+				width: 500px;
+			}
+
+			.search {
+				width: 350px;
+				height: 100%;
+				padding: 30px;
+				background-color: rgba(#fff, .3);
+				color: white;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+
+				.search-item {
+					margin-bottom: 15px;
+
+					&:last-child {
+						margin-bottom: 0;
+					}
+
+					> span {
+						display: block;
+						font-size: 16px;
+						font-weight: bold;
+						margin-bottom: 5px;
+					}
+
+					.rzslider {			
+						.rz-bar {
+							background-color: rgba(white, .5);
+				
+							&.rz-selection {
+								background-color: white;
+							}
+						}
+				
+						.rz-bubble {
+							color: white;
+						}
+				
+						.rz-pointer {
+							background-color: white;
+							outline: none;
+				
+							&::after {
+								background-color: #ccc;
+							}
+				
+							&.rz-active:after {
+								background-color: $secondary-color;
+							}
+						}
+					}
+				}
+
+				.form-control.bootstrap-select {
+					background: none;
+				}
+			}
+		}
+	}
+}

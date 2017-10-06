@@ -19,7 +19,6 @@ angular.module('alabama', [
 		'egmfilho.inputFilters',
 		'slick',
 		'rzModule',
-		// 'ngMap',
 		'bootstrapLightbox',
 		'uiGmapgoogle-maps'
 	])
@@ -142,6 +141,8 @@ angular.module('alabama', [
 				jQuery(header).find('ul.nav li[name="' + previous.name + '"]').removeClass('active');
 			}
 			jQuery(header).find('ul.nav li[name="' + current.name + '"]').addClass('active');
+
+			$timeout(function() {jQuery('.selectpicker').selectpicker('refresh'); });
 		});
 
 		$rootScope.startBootstrapSelect = function() {

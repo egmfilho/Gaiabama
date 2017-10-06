@@ -22,6 +22,9 @@ $secondary-color: $gaia2;
 $brand-primary: $main-color;
 $btn-primary-color: white;
 
+$brand-info: $secondary-color;
+$btn-info-color: $main-color;
+
 // $body-bg: $main-color-dark;
 // $text-color: $secondary-color;
 
@@ -315,6 +318,7 @@ input, select, textarea, .bootstrap-select {
 @import "header4";
 @import "header5";
 @import "header6";
+@import "header7";
 @import "footer";
 @import "carousel";
 @import "card";

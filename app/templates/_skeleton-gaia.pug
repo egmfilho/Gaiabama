@@ -21,7 +21,7 @@ html
 
 	body(ng-app='alabama')
 
-		header3(
+		header7(
 			navigation=`[
 				{
 					"nome": "Home",
@@ -56,9 +56,13 @@ html
 			]`
 			whatsapp='(21) 99999-8888'
 			tel='(21) 2222-3333'
-			email='sac@email.com.br')
+			email='sac@email.com.br'
+			title='A melhor maneira de encontrar seu novo imóvel'
+			message='Use o mapa para encontrar o imovel. Use o mapa para encontrar o imovel. Use o mapa para encontrar o imovel. Use o mapa para encontrar o imovel.'
+			btn-label='Ver mapa'
+			btn-url='/mapa')
 
-		.scroll-top.hidden-xs(ng-class='{"visible": scrollY >= 100}' ng-click='scrollTop()')
+		//- .scroll-top.hidden-xs(ng-class='{"visible": scrollY >= 100}' ng-click='scrollTop()')
 			i.fa.fa-chevron-up
 
 		block page

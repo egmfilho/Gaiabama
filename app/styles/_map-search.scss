@@ -304,11 +304,15 @@
 		.map-container {
 			padding: 0;
 			height: 100%;
-			width: calc(100% - 300px);
+			width: 100%;
 			display: inline-block;
 			overflow: hidden;
 			box-sizing: border-box;
 			position: relative;
+
+			@media (min-width: $screen-sm-min) {
+				width: calc(100% - 300px);
+			}
 
 			@media (min-width: $screen-lg-min) {
 				width: calc(100% - 600px);
