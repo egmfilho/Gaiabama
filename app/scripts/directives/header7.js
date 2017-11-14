@@ -121,6 +121,7 @@
 				navigation: '@',
 				whatsapp: '@',
 				tel: '@',
+				tel2: '@',
 				email: '@',
 				title: '@',
 				message: '@',

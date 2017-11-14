@@ -13,13 +13,19 @@
 .container
 	.row.offset-top-60.offset-bottom-60
 		.col-xs-12
-			h1.text-lg.offset-bottom-60 Sobre
 
 			div
+				h2.offset-bottom-30 Nossos serviços
 				p.text-sm.text-gray.offset-bottom-15.text-line-spacing
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ex nunc, ultricies ac tincidunt a, fringilla id risus. Morbi posuere vehicula lacus, luctus auctor augue accumsan et. Etiam nisl diam, cursus nec lacinia et, facilisis at quam. Aliquam fermentum facilisis nisl eget hendrerit. Vestibulum imperdiet bibendum felis vitae consequat. Duis tincidunt pulvinar quam ultricies aliquam. Aliquam at ante quis neque interdum fringilla.
+					| A Gaia Administradora preza pelo compromisso com nossos clientes. O que traduz a presteza, pontualidade em nossos pagamentos e confiabilidade.
 
+			.hidden-xs.offset-top-30(ng-include='"partials/link-icons.html"')
+
+			.offset-top-30
+				h2.offset-bottom-30 O diferencial
 				p.text-sm.text-gray.offset-bottom-15.text-line-spacing
-					| Vestibulum metus lectus, dignissim tincidunt iaculis in, imperdiet eget neque. Quisque vitae fermentum tellus, vel tincidunt eros. Nam et fermentum dui. Mauris quis blandit lorem. Vivamus pretium nulla eget dui viverra lobortis. Morbi imperdiet enim vel dolor consequat dictum. Donec tincidunt eleifend imperdiet. Nam a ipsum gravida, semper arcu quis, finibus nibh. Praesent tincidunt lectus ac egestas ullamcorper. Proin efficitur at erat at fermentum. Fusce cursus tristique dolor, at laoreet felis pretium egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus quis mollis libero, vitae commodo neque.
+					| A Gaia Administradora tem como finalidade administrar o patrimônio de seus clientes, bem como os encargos (água, condomínio, imposto predial, etc.), fazendo assim com que nossos clientes deixem a preocupação e a obrigação de manter a vida do seu imóvel em dia com a Gaia.
+				p.text-sm.text-gray.offset-bottom-15.text-line-spacing
+					| Na área de administração de condomínios nossa empresa conta com um suporte contábil para melhor atender e manter todos os encargos sociais e trabalhistas sempre em dia e atento nas mudanças legais.
 
 card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='sobre.array' ng-if='sobre.array.length')

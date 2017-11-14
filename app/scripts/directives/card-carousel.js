@@ -105,7 +105,8 @@ angular.module('alabama.directives')
 				cardCarouselId: '@carouselId',
 				cardCarouselName: '@name',
 				cardCarouselInterval: '@interval',
-				cardCarouselArray: '=cards'
+				cardCarouselArray: '=cards',
+				cardCarouselTarget: '@target'
 			},
 			link: link,
 			controller: controller

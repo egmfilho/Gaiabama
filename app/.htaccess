@@ -1,0 +1,8 @@
+RewriteEngine On
+
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_HOST} ^(www._gaiaadministradora.net|www._gaiaadministradora.com.br|www._gaia.adm.br|tmp.gaia.adm.br)$
+RewriteRule ^(.*)$ /gaia/#/$1

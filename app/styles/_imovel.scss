@@ -286,7 +286,7 @@
 
 		> div {
 			display: inline-block;
-			width: 20%;
+			width: (100% / 6);
 			text-align: center;
 			font-size: 14px;
 			color: $main-color;
@@ -299,11 +299,11 @@
 		}
 	}
 
-	.price {
-		background-color: $main-color-dark;
-		padding: 5px 10px;
+	#price {
+		// background-color: $main-color-dark;
+		// padding: 5px 10px;
 		font-size: 14px;
-		color: white;
+		// color: white;
 
 		// border: 1px solid $main-color;
 
@@ -316,17 +316,28 @@
 				&:first-child {
 					font-size: 18px;
 					margin-top: 0;
-					// margin-bottom: 10px;
+					margin-bottom: 15px;
 				}
 	
 				&:last-child {
 					margin-bottom: 0;
 				}
+
+				&.info {
+					margin-top: 30px;
+					font-size: 12px;
+				}
 			}
 		}
 	}
 
-	.tab-description {
+	.tab-description, .tab-price {
+		.tab-content {
+			min-height: calc(100% - 41px);
+		}
+	}
+
+	.tab-description, .tab-map, .tab-interest, .tab-price {
 		ul.nav.nav-tabs {
 			// border-color: $main-color;
 
@@ -351,25 +362,32 @@
 
 	.form-interesse {
 		height: 400px;
-		padding: 15px;
-		background-color: $main-color-dark;
-		color: white;
 		
 		h3 {
 			margin-top: 0;
+			text-align: center;
+			color: $main-color;
+			margin-bottom: 25px;
+		}
+
+		textarea {
+			height: 170px;
+			min-height: 170px;	
+			max-height: 170px;	
 		}
 
 		button {
 			opacity: .9;
+			margin-top: 35px;
 		}
 	}
 
-	.map {
+	#map, #street  {
 		width: 100%;
 		height: 400px;
 		position: relative;
 
-		.angular-google-map-container {
+		.angular-google-map-container, .angular-google-map-street-view-panorama {
 			position: absolute;
 			top: 0;
 			bottom: 0;
@@ -379,10 +397,17 @@
 	}
 
 	.no-map {
+		background-image: url('../images/no-map.png');
+	}
+
+	.no-street {
+		background-image: url('../images/no-street.jpg');
+	}
+
+	.no-map, .no-street {
 		width: 100%;
 		height: 400px;
 		position: relative;
-		background-image: url('../images/no-map.png');
 		text-align: center;
 
 		.cover {
@@ -391,7 +416,7 @@
 			position: absolute;
 			top: 0;
 			left: 0;
-			background-color: rgba(#000, .5);
+			background-color: rgba(#000, .3);
 		}
 
 		.info {

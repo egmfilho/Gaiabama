@@ -271,9 +271,10 @@ input, select, textarea, .bootstrap-select {
 			background-color: $main-color;
 			color: white;
 			border-radius: 50px;
-			padding: 40px;
+			padding: 30px;
 			width: 200px;
 			height: 200px;
+			line-height: 140px;
 		}
 
 		&:hover, &:active, &:visited, &:focus {

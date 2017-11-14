@@ -63,7 +63,7 @@
 		}
 
 		.rz-bubble {
-			color: $main-color-lighter;
+			color: white;
 		}
 
 		.rz-pointer {
@@ -84,7 +84,7 @@
 .searchbar-complete {
 	$input-bg: $main-color-dark;
 	$input-border: $main-color-darker;
-	$input-color-placeholder: $main-color-lighter;
+	$input-color-placeholder: rgba(white, .7);
 
 	input {
 		background-color: $input-bg;
@@ -95,16 +95,26 @@
 		}
 	}
 
-	.bootstrap-select .btn-default {
-		background-color: $input-bg;
-		border-color: $input-border;
-		
-		span.filter-option {
-			color: $input-color-placeholder;
+	.bootstrap-select {
+		.btn-default {
+			background-color: $input-bg;
+			border-color: $input-border;
+			
+			span.filter-option {
+				color: $input-color-placeholder;
+			}
+	
+			span.bs-caret {
+				color: $main-color-darker;
+			}
 		}
 
-		span.bs-caret {
-			color: $main-color-darker;
+		&.open {
+			.btn-default {
+				span.filter-option {
+					color: $main-color;
+				}
+			}
 		}
 	}
 

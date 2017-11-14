@@ -12,7 +12,8 @@ angular.module('alabama.directives')
 			templateUrl: 'partials/directives/card-grid.html',
 			scope: {
 				cardGridArray: '=cards',
-				cardGridName: '@name'
+				cardGridName: '@name',
+				cardGridTarget: '@target'
 			}
 		}
 

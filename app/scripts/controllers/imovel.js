@@ -51,6 +51,21 @@ function ImovelCtrl($rootScope, $scope, $location, $window, $http, $timeout, Imm
 				self.map.window.show = false;
 			}
 		},
+		streetView: {
+			coords: { },
+			radius: 50,
+			ctrl: { },
+			options: {
+				addressControl: true,                
+				linksControl: true,
+				zoomControl: true
+			},
+			forceDraw: function() {
+				$timeout(function() {
+					google.maps.event.trigger(self.map.streetView.ctrl.getGPano(), 'resize');
+				}, 500);
+			}
+		}
 	};
 
 	$scope.$on('$viewContentLoaded', function () {
@@ -72,8 +87,8 @@ function ImovelCtrl($rootScope, $scope, $location, $window, $http, $timeout, Imm
 				self.map.marker.coords.latitude = $scope.immobile.immobile_latitude;
 				self.map.marker.coords.longitude = $scope.immobile.immobile_longitude;
 				self.map.center = { latitude: self.map.marker.coords.latitude, longitude: self.map.marker.coords.longitude };
-				
-				self.ready = true;
+				self.map.streetView.coords = { latitude: parseFloat($scope.immobile.immobile_latitude).toFixed(7), longitude: parseFloat($scope.immobile.immobile_longitude).toFixed(7) };
+				console.log(self.map.streetView.coords);
 				
 				self.related = $scope.immobile.getRelated().map(function(n) {
 					return n.convertToCardInfo();
@@ -84,6 +99,8 @@ function ImovelCtrl($rootScope, $scope, $location, $window, $http, $timeout, Imm
 				self.interest.immobile_name = $scope.immobile.immobile_name;
 				self.interest.mensagem = 'Tenho interesse no imóvel (' + $scope.immobile.immobile_code + ') ' + $scope.immobile.immobile_name + ' em ' + $scope.immobile.address.district.city.city_name;
 				$rootScope.loading.unload();
+
+				self.ready = true;
 			});
 		}
 	});

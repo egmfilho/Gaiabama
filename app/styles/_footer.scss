@@ -1,17 +1,16 @@
 .footer {
-	// $height: 250px;
-	$height: 0;
+	$height: 250px;
 	
-	// padding-top: 20px;
-	// border-top: 20px solid $main-color-darker;
+	padding-top: 20px;
+	border-top: 10px solid $main-color;
 	
 	height: auto;
 	@media (min-width: $screen-sm-min) {
 		height: $height;
 	}
 
-	background-color: white;
-	color: $gray;
+	background-color: $main-color-light;
+	color: white;
 	position: relative;
 
 	@include box-shadow(0, 2px, 5px, rgba(#000, .5));
@@ -19,7 +18,7 @@
 	.logo {
 		width: 100%;
 		height: 160px;
-		background-image: url('../images/PN/logo.png');
+		background-image: url('../images/Gaia/logo.png');
 		background-position: center;
 		background-size: contain;
 		background-repeat: no-repeat;
@@ -29,7 +28,7 @@
 		list-style-type: none;
 
 		li a {
-			color: $gray;
+			color: white;
 
 			&:hover {
 				color: $gray-darker;
@@ -45,10 +44,9 @@
 			}
 
 			li {
-				text-align: center;
+				text-align: left;
 
 				@media(min-width: $screen-sm-min) {
-					// width: 150px;
 					width: 200px;	
 					float: left;
 				}
@@ -61,7 +59,7 @@
 					width: 250px;
 				}
 				
-				font-size: 24px;
+				font-size: 20px;
 
 				a {
 					display: block;
@@ -78,7 +76,12 @@
 					}
 
 					li {
-						font-size: 16px;
+						font-size: 14px;
+						margin-top: 3px;
+
+						i.fa {
+							margin-right: 8px;
+						}
 
 						a {
 							text-decoration: none;
@@ -92,14 +95,18 @@
 	.futura {
 		text-align: center;
 		background-color: $main-color-darker;
-		padding: 6px;
+		padding: 10px;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
 
 		@media (min-width: $screen-sm-min) {
 			// margin-top: 40px;
 		}
 
 		.futura-cubo {
-			font-size: 25px;
+			font-size: 30px;
 			color: white;
 			margin-right: 10px;
 			vertical-align: top;

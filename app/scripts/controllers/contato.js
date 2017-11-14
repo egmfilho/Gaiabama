@@ -8,20 +8,21 @@ angular.module('alabama.controllers')
 		self.enviando = false;
 
 		self.map = {
-			center: { latitude: -22.5, longitude: -43 },
-			zoom: 14,
+			center: { latitude: -22.4137477, longitude: -42.9686792 },
+			zoom: 15,
 			options: {
 				clickableIcons: false,
 				maxZoom: 20,
 				styles: MapTheme.styles,
 			},
 			marker: { 
-				coords: { latitude: -22.5, longitude: -43 },
-				title: 'Gaia',
-				address: 'Endereco',
-				contact: '(21) 2222-3333',
+				coords: { latitude: -22.4137477, longitude: -42.9686792 },
+				title: 'Gaia Administradora',
+				address: 'Av. Delfim Moreira, 168 - Sobrado, Teresópolis - RJ, 03621-070',
+				contact1: 'Telefones: (21) 2742-1516 - (21) 2742-0295',
+				contact2: 'Email: gaia@gaia.adm.br',
 				options: {
-					icon: '../images/marker.png',
+					// icon: '../images/marker.png',
 					click: function() {
 						self.map.window.show = !self.map.window.show;
 					}

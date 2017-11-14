@@ -18,7 +18,7 @@
 						a(href='')
 							i.fa.fa-share-alt.icon-sm
 
-.drop-shadow.paint-back-darker
+//- .drop-shadow.paint-back-darker
 	.container
 		searchbar-complete
 
@@ -67,8 +67,11 @@
 					.picture(ng-style='{"background-image": "url({{pic.thumb}})"}')
 
 	.row.offset-top-30
-		.col-xs-12.col-sm-8
+		.col-xs-12
 			.caracteristicas
+				div
+					i.fa.fa-tag
+					| Cód. {{immobile.immobile_code}}
 				div
 					i.futura-ruler-pencil-x
 					| {{immobile.immobile_area_total}}
@@ -86,41 +89,31 @@
 					i.fa.fa-car
 					| {{immobile.immobile_parking_spot}} Vagas
 
-		.col-xs-12.col-sm-4
-			.price
-				ul.list-unstyled
-					li {{immobile.immobile_type == 1 ? 'Venda' : 'Aluguel'}}
-						i.pull-right {{immobile.immobile_value | currency:'R$ ':2}}
-					li Condomínio
-						i.pull-right {{immobile.immobile_value_condominium | currency:'R$ ':2}}
-					li IPTU
-						i.pull-right {{immobile.immobile_value_iptu | currency:'R$ ':2}}
-
-	.row.tab-description
-		.col-xs-12
-			ul.nav.nav-tabs.offset-top-30(role='tablist')
+	.row.offset-top-30.is-flex
+		.col-xs-12.col-sm-8.tab-description
+			ul.nav.nav-tabs(role='tablist')
 				li.active(role='presentation')
-					a(data-target='#descricao' aria-controls='descrição' role='tab' data-toggle='tab')
+					a(href='' data-target='#descricao' aria-controls='descrição' role='tab' data-toggle='tab')
 						| Descrição
 
 				li(role='presentation' ng-if='immobile.feature_immobile.length')
-					a(data-target='#imovel' aria-controls='imóvel' role='tab' data-toggle='tab')
+					a(href='' data-target='#imovel' aria-controls='imóvel' role='tab' data-toggle='tab')
 						| Imóvel
 
 				li(role='presentation' ng-if='immobile.feature_condominium.length')
-					a(data-target='#condominio' aria-controls='condomínio' role='tab' data-toggle='tab')
+					a(href='' data-target='#condominio' aria-controls='condomínio' role='tab' data-toggle='tab')
 						| Condomínio
 
 			.tab-content
-				#descricao.tab-pane.active(role='tabpanel')
+				#descricao.offset-top-15.tab-pane.active(role='tabpanel')
 					.row
-						.col-xs-12.offset-top-15
+						.col-xs-12
 							h4.text-primary 
 								b Descrição do Imóvel
 							p.text-xs.text-line-spacing {{immobile.immobile_description}}
 
-				#imovel.tab-pane(role='tabpanel')
-					.row.offset-top-15
+				#imovel.offset-top-15.tab-pane(role='tabpanel')
+					.row
 						.col-xs-12.col-sm-6.col-md-4(ng-repeat-start='feature in immobile.feature_immobile track by $index')
 							table.table.table-striped.table-immobile
 								thead
@@ -136,8 +129,8 @@
 						.clearfix.visible-sm-block(ng-if='($index + 1) % 2 == 0')
 						div(ng-repeat-end='')
 
-				#condominio.tab-pane(role='tabpanel')
-					.row.offset-top-15
+				#condominio.offset-top-15.tab-pane(role='tabpanel')
+					.row
 						.col-xs-12.col-sm-6.col-md-4(ng-repeat-start='feature in immobile.feature_condominium track by $index')
 							table.table.table-striped.table-immobile
 								thead
@@ -153,42 +146,94 @@
 						.clearfix.visible-sm-block(ng-if='($index + 1) % 2 == 0')
 						div(ng-repeat-end='')
 
+		.col-xs-12.col-sm-4.tab-price
+			ul.nav.nav-tabs(role='tablist')
+				li.active(role='presentation')
+					a(href='' data-target='#price' aria-controls='price' role='tab' data-toggle='tab')
+						i.fa.fa-usd &nbsp;
+						| Valores
+
+			.tab-content
+				#price.offset-top-15.tab-pane.active(role='tabpanel')
+					ul.list-unstyled
+						li.text-primary {{immobile.immobile_type == 1 ? 'Venda' : 'Aluguel'}}
+							i.pull-right {{immobile.immobile_value | currency:'R$ ':2}}
+						li Condomínio
+							sup *
+							i.pull-right {{immobile.immobile_value_condominium | currency:'R$ ':2}}
+						li IPTU
+							sup *
+							i.pull-right {{immobile.immobile_value_iptu | currency:'R$ ':2}}
+
+						li.text-center.text-light.info
+							sup *&nbsp;
+							| Taxas como Condomínio e IPTU são valores informativos aproximados e poderão sofrer alterações sem notificação prévia.
+
 	.row.offset-top-30
-		.col-xs-12.col-sm-6.col-md-4
-			.form-interesse
-				h3 Tenho Interesse
-				form(name='interest' ng-submit='submitForm()' ng-if='!imovel.enviando')
-					input.form-control.offset-top-15(type='text' placeholder='Nome' name='nome' required ng-model='imovel.interest.nome')
-					input.form-control.offset-top-15(type='text' placeholder='Telefone' name='telefone' required ng-model='imovel.interest.telefone')
-					input.form-control.offset-top-15(type='email' placeholder='Email' name='email' required ng-model='imovel.interest.email')
-					textarea.form-control.offset-top-15(type='text' rows='5' name='mensagem' required ng-model='imovel.interest.mensagem')
-					button.btn.btn-default.btn-lg.btn-block.offset-top-30(type='submit')
-						i.fa.fa-envelope-o
-						|  Enviar
+		.col-xs-12.col-sm-6.col-md-8.tab-map
+			ul.nav.nav-tabs(role='tablist')
+				li.active(role='presentation')
+					a(href='' data-target='#map' aria-controls='mapa' role='tab' data-toggle='tab')
+						i.fa.fa-map-o &nbsp;
+						| Mapa
 
-				.offset-top-60(ng-if='imovel.enviando')
-					.text-white.text-center
-						i.fa.fa-envelope-o.fa-3x &nbsp;
-						i.fa.fa-spin.fa-refresh.fa-3x
-						h2.offset-top-60 Enviando...
+				li(role='presentation')
+					a(href='' data-target='#street' aria-controls='street-view' role='tab' data-toggle='tab' ng-click='imovel.map.streetView.forceDraw()')
+						i.fa.fa-map-marker &nbsp;
+						| Street View
 
-		.col-xs-12.col-sm-6.col-md-8
-			.no-map(ng-if='!(immobile.immobile_latitude && immobile.immobile_latitude != 0 && immobile.immobile_longitude && immobile.immobile_longitude != 0)')
-				.cover
-				.info
-					i.fa.fa-map-o.fa-3x
-					h3 Localização indisponível
+			.tab-content
+				#map.tab-pane.active(role='tabpanel')
+					.no-map(ng-if='!(immobile.immobile_latitude && immobile.immobile_latitude != 0 && immobile.immobile_longitude && immobile.immobile_longitude != 0)')
+						.cover
+						.info
+							i.fa.fa-map-o.fa-3x
+							h3 Localização indisponível
+					
+					.map(ng-if='imovel.ready && immobile.immobile_latitude && immobile.immobile_latitude != 0 && immobile.immobile_longitude && immobile.immobile_longitude != 0')
+						ui-gmap-google-map(center='imovel.map.center' zoom='imovel.map.zoom' options='imovel.map.options')
+							ui-gmap-marker(idKey='immobile.immobile_id' coords='imovel.map.marker.coords' options='imovel.map.marker.options' click='imovel.map.marker.click')
+								ui-gmap-window(options='imovel.map.window.options' closeClick='imovel.map.window.closeClick()' ng-cloak)
+									div
+										h5.hidden-xs 
+											b {{immobile.immobile_name}}
+										p
+											| {{immobile.address.address_public_place}} {{immobile.address.address_number}}
+											br
+											| {{immobile.address.district.district_name}}, {{immobile.address.district.city.city_name}} - {{immobile.address.district.city.uf.uf_code}}
+
+				#street.tab-pane(role='tabpanel')
+					.no-street
+						.cover
+						.info
+							i.fa.fa-map-marker.fa-3x
+							h3 Street View indisponível
+
+					ui-gmap-street-view-panorama(focalCoord='imovel.map.streetView.coords' radius='imovel.map.streetView.radius' options='imovel.map.streetView.options' control='imovel.map.streetView.ctrl')
+
+		.col-xs-12.col-sm-6.col-md-4.tab-interest
+			ul.nav.nav-tabs(role='tablist')
+				li.active(role='presentation')
+					a(href='' data-target='#interest' aria-controls='interest' role='tab' data-toggle='tab')
+						i.fa.fa-envelope-o &nbsp;
+						| Entrar em contato
 			
-			.map(ng-if='imovel.ready && immobile.immobile_latitude && immobile.immobile_latitude != 0 && immobile.immobile_longitude && immobile.immobile_longitude != 0')
-				ui-gmap-google-map(center='imovel.map.center' zoom='imovel.map.zoom' options='imovel.map.options')
-					ui-gmap-marker(idKey='immobile.immobile_id' coords='imovel.map.marker.coords' options='imovel.map.marker.options' click='imovel.map.marker.click')
-						ui-gmap-window(options='imovel.map.window.options' closeClick='imovel.map.window.closeClick()' ng-cloak)
-							div
-								h5.hidden-xs 
-									b {{immobile.immobile_name}}
-								p
-									| {{immobile.address.address_public_place}} {{immobile.address.address_number}}
-									br
-									| {{immobile.address.district.district_name}}, {{immobile.address.district.city.city_name}} - {{immobile.address.district.city.uf.uf_code}}
+			#interest.tab-content
+				.form-interesse.tab-pane.active(role='tabpanel')
+					//- h3 Tenho Interesse
+					form(name='interest' ng-submit='submitForm()' ng-if='!imovel.enviando')
+						input.form-control(type='text' placeholder='Nome' name='nome' required ng-model='imovel.interest.nome')
+						input.form-control.offset-top-15(type='text' placeholder='Telefone' name='telefone' required ng-model='imovel.interest.telefone')
+						input.form-control.offset-top-15(type='email' placeholder='Email' name='email' required ng-model='imovel.interest.email')
+						textarea.form-control.offset-top-15(type='text' rows='5' name='mensagem' required ng-model='imovel.interest.mensagem')
+						button.btn.btn-primary.btn-lg.btn-block(type='submit')
+							i.fa.fa-envelope-o
+							|  Enviar
+
+					.offset-top-60(ng-if='imovel.enviando')
+						.text-white.text-center
+							i.fa.fa-envelope-o.fa-3x &nbsp;
+							i.fa.fa-spin.fa-refresh.fa-3x
+							h2.offset-top-60 Enviando...
 
 card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='imovel.related' ng-if='imovel.related.length')

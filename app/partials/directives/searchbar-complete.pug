@@ -6,13 +6,13 @@
 		.col-md-3.hidden-xs.hidden-sm
 			select.selectpicker.form-control(title='Categoria' data-container='body' autocomplete='off' ng-model='searchbar.search.categoria')
 				option(value='' disabled style='display: none') Categoria
-				option(value='0') Todos
+				option(value='0') Todas as categorias
 				option(value='1') Venda
 				option(value='2') Aluguel
 		.col-md-3.hidden-xs.hidden-sm
 			select.selectpicker.form-control(title='Cidade' data-container='body' ng-model='searchbar.search.cidade')
 				option(value='' disabled style='display: none') Cidade
-				option(value='0') Todas
+				option(value='0') Todas as cidades
 				option(ng-repeat='cidade in searchbar.filters.city' ng-value='cidade.city_id') 
 					| {{cidade.city_name}}
 
@@ -20,25 +20,25 @@
 			.col-xs-12.col-sm-6.hidden-md.hidden-lg
 				select.selectpicker.form-control(title='Categoria' data-container='body' autocomplete='off' ng-model='searchbar.search.categoria')
 					option(value='' disabled style='display: none') Categoria
-					option(value='0') Todos
+					option(value='0') Todas as categorias
 					option(value='1') Venda
 					option(value='2') Aluguel
 			.col-xs-12.col-sm-6.hidden-md.hidden-lg
 				select.selectpicker.form-control(title='Cidade' data-container='body' ng-model='searchbar.search.cidade')
 					option(value='' disabled style='display: none') Cidade
-					option(value='0') Todas
+					option(value='0') Todas as cidades
 					option(ng-repeat='cidade in searchbar.filters.city' ng-value='cidade.city_id') 
 						| {{cidade.city_name}}
 			.col-xs-12.col-sm-6.col-md-3
 				select.selectpicker.form-control(title='Bairro' data-container='body' ng-model='searchbar.search.bairro')
 					option(value='' disabled style='display: none') Bairro
-					option(value='0') Todos
+					option(value='0') Todos os bairros
 					option(ng-repeat='bairro in searchbar.filters.districts' ng-value='bairro.district_id')
 						| {{bairro.district_name}} ({{bairro.quantity}})
 			.col-xs-12.col-sm-6.col-md-3
 				select.selectpicker.form-control(title='Tipo' data-container='body' ng-model='searchbar.search.tipo')
 					option(value='' disabled style='display: none') Tipo
-					option(value='0') Tudo
+					option(value='0') Todo os tipos
 					option(ng-repeat='categoria in searchbar.filters.category' ng-value='categoria.immobile_category_id')
 						| {{categoria.immobile_category_name}}
 			.col-xs-12.col-sm-6.col-md-3

@@ -4,6 +4,7 @@ div
 			.preview(ng-repeat='n in parameter.array track by $index')
 				
 				.thumb(style='background-image: url("{{ n.picture }}")')
+					.code Cód. {{n.code}}
 					.price {{ n.price | currency : 'R$ ' : '0'}}
 				
 				.description
@@ -34,4 +35,4 @@ div
 								i.fa.fa-car
 								| {{n.parking}} {{ n.parking == 1 ? 'vaga' : 'vagas' }}
 
-					a.btn.btn-block.btn-primary(ng-href='{{ n.url }}') Ver mais
+					a.btn.btn-block.btn-primary(ng-href='{{ n.url }}' target='_blank') Ver mais

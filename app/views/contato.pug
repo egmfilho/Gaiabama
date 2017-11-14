@@ -57,11 +57,13 @@
 			ui-gmap-window(options='contato.map.window.options' closeClick='contato.map.window.closeClick()' ng-cloak)
 				div
 					h5.hidden-xs 
-						b {{contato.map.title}} 
+						b {{contato.map.marker.title}} 
 					p
-						| {{contato.map.address}}
+						| {{contato.map.marker.address}}
 						br
-						| {{contato.map.contact}}
+						| {{contato.map.marker.contact1}}
+						br
+						| {{contato.map.marker.contact2}}
 
 card-carousel.offset-top-60(carousel-id='sliding-cards' name='Veja também' interval='5000' cards='contato.array' ng-if='contato.array.length')
 

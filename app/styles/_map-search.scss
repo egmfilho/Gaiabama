@@ -98,7 +98,8 @@
 						max-height: 40px;
 						padding: 10px;
 						overflow: hidden;
-						color: darken($secondary-color, 20%);
+						// color: darken($secondary-color, 20%);
+						color: rgba(white, .7);
 
 						i {
 							font-size: 18px;
@@ -107,6 +108,16 @@
 
 						.toto {
 							float: right;
+						}
+					}
+
+					&.open {
+						> a {
+							color: $main-color;
+						}
+
+						label {
+							cursor: pointer;
 						}
 					}
 
@@ -398,6 +409,19 @@
 									background-size: cover;
 									background-position: center;
 									position: relative;
+
+									.code {
+										font-weight: 400;
+										position: absolute;
+										color: white;
+										top: 5px;
+										right: 5px;
+										text-shadow:
+											-1px -1px 1px rgba(#000, .6),
+											1px -1px 1px rgba(#000, .6),
+											-1px 1px 1px rgba(#000, .6),
+											1px 1px 1px rgba(#000, .6);
+									}
 
 									.price {
 										position: absolute;

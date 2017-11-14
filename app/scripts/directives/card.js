@@ -9,6 +9,10 @@ angular.module('alabama.directives')
 
 		function link(scope, element, attrs) {
 			jQuery('[data-toggle="tooltip"]').tooltip();
+
+			if (scope.target) {
+				jQuery(element).find('a.card').attr('target', scope.target);
+			}
 		}
 
 		function controller($scope, $timeout) {
@@ -77,7 +81,8 @@ angular.module('alabama.directives')
 				category: '@',
 				thumbs: '=',
 				dummy: '=',
-				origin: '@'
+				origin: '@',
+				target: '@'
 			},
 			link: link,
 			controller: controller

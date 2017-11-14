@@ -374,8 +374,8 @@
 										.code-search
 											h4.text-primary
 												| Código do imóvel
-											input.form-control(placeholder='Ex. 988021' ng-model='code')
-											button.btn.btn-block.btn-lg.btn-primary.offset-top-15(type='button' ng-click='mapSearch.getImmobileByCode(code)') Buscar
+											input.form-control(placeholder='Ex. 988021' ng-model='immobileCode' ng-keydown='mapSearch.typeEventOnGetImmobile($event, immobileCode)')
+											button.btn.btn-block.btn-lg.btn-primary.offset-top-15(type='button' ng-click='mapSearch.getImmobileByCode(immobileCode)') Buscar
 
 	.uber-container(ng-style='{ "min-height": innerHeight, "height": innerHeight, "max-height": innerHeight }')
 		.side-menu-container.hidden-xs
@@ -411,6 +411,7 @@
 							bath='{{n.bath}}'
 							parking='{{n.parking}}'
 							thumbs='n.thumbs'
+							target='_blank'
 							ng-mouseenter='mapSearch.cardEnter(n.id)'
 							ng-mouseleave='mapSearch.cardLeave(n.id)'
 						)

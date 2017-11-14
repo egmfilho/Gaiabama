@@ -92,6 +92,18 @@ a.card {
 			position: relative;
 			overflow: hidden;
 
+			.code {
+				position: absolute;
+				color: white;
+				top: 5px;
+				right: 5px;
+				text-shadow:
+					-1px -1px 1px rgba(#000, .6),
+					1px -1px 1px rgba(#000, .6),
+					-1px 1px 1px rgba(#000, .6),
+					1px 1px 1px rgba(#000, .6);
+			}
+
 			.slide-control {
 				height: 100%;
 
@@ -369,8 +381,6 @@ a.card {
 					margin-right: 10px;					
 					padding: 5px 15px;
 					border: 1px solid $main-color;
-					background-color: rgba($main-color, .1);
-					// border-radius: 4px;
 				}
 			}
 

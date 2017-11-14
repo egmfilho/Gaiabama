@@ -6,19 +6,23 @@
 	angular.module('alabama.controllers')
 		.controller('MapSearchCtrl', MapSearchCtrl);
 
-	MapSearchCtrl.$inject = [ '$scope', '$filter', '$location', '$window', '$timeout', 'Filters', 'ImmobileManager', 'MapTheme' ];
+	MapSearchCtrl.$inject = [ '$q', '$scope', '$filter', '$location', '$window', '$timeout', 'Filters', 'Immobile', 'ImmobileManager', 'MapTheme' ];
 
-	function MapSearchCtrl($scope, $filter, $location, $window, $timeout, Filters, ImmobileManager, MapTheme) {
+	function MapSearchCtrl($q, $scope, $filter, $location, $window, $timeout, Filters, Immobile, ImmobileManager, MapTheme) {
 
 		var self = this,
 			_isLoading = 0;
 
-		jQuery('#golimar').modal({
-			backdrop: 'static',
-			keyboard: false
-		}).on('shown.bs.modal', function(e) {
-			jQuery('.modal-backdrop').css('z-index', 3);
-		}).modal('show');
+		/** 
+		 * modal que aparece ao carregar a tela para 
+		 * selecionar a cidade do mapa
+		 */
+		// jQuery('#golimar').modal({
+		// 	backdrop: 'static',
+		// 	keyboard: false
+		// }).on('shown.bs.modal', function(e) {
+		// 	jQuery('.modal-backdrop').css('z-index', 3);
+		// }).modal('show');
 
 		$scope.$on('$viewContentLoaded', function() {		
 			recalcFiltersPosition();
@@ -74,12 +78,90 @@
 				console.log(error);
 				_isLoading = Math.max(_isLoading - 1, 0);
 			});
+		};
+
+		function centerMap(bounds) {
+			if (!self.map.markers.length) return;
+
+			if (!bounds) {
+				bounds = new google.maps.LatLngBounds();
+
+				self.map.markers.map(function(n) {
+					bounds.extend(new google.maps.LatLng(n.latitude, n.longitude));
+				});
+			}
+
+			self.map.bounds = {
+				northeast: { 
+					latitude: bounds.getNorthEast().lat(),
+					longitude: bounds.getNorthEast().lng()
+				},
+				southwest: {
+					latitude: bounds.getSouthWest().lat(),
+					longitude: bounds.getSouthWest().lng()
+				}
+			};
 		}
 
-		self.getImmobileByCode = function(code) {
-			if (!code) return;
+		function filterByCode(code) {
+			return self.array.find(function(item) {
+				return item.immobile_code == code;
+			});
+		}
 
-			console.log('get by code', code);
+		function getByCode(code) {
+			var deferred = $q.defer();
+
+			_isLoading++;
+			var item = new Immobile();
+			item.get(code).then(function(success) {
+				_isLoading = Math.max(_isLoading - 1, 0);
+				if (item.immobile_latitude && item.immobile_longitude) {
+					deferred.resolve(item);
+				} else {
+					deferred.reject(item);
+				}
+			}, function(error) {
+				_isLoading = Math.max(_isLoading - 1, 0);
+				deferred.reject(error);
+			});
+
+			return deferred.promise;
+		}
+
+		self.typeEventOnGetImmobile = function(event, code) {
+			if (event.key == 'Enter') {
+				event.preventDefault();
+				self.getImmobileByCode(code);
+			}
+		};
+
+		self.getImmobileByCode = function(code, event) {
+			if (!code) {
+				self.clearSearch();
+				return;
+			}
+
+			// Primeiro checa se o imovel ja se encontra no array
+			var temp = filterByCode(code);
+
+			if (temp) {
+				// self.map.markers = temp;
+				temp = temp.convertToMapMarker();
+				var bounds = new google.maps.LatLngBounds();
+				bounds.extend(new google.maps.LatLng(temp.latitude, temp.longitude));
+				centerMap(bounds);
+			} else {
+				// Senao faz um get para pegar do servidor
+				getByCode(code).then(function(success) {
+					self.map.markers = [ success.convertToMapMarker() ];
+					centerMap();
+					// Falta ainda marcar a ciadade nos filtros
+				}, function(error) {
+					console.log('imovel nao encontrado ou nao possui coordenadas cadastradas');
+					alert('O imóvel não existe ou não possui coordenadas cadastradas!');
+				});
+			}
 		};
 
 		self.map = {
@@ -175,6 +257,11 @@
 			}, {
 				cidade: this.search.cidade
 			});
+
+			$scope.immobileCode = '';
+
+			applyFilters();
+			centerMap();
 		};
 
 		this.toggleCheckbox = function(key, value) {
@@ -278,6 +365,11 @@
 	
 			self.clearSearch();
 
+			self.search.cidade = self.filters.city.map(function(c) {
+				return c.city_id;
+			})[0];
+			self.loadAll();
+
 			$scope.$watch(function() {
 				return self.search;
 			}, function(newVal, oldVal) {
@@ -308,19 +400,18 @@
 		
 		function applyFilters() {
 			var bounds = new google.maps.LatLngBounds();
-
 			self.map.markers = self.array.reduce(function(array, item) {
 				if (!((self.search.minValue           && item.immobile_value       < self.search.minValue)                       || 
-					  (self.search.maxValue           && item.immobile_value       > self.search.maxValue)                       ||
-					  (self.search.minArea            && item.immobile_area_total  < self.search.minArea)                        || 
-					  (self.search.maxArea            && item.immobile_area_total  > self.search.maxArea)                        ||
-					  (self.search.categoria          && self.search.categoria    != item.immobile_type)                         || 
-					  (self.search.suite >= 0         && self.search.suite        != Math.min(item.immobile_suite, 1))           ||
-					  (self.search.garagem >= 0       && self.search.garagem      != Math.min(item.immobile_parking_spot, 1))    ||
-					  (self.search.tipo.length        && self.search.tipo.indexOf(item.immobile_category_id)                < 0) || 
-					  (self.search.dormitorio.length  && self.search.dormitorio.indexOf(Math.min(item.immobile_bedroom, 4)) < 0) ||
-					  (self.search.banheiro.length    && self.search.banheiro.indexOf(Math.min(item.immobile_bathroom, 4))  < 0)) ) {
-
+				(self.search.maxValue           && item.immobile_value       > self.search.maxValue)                       ||
+				(self.search.minArea            && item.immobile_area_total  < self.search.minArea)                        || 
+				(self.search.maxArea            && item.immobile_area_total  > self.search.maxArea)                        ||
+				(self.search.categoria          && self.search.categoria    != item.immobile_type)                         || 
+				(self.search.suite >= 0         && self.search.suite        != Math.min(item.immobile_suite, 1))           ||
+				(self.search.garagem >= 0       && self.search.garagem      != Math.min(item.immobile_parking_spot, 1))    ||
+				(self.search.tipo.length        && self.search.tipo.indexOf(item.immobile_category_id)                < 0) || 
+				(self.search.dormitorio.length  && self.search.dormitorio.indexOf(Math.min(item.immobile_bedroom, 4)) < 0) ||
+				(self.search.banheiro.length    && self.search.banheiro.indexOf(Math.min(item.immobile_bathroom, 4))  < 0)) ) {
+					
 					self.cards.push(item.convertToCardInfo());
 					array.push(item.convertToMapMarker());
 					bounds.extend(new google.maps.LatLng(item.immobile_latitude, item.immobile_longitude));

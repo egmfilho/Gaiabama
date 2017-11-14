@@ -90,12 +90,6 @@ angular.module('alabama', [
 			controller: 'ImovelCtrl',
 			controllerAs: 'imovel'
 		})
-		.when('/equipe', {
-			name: 'Equipe',
-			templateUrl: 'views/equipe.html',
-			controller: genericController,
-			controllerAs: 'equipe'
-		})
 		.when('/contato', {
 			name: 'Contato',
 			templateUrl: 'views/contato.html',

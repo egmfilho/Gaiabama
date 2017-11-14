@@ -17,26 +17,10 @@ a.card(ng-href='{{!dummy ? url : \'\'}}' ng-class='{"card-horizontal": isHorizon
 
 			.category(ng-if='category')
 				| {{category}}
-			//- .icons(ng-if='!isHorizontal')
-				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{area}} m&#178;' ng-if='area && area > 0')
-					| {{area | number}} 
-					span  m&#178; &nbsp;
 
-				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{bed}} dormitórios' ng-if='bed && bed > 0')
-					| {{bed}}  
-					i.fa.fa-bed
+			.code(ng-show='!isHorizontal')
+				| Cód. {{code}}
 
-				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{suite}} suítes' ng-if='suite && suite > 0')
-					| {{suite}}  
-					i.fa.fa-bathtub
-
-				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{bath}} banheiros' ng-if='bath && bath > 0')
-					| {{bath}}  
-					i.fa.fa-shower
-
-				span(name='icon' data-toggle='tooltip' data-placement='top' title='{{parking}} vagas' ng-if='parking && parking > 0')
-					| {{parking}}  
-					i.fa.fa-car
 	.info(ng-if='!dummy')
 		span.title 
 			| {{title | truncate: (isHorizontal ? 50 : 50)}}
