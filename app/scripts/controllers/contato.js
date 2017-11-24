@@ -18,7 +18,7 @@ angular.module('alabama.controllers')
 			marker: { 
 				coords: { latitude: -22.4137477, longitude: -42.9686792 },
 				title: 'Gaia Administradora',
-				address: 'Av. Delfim Moreira, 168 - Sobrado, Teresópolis - RJ, 03621-070',
+				address: 'Av. Delfim Moreira, 168 - Sobrado, Teresópolis - RJ, 25953-232',
 				contact1: 'Telefones: (21) 2742-1516 - (21) 2742-0295',
 				contact2: 'Email: gaia@gaia.adm.br',
 				options: {
