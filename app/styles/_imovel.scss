@@ -286,7 +286,10 @@
 
 		> div {
 			display: inline-block;
-			width: (100% / 6);
+			width: (100% / 5);
+			@media (min-width: $screen-sm-min) {
+				width: (100% / 6);
+			}
 			text-align: center;
 			font-size: 14px;
 			color: $main-color;
@@ -328,6 +331,14 @@
 					font-size: 12px;
 				}
 			}
+		}
+	}
+
+	.tab-description {
+		margin-bottom: 30px;
+		
+		@media (min-width: $screen-sm-min) {
+			margin-bottom: 0;
 		}
 	}
 

@@ -52,7 +52,9 @@
 					title: '@',
 					subtitle: '@',
 					message: '@',
-					btnLabel: '@'
+					btnLabel: '@',
+					facebookUrl: '@',
+					facebookAlias: '@'
 				},
 				link: function(scope, elem, attrs) {
 					scope.navButtons = JSON.parse(scope.navigation);

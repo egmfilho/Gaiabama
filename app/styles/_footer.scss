@@ -4,7 +4,7 @@
 	padding-top: 20px;
 	border-top: 10px solid $main-color;
 	
-	height: auto;
+	height: 550px;
 	@media (min-width: $screen-sm-min) {
 		height: $height;
 	}
@@ -62,7 +62,7 @@
 				font-size: 20px;
 
 				a {
-					display: block;
+					display: inline;
 					text-decoration: none;
 				}
 

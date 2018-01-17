@@ -17,3 +17,7 @@ textarea, input {
 .dropdown-menu {
 	border-radius: 0;
 }
+
+.dropdown-backdrop {
+	z-index: 4;
+}

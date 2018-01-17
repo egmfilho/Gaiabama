@@ -27,6 +27,10 @@
 		div(ng-if='!!email')
 			i.fa.fa-envelope-o &nbsp;
 			span {{email}}
+		div(ng-if='!!facebook')
+			i.fa.fa-facebook-official
+			a(ng-href='{{facebookUrl}}')
+				| {{facebookAlias}}
 
 
 #header.header6
@@ -43,6 +47,10 @@
 					span(ng-if='!!email')
 						i.fa.fa-envelope-o
 						span {{email}}
+					span(ng-if='!!facebookUrl')
+						i.fa.fa-facebook-official
+						a(ng-href='{{facebookUrl}}')
+							| {{facebookAlias}}
 
 		.menu
 			.container

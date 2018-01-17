@@ -11,7 +11,7 @@
 		li(role='presentation' name='imoveis')
 			a(href='/imoveis' ng-click='header.hideHeader7Mobile()') Imóveis
 
-		li(role='presentation' name='equipe')
+		//- li(role='presentation' name='equipe')
 			a(href='/equipe' ng-click='header.hideHeader7Mobile()') Equipe
 
 		li(role='presentation' name='contato')
@@ -30,6 +30,10 @@
 		div(ng-if='!!email')
 			i.fa.fa-envelope-o &nbsp;
 			span {{email}}
+		div(ng-if='!!facebookUrl')
+			i.fa.fa-facebook-official
+			a(ng-href='{{facebookUrl}}')
+				| {{facebookAlias}}
 
 
 #header.header7(ng-class='{ "opaque": currentPath() != "/" }')
@@ -50,6 +54,11 @@
 					span(ng-if='!!email')
 						i.fa.fa-envelope-o
 						span {{email}}
+					span(ng-if='!!facebookUrl')
+						i.fa.fa-facebook-official
+						span
+							a(ng-href='{{facebookUrl}}')
+								| {{facebookAlias}}
 
 		.menu
 			.container

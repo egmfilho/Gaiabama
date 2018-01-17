@@ -68,8 +68,10 @@
 
 	.row.offset-top-30
 		.col-xs-12
+			p.text-center Código. {{immobile.immobile_code}}
+		.col-xs-12
 			.caracteristicas
-				div
+				div.hidden-xs
 					i.fa.fa-tag
 					| Cód. {{immobile.immobile_code}}
 				div
@@ -78,16 +80,20 @@
 					| m&#178;
 				div
 					i.fa.fa-bed 
-					| {{immobile.immobile_bedroom}} Dormitórios
+					| {{immobile.immobile_bedroom}} 
+					span.hidden-xs Dormitórios
 				div
 					i.fa.fa-bathtub
-					| {{immobile.immobile_suite}} Suítes
+					| {{immobile.immobile_suite}} 
+					span.hidden-xs Suítes
 				div
 					i.fa.fa-shower
-					| {{immobile.immobile_bathroom}} Banheiros
+					| {{immobile.immobile_bathroom}} 
+					span.hidden-xs Banheiros
 				div
 					i.fa.fa-car
-					| {{immobile.immobile_parking_spot}} Vagas
+					| {{immobile.immobile_parking_spot}} 
+					span.hidden-xs Vagas
 
 	.row.offset-top-30.is-flex
 		.col-xs-12.col-sm-8.tab-description
@@ -170,7 +176,7 @@
 							| Taxas como Condomínio e IPTU são valores informativos aproximados e poderão sofrer alterações sem notificação prévia.
 
 	.row.offset-top-30
-		.col-xs-12.col-sm-6.col-md-8.tab-map
+		.col-xs-12.col-sm-6.col-md-8.tab-map.hidden-xs
 			ul.nav.nav-tabs(role='tablist')
 				li.active(role='presentation')
 					a(href='' data-target='#map' aria-controls='mapa' role='tab' data-toggle='tab')
